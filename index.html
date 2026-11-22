@@ -779,7 +779,7 @@ const WORK_LINES = id => {
   return [n + " is checking the maker's support pages…", "The crew is lining up the steps…", "The Supervisor is double-checking the safety notes…", n + " is laying out the tools you'll need…", "Almost there. Big guides take about a minute…"];
 };
 function openGuide(job, push){
-  const v = { room: job.room, job, restart: () => { job.guide = null; job.pending = null; job.stepQs = {}; job.diagram = null; job.stepDiagrams = {}; job.stuck = null; job.blend = null; job.thread = []; paint(v); }, render(d){
+  const v = { room: job.room, job, restart: () => { job.guide = null; job.pending = null; job.diagramPending = null; job.stepQs = {}; job.diagram = null; job.stepDiagrams = {}; job.stuck = null; job.blend = null; job.thread = []; paint(v); }, render(d){
     setBar(job.title, "work");
     if (job.guide) return renderGuide(d, job);
     loadGuide(d, job, v);
@@ -791,8 +791,11 @@ function loadGuide(d, job, v){
   d.append(el("p", { class: "kicker", text: "Crew at work" }), el("h2", { text: job.title }),
     el("div", { class: "crew" }, el("b", { text: "On this job" }), job.advisors.map(mate), el("span", { class: "supbadge" }, avatar("supervisor", 30), "The Supervisor is watching")), box);
   if (job.emergency) d.append(emergencyBox());
+  // start drawing the main diagram at the same time as the guide, so it's ready sooner
+  if (!job.diagram && !job.diagramPending) job.diagramPending = api({ mode: "diagram", title: job.title, question: [job.question, ...job.answers.map(a => a.q + " " + a.a), job.details].filter(Boolean).join(" | "), steps: [] })
+    .then(r => { if (r.ok) job.diagram = r; return r; }).finally(() => { job.diagramPending = null; });
   if (!job.pending) job.pending = api({ mode: "guide", question: job.question, room: job.room, intent: job.intent, answers: job.answers, details: job.details, advisors: job.advisors, style: job.style })
-    .then(g => { if (g.ok) { job.guide = g; job.title = g.title || job.title; job.diagram = null; job.stepDiagrams = {}; } return g; })
+    .then(g => { if (g.ok) { job.guide = g; job.title = g.title || job.title; job.stepDiagrams = {}; } return g; })
     .finally(() => { job.pending = null; });
   job.pending.then(g => {
     if (state.view !== v) return;
@@ -977,6 +980,7 @@ function drawDiagram(box, job, step, titleOverride){
   };
   if (cached) return draw(cached);
   box.append(loadingEl(step ? "Drawing this…" : "Mr. Paul is drawing your diagram…"));
+  if (!step && job && job.diagramPending) { job.diagramPending.then(draw).catch(e => draw({ ok: false, message: e.message })); return; }
   api({ mode: "diagram", title, steps: g ? g.steps.map(s => s.title) : [], step: step ? { title: step.title, text: step.text } : null })
     .then(r => { if (r.ok) store1(r); draw(r); })
     .catch(e => draw({ ok: false, message: e.message }));
