@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- LearnWow member pass (do not remove): gets the member pass from nusparklearnwow.com and shows the Join screen when a visitor runs out of tries -->
+<script>
+(function () {
+  if (window.__lwgate) return; window.__lwgate = 1;
+  var JOIN = "https://nusparklearnwow.com/join/", LOGIN = "https://nusparklearnwow.com/membership-login/";
+  var LW = { pass: null, vid: "" };
+  try { LW.vid = localStorage.getItem("lw_vid") || ""; if (!LW.vid) { LW.vid = (Date.now().toString(36) + Math.random().toString(36).slice(2, 12)); localStorage.setItem("lw_vid", LW.vid); } }
+  catch (e) { LW.vid = "s" + Math.random().toString(36).slice(2, 12); }
+  var okHost = /(^|\.)(nusparklearnwow|nusparkpublishing|nusparkmarketing)\.com$/;
+  var ready = new Promise(function (done) {
+    if (window.parent === window) return done();
+    var fin = false, end = function () { if (!fin) { fin = true; done(); } };
+    window.addEventListener("message", function (e) {
+      var d = e.data; if (!d || d.type !== "lw-pass") return;
+      try { if (!okHost.test(new URL(e.origin).hostname)) return; } catch (x) { return; }
+      LW.pass = d.pass || null;
+      if (d.vid && /^[a-z0-9]{6,40}$/i.test(d.vid)) LW.vid = "w" + d.vid;
+      end();
+    });
+    try { window.parent.postMessage({ type: "lw-pass-request" }, "*"); } catch (x) {}
+    setTimeout(end, 1500);
+  });
+
+  var lastAct = 0;
+  ["pointerdown", "keydown", "touchstart"].forEach(function (ev) { window.addEventListener(ev, function (e) { if (e.isTrusted) lastAct = Date.now(); }, true); });
+
+  var shown = false;
+  function show(j) {
+    if (shown) return; shown = true;
+    var reason = j && j.lwgate;
+    var title = reason === "budget" ? "You've reached this month's limit" : reason === "preview" ? "This is a members feature" : "You've used your tries";
+    var text = reason === "budget"
+      ? "Your membership has hit its monthly usage limit. It resets at the start of next month. Questions? Contact us at nusparklearnwow.com/support."
+      : "Join LearnWow to unlock all 24+ experiences. 7-day trial, then $29.99/month. Cancel anytime.";
+    var box = document.createElement("div");
+    box.setAttribute("style", "position:fixed;inset:0;z-index:2147483647;background:rgba(10,25,60,.72);display:flex;align-items:center;justify-content:center;padding:20px;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif");
+    var btn = "display:inline-block;margin:6px;padding:14px 28px;border-radius:40px;font-weight:800;font-size:17px;text-decoration:none;";
+    box.innerHTML =
+      '<div style="background:#123166;color:#fff;max-width:440px;width:100%;border-radius:22px;padding:30px 26px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.35)">' +
+      '<div style="font-size:40px;line-height:1;color:#F2B33D">&#10022;</div>' +
+      '<div style="font-size:24px;font-weight:800;margin:10px 0 8px">' + title + '</div>' +
+      '<div style="font-size:16px;line-height:1.5;opacity:.92;margin-bottom:18px">' + text + '</div>' +
+      (reason === "budget" ? "" : '<a target="_top" href="' + JOIN + '" style="' + btn + 'background:#F2B33D;color:#123166">Join Now</a>') +
+      '<a target="_top" href="' + LOGIN + '" style="' + btn + 'background:transparent;color:#fff;border:2px solid rgba(255,255,255,.6)">Member Log In</a>' +
+      '<div><button type="button" style="margin-top:10px;background:none;border:0;color:#cfd8ef;font-size:14px;cursor:pointer;text-decoration:underline">Keep looking around</button></div>' +
+      "</div>";
+    box.querySelector("button").onclick = function () { box.remove(); shown = false; };
+    (document.body || document.documentElement).appendChild(box);
+  }
+
+  var of = window.fetch && window.fetch.bind(window);
+  if (!of) return;
+  window.fetch = function (input, init) {
+    var url = typeof input === "string" ? input : (input && input.url) || String(input || "");
+    var u; try { u = new URL(url, location.href); } catch (e) { return of(input, init); }
+    if (u.origin !== location.origin || u.pathname.indexOf("/api/") !== 0) return of(input, init);
+    var act = Date.now() - lastAct < 30000;
+    return ready.then(function () {
+      var o = {}; if (init) for (var k in init) o[k] = init[k];
+      var hd = new Headers(o.headers || (typeof input !== "string" && input && input.headers) || undefined);
+      if (LW.pass) hd.set("x-lw-pass", LW.pass);
+      hd.set("x-lw-vid", LW.vid);
+      if (act) hd.set("x-lw-act", "1");
+      o.headers = hd;
+      return of(input, o);
+    }).then(function (r) {
+      if (r.status === 402) r.clone().json().then(function (j) { if (j && j.lwgate) show(j); }).catch(function () {});
+      return r;
+    });
+  };
+})();
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fix It. Clean It. Maintain It. | Learn...Wow! | NuSparkLearnWow</title>
+<meta name="description" content="Step-by-step help for anything that's broken, dirty or due, from Outlook errors to leaky faucets. Guided fixes with expert AI helpers, diagrams and source-checked steps.">
+<meta property="og:title" content="Fix It. Clean It. Maintain It. | Wow...Who Knew?">
+<meta property="og:description" content="Type in what's broken, dirty or due. A crew of AI helpers walks you through the fix, step by step, with diagrams. From NuSparkLearnWow.com.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1f2a44; --soft:#5d6677; --steel:#2f5f96; --steel-dk:#1f3f66; --steel-lt:#e7eef7;
+  --yellow:#f2b12a; --yellow-dk:#a87512; --red:#d9482b; --green:#3f8f5a; --peg:#d7b585; --peg-dk:#b8915c;
+  --bench:#8a5f33; --bench-dk:#5f3f1f; --wall:#f3f1ec; --screen:#fffefb; --bezel:#151a20;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:Nunito,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--wall);line-height:1.5}
+button,input,textarea,select{font-family:inherit}
+a{color:var(--steel)}
+
+/* header */
+.top{text-align:center;padding:22px 16px 12px}
+.top h1{font-family:Oswald,Impact,sans-serif;font-weight:700;font-size:clamp(30px,6vw,54px);margin:0;letter-spacing:.5px;line-height:1.1;text-transform:uppercase}
+.top h1 .a{color:var(--steel)} .top h1 .b{color:var(--green)} .top h1 .c{color:var(--red)}
+.top .tagline{margin:6px auto 0;max-width:680px;color:var(--soft);font-size:17px;font-weight:700}
+
+/* banner */
+.banner{display:flex;gap:6px;overflow:hidden;height:150px;background:var(--steel-dk)}
+.banner figure{margin:0;flex:1 1 0;min-width:110px;position:relative;overflow:hidden;background:#284e7a}
+.banner img{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .6s}
+.banner img.on{opacity:1}
+.banner figcaption{position:absolute;left:0;right:0;bottom:0;padding:4px 8px;font-size:12px;font-weight:800;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.65))}
+@media(max-width:700px){.banner{height:96px}.banner figure:nth-child(n+5){display:none}}
+
+.shop{max-width:1100px;margin:0 auto;padding:0 14px}
+
+/* search */
+.search{margin:22px 0 0;background:#fff;border-radius:18px;padding:18px clamp(14px,3vw,26px) 16px;box-shadow:0 8px 22px rgba(31,42,68,.12);position:relative;overflow:hidden}
+.search::before{content:"";position:absolute;left:0;right:0;top:0;height:8px;background:repeating-linear-gradient(-45deg,var(--yellow) 0 16px,#1f2a44 16px 32px)}
+.search label{display:block;font-family:Oswald,Impact,sans-serif;font-size:clamp(21px,3.4vw,28px);font-weight:700;color:var(--ink);margin:8px 0 2px;text-transform:uppercase;letter-spacing:.4px}
+.search .ex{margin-bottom:8px}
+.sbar{display:flex;gap:8px}
+.sbar input{flex:1;min-width:0;font-size:18px;padding:14px 16px;border:3px solid #d5dbe4;border-radius:14px;background:#fff}
+.sbar input:focus{outline:none;border-color:var(--steel)}
+.sbar .btn{font-size:17px;padding:12px 22px}
+@media(max-width:520px){.sbar{flex-direction:column}.sbar .btn{width:100%}}
+.pop{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
+.pop b{font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:var(--soft);margin-right:4px}
+.pop button{border:0;background:var(--steel-lt);color:var(--steel-dk);font-weight:800;font-size:14px;padding:7px 12px;border-radius:30px;cursor:pointer}
+.pop button:hover{background:var(--steel);color:#fff}
+
+/* pegboard rooms */
+.howto{text-align:center;color:var(--soft);font-weight:700;margin:22px 0 10px}
+.pegboard{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;padding:22px 16px 16px;border-radius:12px 12px 0 0;background-color:var(--peg);
+  background-image:radial-gradient(circle,rgba(70,45,15,.55) 0 3px,transparent 3.5px);background-size:26px 26px;box-shadow:inset 0 0 0 6px var(--peg-dk)}
+.tag{position:relative;border:0;cursor:pointer;background:#fff;border-radius:12px;padding:20px 8px 12px;display:flex;flex-direction:column;align-items:center;gap:4px;
+  box-shadow:0 5px 0 rgba(0,0,0,.18),0 8px 14px rgba(0,0,0,.12);transition:transform .2s,box-shadow .2s;color:var(--ink)}
+.tag::before{content:"";position:absolute;top:-10px;left:50%;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f4f6f8,#7d8790);box-shadow:0 2px 3px rgba(0,0,0,.4)}
+.tag::after{content:"";position:absolute;top:8px;left:50%;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:var(--peg);box-shadow:inset 0 1px 2px rgba(0,0,0,.4)}
+.tag:hover{transform:translateY(-3px) rotate(-1deg)}
+.tag.on{background:var(--yellow);transform:rotate(-2deg)}
+.tag .ico{font-size:32px;line-height:1.1}
+.tag .lab{font-weight:900;font-size:14px;line-height:1.15;text-align:center}
+.tag .who{font-size:11.5px;font-weight:700;color:var(--soft)}
+.tag.on .who{color:#5b3d05}
+.tag:focus-visible{outline:3px solid var(--steel);outline-offset:2px}
+@media(max-width:900px){.pegboard{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:560px){.pegboard{grid-template-columns:repeat(3,1fr);gap:9px;padding:18px 9px 12px}.tag .ico{font-size:26px}.tag .lab{font-size:12.5px}.tag .who{display:none}}
+
+/* workbench + screen */
+.bench{background:linear-gradient(var(--bench),var(--bench-dk));padding:16px;border-radius:0 0 12px 12px;box-shadow:0 6px 0 #3f2912}
+.screen{background:var(--bezel);border-radius:18px;padding:12px;box-shadow:0 14px 30px rgba(0,0,0,.35),inset 0 0 0 2px #2b323b}
+.screen .bar{display:flex;justify-content:space-between;align-items:center;color:#a9b6c7;font-size:12.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:0 6px 8px;gap:10px}
+.screen .bar .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#4ade80;margin-right:6px;box-shadow:0 0 6px #4ade80}
+body.working .screen .bar .dot{background:var(--yellow);box-shadow:0 0 8px var(--yellow);animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.3}}
+.display{background:var(--screen);border-radius:10px;min-height:360px;padding:22px clamp(14px,3vw,32px);overflow:hidden}
+@media(max-width:520px){.bench{padding:8px}.screen{padding:8px}.screen #barRight{display:none}.display{padding:18px 13px}}
+
+/* content */
+.navrow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.back{border:0;background:var(--steel-lt);color:var(--ink);font-weight:800;font-size:14px;padding:7px 14px;border-radius:30px;cursor:pointer}
+.kicker{font-size:13px;font-weight:900;letter-spacing:1.4px;text-transform:uppercase;color:var(--red);margin:0}
+.display h2{font-family:Oswald,Impact,sans-serif;font-weight:700;font-size:clamp(25px,4vw,34px);line-height:1.15;margin:4px 0 10px;color:var(--ink)}
+.display h3{font-size:19px;margin:22px 0 6px;color:var(--steel-dk)}
+.display p{margin:0 0 10px;font-size:17px}
+.lead{font-size:18px !important;font-weight:600}
+.ex{display:block;font-size:14.5px;font-weight:700;color:var(--soft);margin:0 0 6px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.chip{border:2px solid var(--steel);background:#fff;color:var(--steel-dk);font-weight:800;font-size:15.5px;padding:10px 16px;border-radius:30px;cursor:pointer;text-align:left;transition:.15s}
+.chip:hover,.chip.on{background:var(--steel);color:#fff}
+.chip.alt{border-color:var(--red);color:#a8341d}
+.chip.alt:hover{background:var(--red);color:#fff}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px}
+.btn{border:0;background:var(--red);color:#fff;font-weight:800;font-size:16px;padding:11px 20px;border-radius:30px;cursor:pointer}
+.btn.blue{background:var(--steel)}
+.btn.yellow{background:var(--yellow);color:var(--ink)}
+.btn.green{background:var(--green)}
+.btn.ghost{background:#fff;color:var(--steel-dk);border:2px solid var(--steel)}
+.btn.small{font-size:14px;padding:8px 14px}
+.btn:disabled{opacity:.55;cursor:wait}
+.field{margin-top:16px}
+.field label{display:block;font-size:15.5px;font-weight:800;color:var(--ink);margin:0 0 4px}
+.inrow{display:flex;gap:8px}
+.inrow input,.field textarea,.field select{flex:1;min-width:0;font-size:16.5px;padding:12px 14px;border:2px solid #d5dbe4;border-radius:12px;background:#fff}
+.field textarea{width:100%;min-height:110px;resize:vertical}
+.field select{flex:none;font-weight:700}
+.inrow input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--steel)}
+@media(max-width:520px){.inrow{flex-direction:column}}
+.loading{display:flex;align-items:center;gap:14px;font-weight:800;color:var(--steel-dk);font-size:17px;padding:26px 0}
+.gear{width:40px;height:40px;flex:none;animation:sp 2.2s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.err{background:#fdecea;color:#7a2010;border-radius:12px;padding:12px 14px;font-weight:700;margin:10px 0}
+.photo{float:right;width:min(40%,320px);margin:0 0 12px 18px;border-radius:12px;overflow:hidden;background:#eef1f5;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.photo img{width:100%;display:block;max-height:280px;object-fit:cover}
+.photo figcaption{font-size:12px;color:var(--soft);padding:5px 8px}
+@media(max-width:620px){.photo{float:none;width:100%;margin:0 0 14px}}
+.clear{clear:both}
+
+/* quick answer (search-page style) */
+.qa{background:var(--steel-dk);border-radius:18px;padding:8px;margin:8px 0 6px}
+.qa .in{background:#fbfaf6;border-radius:14px;padding:16px 18px}
+.qa .in b.t{display:block;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:#9a6b07;margin-bottom:6px}
+.qa .in p{font-size:18px;margin:0}
+.qa .note{color:#c9d6ea;font-size:13.5px;padding:6px 8px 2px}
+
+/* badges */
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.badge{font-weight:900;font-size:14px;padding:6px 12px;border-radius:30px;background:#eef1f5;color:var(--ink)}
+.badge.diy{background:#e3f3e8;color:#1f6b3a}
+.badge.caution{background:#fff3d4;color:#7a5306}
+.badge.pro{background:#fde3dd;color:#8c2a14}
+.emerg{background:var(--red);color:#fff;border-radius:14px;padding:14px 16px;font-weight:800;font-size:17px;margin:10px 0}
+
+/* crew */
+.crew{display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:#f6f8fb;border:2px solid #e2e8f0;border-radius:16px;padding:10px 12px;margin:6px 0 12px}
+.crew>b{font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:var(--soft)}
+.mate{display:flex;align-items:center;gap:8px;background:#fff;border-radius:40px;padding:4px 12px 4px 4px;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.av{width:38px;height:38px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:20px;flex:none;color:#fff;box-shadow:inset 0 -3px 0 rgba(0,0,0,.18)}
+.mate span{font-weight:900;font-size:14px;line-height:1.1}
+.mate small{display:block;font-weight:700;font-size:11.5px;color:var(--soft)}
+.crewgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin:10px 0}
+
+/* boxes + lists */
+.box{border-radius:14px;padding:14px 16px;margin:16px 0}
+.box b.t{display:block;font-size:13px;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px}
+.warn{background:#fff6dd;border-left:6px solid var(--yellow)} .warn b.t{color:#7a5306}
+.pro{background:#fdecea;border-left:6px solid var(--red)} .pro b.t{color:#8c2a14}
+.good{background:#e9f5ed;border-left:6px solid var(--green)} .good b.t{color:#1f6b3a}
+.info{background:var(--steel-lt);border-left:6px solid var(--steel)} .info b.t{color:var(--steel-dk)}
+.wow{background:#fff4d6;border:2px dashed var(--yellow)} .wow b.t{color:#8a6510}
+.list{padding-left:22px;font-size:17px;margin:4px 0 8px}
+.list li{margin:5px 0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:620px){.two{grid-template-columns:1fr}}
+.check{list-style:none;padding:0;margin:4px 0}
+.check li{margin:6px 0}
+.check label{display:flex;gap:10px;align-items:flex-start;font-size:16.5px;cursor:pointer}
+.check input{width:20px;height:20px;margin-top:3px;flex:none;accent-color:var(--green)}
+.check input:checked+span{text-decoration:line-through;color:var(--soft)}
+
+/* diagram */
+.diagram{background:#fff;border:2px solid #e2e8f0;border-radius:16px;padding:12px;margin:16px 0}
+.diagram img{width:100%;height:auto;display:block;border-radius:8px}
+.diagram .cap{font-size:14.5px;color:var(--soft);font-weight:700;margin:8px 2px 0}
+.diagram b.t{display:block;font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:var(--steel-dk);margin-bottom:8px}
+
+/* steps */
+.step{position:relative;border:2px solid #e2e8f0;border-radius:16px;padding:14px 16px 14px 64px;margin:12px 0;background:#fff;transition:border-color .2s,box-shadow .2s}
+.step .num{position:absolute;left:14px;top:14px;width:36px;height:36px;border-radius:50%;background:var(--steel);color:#fff;font-family:Oswald,Impact,sans-serif;font-weight:700;font-size:19px;display:flex;align-items:center;justify-content:center}
+.step h4{margin:2px 0 6px;font-size:18px}
+.step p{font-size:16.5px !important}
+.step .ck{background:#e9f5ed;border-radius:10px;padding:8px 12px;font-size:15px;font-weight:700;color:#1f5f35;margin:8px 0}
+.step.now{border-color:var(--yellow);box-shadow:0 0 0 4px rgba(242,177,42,.25)}
+.step.tried{opacity:.72}
+.step.tried .num{background:#9aa5b5}
+.step.fixed{border-color:var(--green);box-shadow:0 0 0 4px rgba(63,143,90,.2)}
+.step.fixed .num{background:var(--green)}
+.step .sb{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+@media(max-width:520px){.step{padding:14px 12px 14px 12px}.step .num{position:static;margin-bottom:6px}}
+
+/* tips + thread */
+.say{display:flex;gap:10px;align-items:flex-start;margin:12px 0}
+.say .bub{position:relative;background:#fff;border:2px solid #e2e8f0;border-radius:14px;padding:10px 14px;font-size:16.5px;flex:1}
+.say .bub b{display:block;font-size:13.5px;color:var(--steel-dk);margin-bottom:2px}
+.say.me{flex-direction:row-reverse}
+.say.me .bub{background:var(--steel-lt);border-color:#c9d7ea}
+.say .bub .cq{margin-top:8px;font-style:italic;color:#7a5306;font-weight:700}
+.askbar{border-top:2px dashed #dfe5ee;margin-top:24px;padding-top:6px}
+
+/* footnotes */
+.fn{clear:both;border-top:2px solid #e8edf3;margin-top:20px;padding-top:10px;font-size:14px}
+.fn b{display:block;font-size:12.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--soft);margin-bottom:4px}
+.fn ol{margin:0;padding-left:20px}
+.fn li{margin:2px 0;word-break:break-word}
+.ainote{font-size:13.5px;color:var(--soft);margin-top:10px}
+
+/* Mr. Paul host */
+.mphost{display:flex;align-items:center;gap:14px;max-width:1100px;margin:22px auto 4px;padding:0 14px}
+.mphost .mpfig{width:96px;flex:none;filter:drop-shadow(0 4px 8px rgba(0,0,0,.3))}
+.mphost .mpfig svg{width:100%;height:auto;display:block}
+.mphost .mpbub{position:relative;background:#fff;color:var(--ink);border:2px solid var(--yellow);border-radius:16px;padding:10px 16px;font-weight:700;font-size:16px;line-height:1.35;max-width:380px}
+.mphost .mpbub::before{content:"";position:absolute;left:-11px;top:50%;margin-top:-9px;border:9px solid transparent;border-right-color:var(--yellow);border-left:0}
+.mphost .mpbub::after{content:"";position:absolute;left:-7px;top:50%;margin-top:-7px;border:7px solid transparent;border-right-color:#fff;border-left:0}
+@media(max-width:560px){.mphost .mpfig{width:74px}.mphost .mpbub{font-size:15px}}
+
+footer{max-width:1100px;margin:10px auto 30px;padding:14px;font-size:13.5px;color:var(--soft);border-top:2px solid #e2e8f0}
+footer p{margin:6px 0}
+
+@media print{
+  .top,.banner,.search,.howto,.pegboard,.mphost,footer,.navrow,.row,.sb,.askbar,.noprint{display:none !important}
+  body{background:#fff}.bench,.screen{background:none;box-shadow:none;padding:0}.display{padding:0}
+  .step{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1><span class="a">Fix It.</span> <span class="b">Clean It.</span> <span class="c">Maintain It.</span></h1>
+  <p class="tagline">Step-by-step help for anything that's broken, dirty or due, from Outlook errors to leaky faucets. Wow...Who Knew?</p>
+</header>
+
+<div class="banner" id="banner" aria-hidden="true"></div>
+
+<main class="shop">
+  <section class="search" aria-label="Search">
+    <label for="mainQ">What needs fixing, cleaning or maintaining?</label>
+    <span class="ex">Examples: Outlook says low system resources · toilet keeps running · red wine on the carpet</span>
+    <div class="sbar">
+      <input type="text" id="mainQ" maxlength="300" autocomplete="off">
+      <button class="btn" type="button" id="mainGo">Find the Fix</button>
+    </div>
+    <div class="pop" id="popular"></div>
+  </section>
+
+  <p class="howto">Or pick a room off the pegboard. Each one has its own helper.</p>
+  <div class="pegboard" id="pegboard"></div>
+
+  <div class="bench">
+    <div class="screen">
+      <div class="bar"><span><span class="dot"></span><span id="barLeft">The Workshop</span></span><span id="barRight">Open for Repairs</span></div>
+      <div class="display" id="display" aria-live="polite"></div>
+    </div>
+  </div>
+</main>
+
+<!-- Mr. Paul, the workshop host (cartoon drawn in code) -->
+<div class="mphost" role="note" aria-label="Mr. Paul says: Welcome to the workshop! What needs fixing today?"><div class="mpfig"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -12 320 392" class="mph-svg" aria-hidden="true"><defs><linearGradient id="fx-skin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6d2bb"></stop><stop offset="1" stop-color="#eebc9f"></stop></linearGradient><linearGradient id="fx-coat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3f74b0"></stop><stop offset="1" stop-color="#2c5687"></stop></linearGradient><linearGradient id="fx-lens" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d8dde0" stop-opacity=".45"></stop><stop offset="1" stop-color="#aeb6bc" stop-opacity=".3"></stop></linearGradient><linearGradient id="fx-glens" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e6f6ff"></stop><stop offset=".6" stop-color="#a9d8f2"></stop><stop offset="1" stop-color="#7fbfe3"></stop></linearGradient></defs><path d="M40 380 C44 318 78 290 122 282 L160 300 L198 282 C242 290 276 318 280 380 Z" fill="url(#fx-coat)" stroke="#1f3f66" stroke-width="3"></path><path d="M160 302 L204 288 C212 324 212 356 210 380 L150 380 Z" fill="#35659d" stroke="#1f3f66" stroke-width="2.5"></path><g fill="#e8eef5"><circle cx="172" cy="322" r="4.5"></circle><circle cx="196" cy="322" r="4.5"></circle><circle cx="172" cy="350" r="4.5"></circle><circle cx="196" cy="350" r="4.5"></circle></g><rect x="70" y="330" width="56" height="22" rx="4" fill="#c99a2e"></rect><text x="98" y="345.5" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="#1f2a44">Mr. Paul</text><path d="M126 282 Q160 304 194 282 L190 298 Q160 318 130 298 Z" fill="#24507f" stroke="#183a5e" stroke-width="2"></path><path d="M152 304 L168 304 L174 326 L160 318 L146 326 Z" fill="#24507f" stroke="#183a5e" stroke-width="2"></path><!-- neck --><path d="M134 240 L136 290 Q160 304 184 290 L186 240 Z" fill="#e8b294"></path><!-- side hair (behind head), soft and fluffy --><g fill="#dedad2"><ellipse cx="82" cy="130" rx="14" ry="22"></ellipse><ellipse cx="78" cy="152" rx="18" ry="30"></ellipse><ellipse cx="76" cy="182" rx="14" ry="24"></ellipse><ellipse cx="88" cy="206" rx="12" ry="16"></ellipse><ellipse cx="238" cy="130" rx="14" ry="22"></ellipse><ellipse cx="242" cy="152" rx="18" ry="30"></ellipse><ellipse cx="244" cy="182" rx="14" ry="24"></ellipse><ellipse cx="232" cy="206" rx="12" ry="16"></ellipse></g><g stroke="#c2bdb3" stroke-width="1.8" fill="none" stroke-linecap="round"><path d="M70 132 C64 150 64 170 70 190"></path><path d="M78 140 C74 160 74 184 82 206"></path><path d="M66 124 C62 118 60 112 61 106"></path><path d="M250 132 C256 150 256 170 250 190"></path><path d="M242 140 C246 160 246 184 238 206"></path><path d="M254 124 C258 118 260 112 259 106"></path></g><!-- ears --><ellipse cx="82" cy="168" rx="13" ry="20" fill="#eab597"></ellipse><ellipse cx="238" cy="168" rx="13" ry="20" fill="#eab597"></ellipse><path d="M84 158 Q78 168 85 178" stroke="#cf957a" stroke-width="2.5" fill="none" stroke-linecap="round"></path><path d="M236 158 Q242 168 235 178" stroke="#cf957a" stroke-width="2.5" fill="none" stroke-linecap="round"></path><!-- head --><path d="M160 42 C216 42 240 86 240 142 C240 210 214 254 160 254 C106 254 80 210 80 142 C80 86 104 42 160 42 Z" fill="url(#fx-skin)"></path><!-- thinning hair on top --><path d="M90 118 C88 74 116 46 160 44 C204 46 232 74 230 118 C222 96 206 82 186 80 C176 70 146 70 134 80 C114 82 98 96 90 118 Z" fill="#d6d1c8"></path><g stroke="#b3ada2" stroke-width="2" fill="none" stroke-linecap="round"><path d="M110 84 C122 62 140 52 160 50"></path><path d="M122 78 C134 62 150 56 166 56"></path><path d="M210 84 C198 62 180 52 160 50"></path><path d="M198 78 C186 62 170 56 154 58"></path><path d="M96 106 C100 90 108 80 120 72"></path><path d="M224 106 C220 90 212 80 200 72"></path><path d="M146 72 C150 64 158 60 166 62"></path><path d="M160 70 C164 62 172 58 180 60"></path></g><ellipse cx="160" cy="58" rx="22" ry="7" fill="#fff" opacity=".22"></ellipse><g><path d="M108 136 Q126 126 146 132" stroke="#8c847a" stroke-width="5" fill="none" stroke-linecap="round"></path><path d="M174 132 Q194 126 212 136" stroke="#8c847a" stroke-width="5" fill="none" stroke-linecap="round"></path></g><!-- eyes --><ellipse cx="128" cy="158" rx="10" ry="7.5" fill="#fff"></ellipse><ellipse cx="192" cy="158" rx="10" ry="7.5" fill="#fff"></ellipse><circle cx="129" cy="158" r="5.5" fill="#7d9277"></circle><circle cx="193" cy="158" r="5.5" fill="#7d9277"></circle><circle cx="129" cy="158" r="2.6" fill="#22262b"></circle><circle cx="193" cy="158" r="2.6" fill="#22262b"></circle><circle cx="131" cy="156" r="1.4" fill="#fff"></circle><circle cx="195" cy="156" r="1.4" fill="#fff"></circle><!-- smile crinkles --><path d="M112 164 Q118 170 126 168" stroke="#d29c80" stroke-width="2" fill="none" stroke-linecap="round"></path><path d="M208 164 Q202 170 194 168" stroke="#d29c80" stroke-width="2" fill="none" stroke-linecap="round"></path><!-- glasses: dark grey translucent rectangular frames --><rect x="100" y="138" width="56" height="40" rx="8" fill="url(#fx-lens)" stroke="#555b63" stroke-width="6"></rect><rect x="164" y="138" width="56" height="40" rx="8" fill="url(#fx-lens)" stroke="#555b63" stroke-width="6"></rect><path d="M156 152 Q160 148 164 152" stroke="#555b63" stroke-width="5" fill="none"></path><path d="M100 148 L84 146" stroke="#555b63" stroke-width="5" stroke-linecap="round"></path><path d="M220 148 L236 146" stroke="#555b63" stroke-width="5" stroke-linecap="round"></path><circle cx="104" cy="142" r="2" fill="#9aa1a9"></circle><circle cx="216" cy="142" r="2" fill="#9aa1a9"></circle><!-- nose --><path d="M160 168 C156 186 150 196 152 202 C156 208 166 208 170 202" stroke="#cf957a" stroke-width="3.5" fill="none" stroke-linecap="round"></path><!-- rosy cheeks --><ellipse cx="114" cy="200" rx="15" ry="9" fill="#f29a8a" opacity=".45"></ellipse><ellipse cx="206" cy="200" rx="15" ry="9" fill="#f29a8a" opacity=".45"></ellipse><!-- light stubble around mouth and chin --><path d="M122 212 C128 244 192 244 198 212 C198 234 184 252 160 252 C136 252 122 234 122 212 Z" fill="#c9b6a6" opacity=".22"></path><g><path d="M136 220 Q160 236 184 220" stroke="#b5635a" stroke-width="4.5" fill="none" stroke-linecap="round"></path><path d="M132 218 Q134 222 137 221" stroke="#b5635a" stroke-width="3" fill="none" stroke-linecap="round"></path><path d="M188 218 Q186 222 183 221" stroke="#b5635a" stroke-width="3" fill="none" stroke-linecap="round"></path></g><!-- hard hat --><path d="M80 112 C80 52 116 26 160 26 C204 26 240 52 240 112 Z" fill="#f2b12a" stroke="#a87512" stroke-width="3"></path><path d="M150 28 C150 60 150 90 152 112 L168 112 C170 90 170 60 170 28 Z" fill="#e09e18"></path><path d="M108 50 C100 70 98 92 100 112" stroke="#e09e18" stroke-width="6" fill="none" stroke-linecap="round"></path><path d="M212 50 C220 70 222 92 220 112" stroke="#e09e18" stroke-width="6" fill="none" stroke-linecap="round"></path><path d="M64 108 Q160 92 256 108 L252 124 Q160 110 68 124 Z" fill="#f2b12a" stroke="#a87512" stroke-width="3"></path><ellipse cx="128" cy="52" rx="16" ry="7" fill="#fff" opacity=".35"></ellipse><!-- wrench in pocket --><g transform="rotate(-20 236 330)"><rect x="230" y="300" width="10" height="56" rx="4" fill="#cfd5db" stroke="#6b7682" stroke-width="2"></rect><path d="M224 300 a11 11 0 1 1 22 0 l-5 0 l0 -8 l-12 0 l0 8 Z" fill="#cfd5db" stroke="#6b7682" stroke-width="2"></path></g></svg></div><div class="mpbub">Welcome to the workshop! What needs fixing today?</div></div>
+
+<footer>
+  <p>Guides are researched live with AI and checked against real sources. AI can still make mistakes, so double-check anything important and follow your owner's manual.</p>
+  <p>Safety first: unplug it, switch off the breaker, shut off the water or let it cool before you start. For gas, wiring, structural, roof or other risky work, call a licensed professional. In an emergency, get to safety and call 911.</p>
+  <p>Helper names are friendly characters, not real people. Brand names appear only to describe your own device or product, never as endorsements. Photos from Wikipedia / Wikimedia Commons, credited on each photo.</p>
+  <p>Fix It. Clean It. Maintain It. is part of <a href="https://nusparklearnwow.com" target="_blank" rel="noopener">NuSparkLearnWow.com</a> from NuSpark Publishing.</p>
+</footer>
+
+<script>
+/* ---------- the crew ---------- */
+const ADV = {
+  tess:   { name: "Tech Tess",     role: "Tech Helper",         ico: "💻", color: "#6a4fb3" },
+  pete:   { name: "Plumber Pete",  role: "Plumbing",            ico: "🔧", color: "#2f5f96" },
+  sparky: { name: "Sparky Sue",    role: "Electrical",          ico: "⚡", color: "#c98a10" },
+  al:     { name: "Appliance Al",  role: "Appliances",          ico: "🧺", color: "#3f8f5a" },
+  mo:     { name: "Mechanic Mo",   role: "Car & Bike",          ico: "🚗", color: "#d9482b" },
+  hank:   { name: "Handy Hank",    role: "Handyman",            ico: "🔨", color: "#8a5f33" },
+  carla:  { name: "Clean Carla",   role: "Cleaning Pro",        ico: "🧽", color: "#1f8fa6" },
+  harry:  { name: "HVAC Harry",    role: "Heating & Cooling",   ico: "🌡️", color: "#c2410c" },
+  gail:   { name: "Garden Gail",   role: "Yard & Outdoor",      ico: "🌱", color: "#4d7c0f" },
+  tina:   { name: "Tailor Tina",   role: "Clothes & Shoes",     ico: "🧵", color: "#be185d" }
+};
+
+/* ---------- the rooms ---------- */
+const ROOMS = [
+  { id: "tech", ico: "💻", name: "Tech & Gadgets", helper: "tess", blurb: "Computers, phones, email, Wi-Fi, printers, TVs and smart gadgets.",
+    topics: ["Outlook says low system resources","Wi-Fi keeps dropping","Laptop running slow","Printer says it's offline","Phone storage is full","Computer won't turn on","Laptop overheating","Bluetooth won't connect","Clean a laptop keyboard","Smart TV apps keep freezing","Email stuck in the outbox","Update Windows safely"] },
+  { id: "plumbing", ico: "🚿", name: "Plumbing", helper: "pete", blurb: "Drains, toilets, faucets, pipes, disposals and water heaters.",
+    topics: ["Toilet keeps running","Slow bathroom sink drain","Leaky kitchen faucet","Garbage disposal hums but won't spin","Low water pressure in the shower","Unclog a toilet","Water heater not getting hot","Drip under the kitchen sink","Clean a clogged shower head","Flush a water heater","Toilet rocks on the floor","Keep pipes from freezing"] },
+  { id: "electrical", ico: "🔌", name: "Electrical & Lighting", helper: "sparky", blurb: "Outlets, breakers, bulbs, switches and fixtures, with safety first.",
+    topics: ["Outlet stopped working","Breaker keeps tripping","GFCI outlet won't reset","Light bulbs burn out fast","Flickering lights","Choose the right LED bulb","Ceiling fan wobbles","Extension cord safety","Smoke detector keeps chirping","Doorbell stopped ringing","Change a ceiling light bulb safely","Dimmer switch buzzing"] },
+  { id: "appliances", ico: "🧺", name: "Appliances", helper: "al", blurb: "Washers, dryers, fridges, dishwashers, ovens and small appliances.",
+    topics: ["Dryer takes forever to dry","Washer won't drain","Fridge not cooling","Dishwasher leaves dishes dirty","Ice maker stopped working","Oven not heating evenly","Microwave runs but won't heat","Washing machine smells","Clean the dryer vent","Dishwasher won't drain","Fridge making a loud noise","Descale a coffee maker"] },
+  { id: "car", ico: "🚗", name: "Car & Bike", helper: "mo", blurb: "Warning lights, batteries, tires, wipers, fluids, bikes and mowers.",
+    topics: ["Check engine light came on","Car won't start, just clicks","Tire pressure light is on","Replace wiper blades","Jump-start a car safely","Car battery keeps dying","Squeaky brakes","Check and top off fluids","Foggy headlights","Bike chain keeps falling off","Fix a flat bike tire","Lawn mower won't start"] },
+  { id: "house", ico: "🔨", name: "Around the House", helper: "hank", blurb: "Doors, walls, floors, furniture, paint, caulk and hanging things.",
+    topics: ["Door won't latch","Squeaky door hinge","Patch a hole in drywall","Sticky dresser drawer","Squeaky floorboards","Recaulk a bathtub","Hang a heavy picture","Fix a wobbly table","Touch up paint scuffs","Window won't stay open","Loose cabinet hinge","Remove old wallpaper"] },
+  { id: "cleaning", ico: "🧽", name: "Cleaning & Stains", helper: "carla", blurb: "Stains, odors, kitchens, bathrooms, floors and every surface.",
+    topics: ["Red wine on the carpet","Clean a really dirty oven","Hard water stains on glass","Mold in the shower grout","Smelly garbage disposal","Clean a mattress","Grease stain on a shirt","Clean stainless steel appliances","Pet urine smell in carpet","Clean a microwave fast","Streak-free windows","Clean a washing machine"] },
+  { id: "hvac", ico: "🌡️", name: "Heating & Cooling", helper: "harry", blurb: "Furnaces, air conditioners, heat pumps, thermostats and filters.",
+    topics: ["AC running but not cooling","Furnace won't turn on","Change the furnace filter","Thermostat screen is blank","One room is always cold","AC unit freezing up","Strange smell from the vents","Heat pump blowing cold air","Clean air vents and returns","Humidifier care","Window AC dripping inside","Get the AC ready for summer"] },
+  { id: "yard", ico: "🌳", name: "Yard & Outdoor", helper: "gail", blurb: "Lawns, gutters, decks, fences, patios and outdoor gear.",
+    topics: ["Clean the gutters safely","Brown patches in the lawn","Deck boards turning gray","Fence post is leaning","Pressure wash a patio","Winterize an outdoor faucet","Sharpen garden tools","Weeds between pavers","Gate won't close","Store the grill for winter","Clean patio furniture","Garden hose leaks at the end"] },
+  { id: "clothes", ico: "👕", name: "Clothes & Shoes", helper: "tina", blurb: "Zippers, buttons, tears, shrinking, stains, shoes and care labels.",
+    topics: ["Zipper came off the track","Sew a button back on","Shrunk a wool sweater","Remove pilling from a sweater","Clean white sneakers","Small tear in jeans","Stinky gym clothes","Read laundry care symbols","Waterproof boots","Hem pants without sewing","Unstick a stuck zipper","Deodorant marks on a shirt"] },
+  { id: "toolbox", ico: "🧰", name: "The Toolbox", helper: "hank", blurb: "What each tool is, what it's for, and how to use it safely.",
+    topics: ["Tools every home should have","How to use a stud finder","Types of screwdrivers","How to use a drill safely","Choose the right screw or nail","What a multimeter does","Caulk vs. spackle vs. putty","How to read a tape measure","Socket wrench basics","Choose the right ladder","Types of plungers","Sandpaper grits explained"] },
+  { id: "calendar", ico: "🗓️", name: "Maintenance Calendar", helper: "hank", calendar: true, blurb: "What to check monthly, every season, and every year, so things don't break in the first place." }
+];
+const CAL_PICKS = [["home", "🏠 Home"], ["car", "🚗 Car"], ["tech", "💻 Tech"], ["appliances", "🧺 Appliances"], ["yard", "🌳 Yard"], ["all", "📋 Whole Household"]];
+const BANNER = ["Toolbox", "Wrench", "Screwdriver", "Plunger", "Laptop", "Paint roller", "Vacuum cleaner", "Tape measure", "Hammer", "Washing machine", "Lawn mower", "Spark plug"];
+const BAR_RIGHT = { home: "Open for Repairs", room: "Pick a Job", clarify: "Quick Question", work: "Crew at Work", guide: "Guided Fix", calendar: "Maintenance Calendar" };
+const SAFETY = { diy: ["diy", "✅ DIY Friendly"], caution: ["caution", "⚠️ Doable With Care"], pro: ["pro", "🛑 Call a Pro"] };
+
+/* ---------- helpers ---------- */
+const $ = s => document.querySelector(s);
+function el(tag, attrs, ...kids){
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (k === "text") e.textContent = v;
+    else if (k.startsWith("on")) e.addEventListener(k.slice(2), v);
+    else if (v !== false && v != null) e.setAttribute(k, v);
+  }
+  for (const k of kids.flat()) if (k != null && k !== false && k !== "") e.append(k.nodeType ? k : document.createTextNode(k));
+  return e;
+}
+const store = {
+  get(k, d){ try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch(e){ return d; } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+};
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const cleanAI = v => typeof v === "string" ? v.replace(/<\/?cite\b[^>]*>/gi, "").replace(/\*\*/g, "").replace(/[ \t]{2,}/g, " ").trim()
+  : Array.isArray(v) ? v.map(cleanAI) : (v && typeof v === "object") ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, k === "svg" ? x : cleanAI(x)])) : v;
+async function api(body){
+  const r = await fetch("/api/fix", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+  let j = {}; try { j = await r.json(); } catch(e){}
+  if (r.status === 402) throw new Error("Join LearnWow to keep using Fix It. Clean It. Maintain It.");
+  if (!r.ok) throw new Error(j.message || j.error || "Something went wrong. Please try again.");
+  return cleanAI(j);
+}
+const roomOf = id => ROOMS.find(r => r.id === id);
+function avatar(id, size){
+  const a = ADV[id] || ADV.hank;
+  return el("span", { class: "av", style: "background:" + a.color + (size ? ";width:" + size + "px;height:" + size + "px;font-size:" + Math.round(size * .52) + "px" : ""), title: a.name, "aria-hidden": "true" }, a.ico);
+}
+function mate(id){ const a = ADV[id] || ADV.hank; return el("div", { class: "mate" }, avatar(id), el("span", {}, a.name, el("small", { text: a.role }))); }
+const GEAR = '<svg class="gear" viewBox="0 0 24 24" aria-hidden="true"><path fill="#2f5f96" d="M19.4 13a7.6 7.6 0 0 0 0-2l2.1-1.6-2-3.5-2.5 1a7.4 7.4 0 0 0-1.7-1L15 3.3h-4l-.4 2.6a7.4 7.4 0 0 0-1.7 1l-2.5-1-2 3.5L6.6 11a7.6 7.6 0 0 0 0 2l-2.1 1.6 2 3.5 2.5-1a7.4 7.4 0 0 0 1.7 1l.4 2.6h4l.4-2.6a7.4 7.4 0 0 0 1.7-1l2.5 1 2-3.5zM13 15.5A3.5 3.5 0 1 1 13 8.5a3.5 3.5 0 0 1 0 7z" transform="translate(-1 0)"/></svg>';
+function loadingEl(msg, rotate){
+  const t = el("span", { text: msg });
+  const box = el("div", { class: "loading" });
+  box.innerHTML = GEAR; box.append(t);
+  if (rotate && rotate.length) {
+    let i = 0; const iv = setInterval(() => { if (!document.body.contains(box)) return clearInterval(iv); t.textContent = rotate[i++ % rotate.length]; }, 4500);
+  }
+  return box;
+}
+function working(on){ document.body.classList.toggle("working", !!on); }
+function slug(s){ return String(s || "guide").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60) || "guide"; }
+function download(name, text, type){
+  const blob = new Blob([text], { type: type || "text/plain;charset=utf-8" });
+  const a = el("a", { href: URL.createObjectURL(blob), download: name });
+  document.body.append(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 800);
+}
+
+/* ---------- photos (Wikipedia / Wikimedia Commons, credited) ---------- */
+const photoMem = {};
+function wikiPhoto(title, size){
+  if (!title) return Promise.resolve(null);
+  const key = title + "|" + (size || 800);
+  if (photoMem[key]) return photoMem[key];
+  const cached = store.get("fx_ph_" + key, null);
+  if (cached && cached.t > Date.now() - 7 * 864e5) return (photoMem[key] = Promise.resolve(cached.v));
+  return (photoMem[key] = (async () => {
+    try {
+      const u = "https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&redirects=1&prop=pageimages&piprop=thumbnail&pithumbsize=" + (size || 800) + "&titles=" + encodeURIComponent(title);
+      const j = await (await fetch(u)).json();
+      const page = Object.values((j.query && j.query.pages) || {})[0];
+      const src = page && page.thumbnail && page.thumbnail.source;
+      if (!src || /\.svg/i.test(src)) return null;
+      const v = { src, title: page.title, link: "https://en.wikipedia.org/wiki/" + encodeURIComponent(page.title.replace(/ /g, "_")) };
+      store.set("fx_ph_" + key, { t: Date.now(), v });
+      return v;
+    } catch(e){ return null; }
+  })());
+}
+function photoFig(title){
+  const fig = el("figure", { class: "photo", hidden: "" });
+  wikiPhoto(title).then(p => {
+    if (!p) return fig.remove();
+    const img = el("img", { src: p.src, alt: p.title, loading: "lazy" });
+    img.onerror = () => fig.remove();
+    fig.append(img, el("figcaption", {}, "Photo: ", el("a", { href: p.link, target: "_blank", rel: "noopener", text: "Wikipedia, " + p.title })));
+    fig.hidden = false;
+  });
+  return fig;
+}
+function buildBanner(){
+  const b = $("#banner");
+  shuffle(BANNER).slice(0, 8).forEach(t => {
+    const fig = el("figure", {}); b.append(fig);
+    wikiPhoto(t, 400).then(p => {
+      if (!p) return;
+      const img = el("img", { src: p.src, alt: "" });
+      img.onload = () => img.classList.add("on");
+      fig.append(img, el("figcaption", { text: p.title }));
+    });
+  });
+}
+
+/* ---------- screen + navigation ---------- */
+const state = { view: null, stack: [], seen: {} };
+const display = $("#display");
+function setBar(left, kind){ $("#barLeft").textContent = left || "The Workshop"; $("#barRight").textContent = BAR_RIGHT[kind] || BAR_RIGHT.home; }
+function show(view, push = true){
+  if (push && state.view) state.stack.push(state.view);
+  state.view = view;
+  display.innerHTML = "";
+  if (state.stack.length) display.append(el("div", { class: "navrow" },
+    el("button", { class: "back", type: "button", onclick: goBack }, "← Back"),
+    el("button", { class: "back", type: "button", onclick: goHome }, "🏠 Workshop Home")));
+  view.render(display);
+  syncTags();
+  if (push) scrollToEl(display.closest(".screen"));
+}
+function scrollToEl(node){
+  if (!node) return;
+  if (window.parent !== window) {
+    try { window.parent.postMessage({ lwToolScrollY: Math.max(0, node.getBoundingClientRect().top + window.scrollY - 10) }, "*"); } catch(e){}
+  } else node.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+function goBack(){ const v = state.stack.pop(); if (v) show(v, false); }
+function goHome(){ state.stack = []; show(homeView(), false); }
+function syncTags(){ const id = state.view && state.view.room; document.querySelectorAll(".tag").forEach(t => t.classList.toggle("on", t.dataset.id === id)); }
+
+/* ---------- home ---------- */
+function homeView(){
+  return { room: null, render(d){
+    setBar("The Workshop", "home");
+    d.append(el("p", { class: "kicker", text: "Welcome to the workshop" }),
+      el("h2", { text: "Broken, dirty or due? Let's walk through it." }),
+      el("p", { class: "lead", text: "Type what's going on in the search box, or pick a room off the pegboard. The right helpers join the job, ask a quick question if they need to, then walk you through the fix one step at a time, with a diagram, a safety check and real sources." }),
+      el("h3", { text: "How it works" }),
+      el("ol", { class: "list" },
+        el("li", { text: "Tell the crew what's wrong, what needs cleaning, or what you want to keep in shape." }),
+        el("li", { text: "The right helper (or two) joins the job. If they need a detail, like a model or an error message, they'll ask." }),
+        el("li", { text: "Work through the steps. Tap Fixed It! when it works, or Not Yet to move to the next step." }),
+        el("li", { text: "Still stuck? The crew suggests what to try next, and tells you honestly when it's time to call a pro." })),
+      el("h3", { text: "Meet the crew" }),
+      el("div", { class: "crewgrid" }, Object.keys(ADV).map(mate)));
+  }};
+}
+
+/* ---------- rooms ---------- */
+function roomView(id){
+  const r = roomOf(id);
+  if (r.calendar) return calendarView();
+  return { room: id, render(d){
+    setBar(r.name, "room");
+    d.append(el("p", { class: "kicker", text: "Room" }), el("h2", { text: r.ico + " " + r.name }), el("p", { class: "lead", text: r.blurb }),
+      el("div", { class: "crew" }, el("b", { text: "Your helper here" }), mate(r.helper)));
+    const seen = state.seen[id] || (state.seen[id] = new Set());
+    const pool = r.topics.filter(t => !seen.has(t));
+    const pick = shuffle(pool.length >= 6 ? pool : r.topics).slice(0, 6);
+    pick.forEach(t => seen.add(t));
+    const chips = el("div", { class: "chips" });
+    const addChips = list => list.forEach(t => chips.append(el("button", { class: "chip", type: "button", onclick: () => startJob(t, id) }, t)));
+    addChips(pick);
+    const msg = el("p", { class: "ex" });
+    const more = el("button", { class: "btn blue", type: "button" }, "Show Me 6 More");
+    more.onclick = async () => {
+      more.disabled = true; msg.textContent = ADV[r.helper].name + " is thinking of more jobs…";
+      try {
+        const res = await api({ mode: "more", room: id, exclude: [...seen] });
+        const fresh = (res.topics || []).filter(t => !seen.has(t));
+        fresh.forEach(t => seen.add(t));
+        if (fresh.length) { chips.innerHTML = ""; addChips(fresh); msg.textContent = ""; } else msg.textContent = "No new ideas came back. Try again in a moment.";
+      } catch(e){ msg.textContent = e.message; }
+      more.disabled = false;
+    };
+    const inp = el("input", { type: "text", id: "own-" + id, maxlength: "300", autocomplete: "off" });
+    const go = () => { const v = inp.value.trim(); if (v) startJob(v, id); };
+    inp.addEventListener("keydown", e => { if (e.key === "Enter") go(); });
+    d.append(el("h3", { text: "Popular jobs" }), chips, el("div", { class: "row" }, more), msg,
+      el("div", { class: "field" }, el("label", { for: "own-" + id, text: "Or describe your own:" }),
+        el("span", { class: "ex", text: "Example: " + r.topics[r.topics.length - 1].toLowerCase() }),
+        el("div", { class: "inrow" }, inp, el("button", { class: "btn", type: "button", onclick: go }, "Find the Fix"))));
+  }};
+}
+
+/* ---------- a job: triage -> (clarify) -> guide ---------- */
+function startJob(question, room){
+  const job = { question, room: room || "", answers: [], details: "", advisors: [], style: "full", tried: new Set(), thread: [] };
+  $("#mainQ").value = "";
+  show({ room: room || null, render(d){
+    setBar("Reading the job", "work");
+    const view = this;
+    if (view.done) return view.done(d);
+    const box = loadingEl("Mr. Paul is reading the job and calling the right helper…");
+    d.append(el("p", { class: "kicker", text: "You asked" }), el("h2", { text: question }), box);
+    working(true);
+    api({ mode: "triage", question, room }).then(t => {
+      working(false);
+      view.done = dd => renderTriage(dd, job, t);
+      if (d.contains(box)) { d.innerHTML = ""; if (state.stack.length) d.append(navRow()); renderTriage(d, job, t); }
+    }).catch(e => { working(false); box.replaceWith(el("div", { class: "err", text: e.message })); });
+  }});
+}
+function navRow(){ return el("div", { class: "navrow" }, el("button", { class: "back", type: "button", onclick: goBack }, "← Back"), el("button", { class: "back", type: "button", onclick: goHome }, "🏠 Workshop Home")); }
+function renderTriage(d, job, t){
+  if (!t.onTopic) {
+    d.append(el("p", { class: "kicker", text: "You asked" }), el("h2", { text: job.question }), el("div", { class: "box info" }, t.message),
+      el("div", { class: "row" }, el("a", { class: "btn blue", href: "https://nusparklearnwow.com/the-answer-man/", target: "_top", style: "text-decoration:none" }, "Ask The Answer Man")));
+    return;
+  }
+  job.title = t.title; job.room = t.room || job.room; job.advisors = t.advisors; job.safety = t.safety; job.emergency = t.emergency;
+  if (state.view) state.view.room = job.room; syncTags();
+  if (t.clarify) return renderClarify(d, job, t);
+  openGuide(job, false, d);
+}
+function renderClarify(d, job, t){
+  setBar(job.title, "clarify");
+  d.append(el("p", { class: "kicker", text: "Quick question" }), el("h2", { text: job.title }),
+    el("div", { class: "crew" }, el("b", { text: "On this job" }), job.advisors.map(mate)),
+    el("p", { class: "lead", text: ADV[job.advisors[0]].name + " needs one detail so the steps fit your situation." }));
+  const picks = {};
+  t.questions.forEach((q, qi) => {
+    const chips = el("div", { class: "chips" });
+    q.options.forEach(o => {
+      const c = el("button", { class: "chip", type: "button" }, o);
+      c.onclick = () => { picks[qi] = o; chips.querySelectorAll(".chip").forEach(x => x.classList.toggle("on", x === c)); };
+      chips.append(c);
+    });
+    d.append(el("div", { class: "say" }, avatar(job.advisors[0]), el("div", { class: "bub" }, el("b", { text: ADV[job.advisors[0]].name }), q.q)), chips);
+  });
+  const ta = el("textarea", { id: "clarMore", maxlength: "600" });
+  d.append(el("div", { class: "field" }, el("label", { for: "clarMore", text: "Anything else the crew should know? (optional)" }),
+    el("span", { class: "ex", text: "Example: the exact error message, the model, or what you already tried" }), ta));
+  const go = () => {
+    job.answers = t.questions.map((q, i) => ({ q: q.q, a: picks[i] || "" })).filter(a => a.a);
+    job.details = ta.value.trim();
+    openGuide(job, true);
+  };
+  d.append(el("div", { class: "row" }, el("button", { class: "btn", type: "button", onclick: go }, "Show Me the Fix"),
+    el("button", { class: "btn ghost", type: "button", onclick: () => { job.answers = []; job.details = ta.value.trim(); openGuide(job, true); } }, "Skip the Questions")));
+}
+
+const WORK_LINES = id => {
+  const n = (ADV[id] || ADV.hank).name;
+  return [n + " is checking the maker's support pages…", "The crew is lining up the steps, easiest first…", "Mr. Paul is double-checking the safety notes…", n + " is laying out the tools you'll need…", "Almost there. Big guides take about a minute…"];
+};
+function openGuide(job, push, intoEl){
+  const view = { room: job.room, job, render(d){
+    setBar(job.title, "work");
+    if (job.guide) return renderGuide(d, job);
+    loadGuide(d, job);
+  }};
+  if (intoEl) { state.view = view; intoEl.innerHTML = ""; if (state.stack.length) intoEl.append(navRow()); view.render(intoEl); syncTags(); }
+  else show(view, push !== false);
+}
+function loadGuide(d, job){
+  const box = loadingEl("The crew is on the way…", WORK_LINES(job.advisors[0]));
+  d.append(el("p", { class: "kicker", text: "Crew at work" }), el("h2", { text: job.title }),
+    el("div", { class: "crew" }, el("b", { text: "On this job" }), job.advisors.map(mate)), box);
+  if (job.emergency) d.append(el("div", { class: "emerg", text: "If you smell gas, see smoke or sparks, or a carbon monoxide alarm is going off: get everyone outside now and call 911 or your utility from outside." }));
+  working(true);
+  if (!job.pending) job.pending = api({ mode: "guide", question: job.question, room: job.room, answers: job.answers, details: job.details, advisors: job.advisors, style: job.style })
+    .then(g => { if (g.ok) { job.guide = g; job.title = g.title || job.title; job.tried = new Set(); job.diagram = null; job.stepDiagrams = {}; } return g; })
+    .finally(() => { job.pending = null; });
+  job.pending.then(g => {
+    working(false);
+    if (!(state.view && state.view.job === job) || !d.contains(box)) return;
+    if (!g.ok) { box.replaceWith(el("div", { class: "err", text: g.message })); return; }
+    d.innerHTML = ""; if (state.stack.length) d.append(navRow()); renderGuide(d, job);
+  }).catch(e => { working(false); if (d.contains(box)) box.replaceWith(el("div", { class: "err", text: e.message })); });
+}
+
+/* ---------- the guide ---------- */
+function renderGuide(d, job){
+  const g = job.guide;
+  setBar(g.title, "guide");
+  const room = roomOf(job.room);
+  d.append(el("p", { class: "kicker", text: (room ? room.ico + " " + room.name : "Guided Fix") + (job.style === "simple" ? " · Simplified" : job.style === "extended" ? " · Double Length" : "") }), el("h2", { text: g.title }));
+  d.append(crewBar(job));
+  if (g.emergency || job.emergency) d.append(el("div", { class: "emerg", text: "If you smell gas, see smoke or sparks, or a carbon monoxide alarm is going off: get everyone outside now and call 911 or your utility from outside." }));
+  if (g.wiki) d.append(photoFig(g.wiki));
+  d.append(el("div", { class: "qa" }, el("div", { class: "in" }, el("b", { class: "t", text: "Quick Answer" }), el("p", { text: g.quickAnswer })), el("div", { class: "note", text: "AI can make mistakes, so double-check anything important." })));
+  const s = SAFETY[g.safety] || SAFETY.caution;
+  d.append(el("div", { class: "badges" }, el("span", { class: "badge " + s[0], text: s[1] }), el("span", { class: "badge", text: "🔧 " + g.difficulty }), g.time ? el("span", { class: "badge", text: "⏱️ " + g.time }) : ""));
+  if (g.safetyNote) d.append(el("div", { class: "box " + (g.safety === "pro" ? "pro" : "warn") }, el("b", { class: "t", text: g.safety === "pro" ? "🛑 Safety: call a pro" : "⚠️ Safety check" }), g.safetyNote));
+  d.append(el("div", { class: "clear" }));
+
+  // diagram
+  const dia = el("div", { class: "diagram noprint-if-empty" });
+  d.append(dia);
+  drawDiagram(dia, job, null);
+
+  if (g.causes && g.causes.length) d.append(el("h3", { text: "🔍 Most likely causes" }), el("ul", { class: "list" }, g.causes.map(c => el("li", {}, el("b", { text: c.cause }), c.sign ? ": " + c.sign : ""))));
+  if ((g.tools && g.tools.length) || (g.supplies && g.supplies.length)) {
+    const ck = list => el("ul", { class: "check" }, list.map(x => el("li", {}, el("label", {}, el("input", { type: "checkbox" }), el("span", { text: x })))));
+    d.append(el("h3", { text: "🧰 What you'll need" }), el("div", { class: "two" },
+      el("div", {}, el("b", { text: "Tools" }), g.tools.length ? ck(g.tools) : el("p", { class: "ex", text: "No special tools." })),
+      el("div", {}, el("b", { text: "Supplies & parts" }), g.supplies.length ? ck(g.supplies) : el("p", { class: "ex", text: "No supplies needed." }))));
+  }
+  if (g.before && g.before.length) d.append(el("div", { class: "box warn" }, el("b", { class: "t", text: "✋ Before you start" }), el("ul", { class: "list" }, g.before.map(x => el("li", { text: x })))));
+
+  // steps
+  d.append(el("h3", { text: g.safety === "pro" ? "🧯 What to do right now" : "🪜 Step by step" }),
+    el("p", { class: "ex", text: g.safety === "pro" ? "These are the safe steps only. The repair itself is a job for a licensed pro." : "Start at step 1. Tap Fixed It! when it works, or Not Yet to move on. Tap Show Me for a diagram of that step." }));
+  const stepsWrap = el("div", {});
+  d.append(stepsWrap);
+  const cards = g.steps.map((st, i) => stepCard(st, i, job, cards => cards));
+  cards.forEach(c => stepsWrap.append(c));
+  const fixedBox = el("div", {});
+  const stuckWrap = el("div", {});
+  d.append(fixedBox, stuckWrap);
+  const setNow = i => cards.forEach((c, k) => c.classList.toggle("now", k === i && !c.classList.contains("fixed")));
+  setNow(0);
+  cards.forEach((c, i) => {
+    c.querySelector(".yes").onclick = () => {
+      cards.forEach(x => x.classList.remove("now")); c.classList.add("fixed");
+      fixedBox.innerHTML = "";
+      fixedBox.append(el("div", { class: "box good" }, el("b", { class: "t", text: "🎉 Nice work!" }), "You fixed it at step " + (i + 1) + ". Check the tips below to keep it from happening again."));
+      scrollToEl(fixedBox);
+    };
+    c.querySelector(".no").onclick = () => {
+      job.tried.add((i + 1) + ". " + g.steps[i].title); c.classList.add("tried");
+      if (i + 1 < cards.length) { setNow(i + 1); scrollToEl(cards[i + 1]); }
+      else { setNow(-1); openStuck(stuckWrap, job, true); }
+    };
+  });
+  if (g.safety !== "pro") d.append(el("div", { class: "row" }, el("button", { class: "btn ghost", type: "button", onclick: () => openStuck(stuckWrap, job, true) }, "😕 Still Not Fixed?")));
+
+  // crew tips
+  if (g.tips && g.tips.length) {
+    d.append(el("h3", { text: "💬 Tips from the crew" }));
+    g.tips.forEach(t => d.append(el("div", { class: "say" }, avatar(t.id), el("div", { class: "bub" }, el("b", { text: ADV[t.id].name }), t.tip))));
+  }
+  if (g.mistakes && g.mistakes.length) d.append(el("h3", { text: "🚫 Common mistakes" }), el("ul", { class: "list" }, g.mistakes.map(x => el("li", { text: x }))));
+  if (g.prevent && g.prevent.length) d.append(el("h3", { text: "🛡️ Keep it from happening again" }), el("ul", { class: "list" }, g.prevent.map(x => el("li", { text: x }))));
+  if (g.callPro) d.append(el("div", { class: "box pro" }, el("b", { class: "t", text: "📞 When to call a pro" }), g.callPro));
+  if (g.deeper && g.deeper.length) { d.append(el("h3", { text: "📚 Go deeper" })); g.deeper.forEach(x => d.append(el("h4", { text: x.heading, style: "margin:12px 0 4px;font-size:17px" }), el("p", { text: x.text }))); }
+
+  // actions
+  const eyes = el("div", {});
+  d.append(el("div", { class: "row" },
+    job.style !== "simple" ? el("button", { class: "btn yellow", type: "button", onclick: () => restyle(job, "simple") }, "🪄 Simplify") : el("button", { class: "btn yellow", type: "button", onclick: () => restyle(job, "full") }, "📄 Full Guide"),
+    job.style !== "extended" ? el("button", { class: "btn yellow", type: "button", onclick: () => restyle(job, "extended") }, "📏 Double Length") : "",
+    el("button", { class: "btn blue", type: "button", onclick: () => window.print() }, "🖨️ Print"),
+    el("button", { class: "btn blue", type: "button", onclick: () => download(slug(g.title) + ".txt", guideText(job)) }, "⬇️ Download"),
+    el("button", { class: "btn ghost", type: "button", onclick: () => { eyes.innerHTML = ""; eyes.append(perspectivePanel(job)); } }, "👀 Gain Another Perspective"),
+    el("button", { class: "btn", type: "button", onclick: newQuestion }, "🆕 New Question")), eyes);
+
+  // follow-ups + thread
+  d.append(askSection(job));
+  if (g.sourceNote) d.append(el("p", { class: "ainote", text: g.sourceNote }));
+  d.append(footnotes(g.sources), el("p", { class: "ainote", text: g.safetyFooter || "" }));
+}
+function crewBar(job){
+  const bar = el("div", { class: "crew" }, el("b", { text: "On this job" }), job.advisors.map(mate));
+  return bar;
+}
+function stepCard(st, i, job){
+  const show = el("button", { class: "btn ghost small", type: "button" }, "📐 Show Me");
+  const holder = el("div", {});
+  const card = el("div", { class: "step" }, el("span", { class: "num", text: String(i + 1) }), el("h4", { text: st.title || ("Step " + (i + 1)) }), el("p", { text: st.text }),
+    st.check ? el("div", { class: "ck", text: "✅ How to tell it worked: " + st.check }) : "",
+    el("div", { class: "sb" }, el("button", { class: "btn green small yes", type: "button" }, "🎉 Fixed It!"), el("button", { class: "btn ghost small no", type: "button" }, "➡️ Not Yet"), show), holder);
+  show.onclick = () => {
+    if (holder.childNodes.length) { holder.innerHTML = ""; show.textContent = "📐 Show Me"; return; }
+    const dia = el("div", { class: "diagram" }); holder.append(dia); show.textContent = "📐 Hide Diagram";
+    drawDiagram(dia, job, { title: st.title, text: st.text, i });
+  };
+  return card;
+}
+function svgImg(svg){ return el("img", { src: "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg), alt: "Diagram" }); }
+function drawDiagram(box, job, step){
+  const g = job.guide;
+  const cacheKey = step ? "s" + step.i : "main";
+  job.stepDiagrams = job.stepDiagrams || {};
+  const cached = step ? job.stepDiagrams[cacheKey] : job.diagram;
+  box.innerHTML = "";
+  box.append(el("b", { class: "t", text: step ? "📐 Step " + (step.i + 1) + " diagram" : "📐 The diagram" }));
+  const paint = r => {
+    box.querySelector(".loading") && box.querySelector(".loading").remove();
+    if (!r || !r.ok) {
+      box.append(el("p", { class: "ex", text: (r && r.message) || "The diagram didn't load." }), el("button", { class: "btn ghost small", type: "button", onclick: () => { if (step) delete job.stepDiagrams[cacheKey]; else job.diagram = null; drawDiagram(box, job, step); } }, "Try Again"));
+      return;
+    }
+    const img = svgImg(r.svg);
+    box.append(img);
+    if (r.caption) box.append(el("p", { class: "cap", text: r.caption }));
+    box.append(el("div", { class: "row noprint" },
+      el("button", { class: "btn ghost small", type: "button", onclick: () => svgToPng(r.svg, slug(g.title) + (step ? "-step-" + (step.i + 1) : "") + "-diagram.png") }, "⬇️ Download Diagram"),
+      el("button", { class: "btn ghost small", type: "button", onclick: () => { if (step) delete job.stepDiagrams[cacheKey]; else job.diagram = null; drawDiagram(box, job, step); } }, "🔄 Redraw")));
+  };
+  if (cached) return paint(cached);
+  box.append(loadingEl(step ? "Drawing this step…" : "Mr. Paul is drawing your diagram…"));
+  api({ mode: "diagram", title: g.title, steps: g.steps.map(s => s.title), step: step ? { title: step.title, text: step.text } : null })
+    .then(r => { if (r.ok) { if (step) job.stepDiagrams[cacheKey] = r; else job.diagram = r; } paint(r); })
+    .catch(e => paint({ ok: false, message: e.message }));
+}
+function svgToPng(svg, name){
+  const img = new Image();
+  img.onload = () => {
+    const c = document.createElement("canvas"); c.width = 1600; c.height = Math.round(1600 * (img.height / img.width || .65));
+    const x = c.getContext("2d"); x.fillStyle = "#fff"; x.fillRect(0, 0, c.width, c.height); x.drawImage(img, 0, 0, c.width, c.height);
+    c.toBlob(b => { if (!b) return download(name.replace(/png$/, "svg"), svg, "image/svg+xml"); const a = el("a", { href: URL.createObjectURL(b), download: name }); document.body.append(a); a.click(); setTimeout(() => a.remove(), 800); }, "image/png");
+  };
+  img.onerror = () => download(name.replace(/png$/, "svg"), svg, "image/svg+xml");
+  img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+}
+function restyle(job, style){
+  job.style = style; job.guide = null; job.thread = job.thread || [];
+  openGuide(job, true);
+}
+function newQuestion(){
+  goHome();
+  const q = $("#mainQ"); scrollToEl($(".search")); setTimeout(() => q.focus(), 300);
+}
+
+/* ---------- still not fixed ---------- */
+function openStuck(wrap, job, scroll){
+  if (wrap.dataset.open === "1") { if (scroll) scrollToEl(wrap); return; }
+  wrap.dataset.open = "1"; wrap.innerHTML = "";
+  const ta = el("textarea", { id: "stuckIn", maxlength: "600" });
+  const out = el("div", {});
+  const go = el("button", { class: "btn", type: "button" }, "Ask the Crew for Next Steps");
+  go.onclick = async () => {
+    go.disabled = true; out.innerHTML = ""; out.append(loadingEl("The crew is digging into less common causes…")); working(true);
+    try {
+      const r = await api({ mode: "stuck", title: job.title, question: job.question, answers: job.answers, details: job.details, advisors: job.advisors, tried: [...job.tried], notes: ta.value.trim() });
+      out.innerHTML = "";
+      out.append(el("div", { class: "say" }, avatar(r.speaker), el("div", { class: "bub" }, el("b", { text: ADV[r.speaker].name }), r.message)));
+      if (r.causes.length) out.append(el("h3", { text: "🔍 What else it could be" }), el("ul", { class: "list" }, r.causes.map(c => el("li", {}, el("b", { text: c.cause }), c.sign ? ": " + c.sign : ""))));
+      if (r.steps.length) { out.append(el("h3", { text: "🪜 Try these next" })); r.steps.forEach((st, i) => out.append(el("div", { class: "step" }, el("span", { class: "num", text: String(i + 1) }), el("h4", { text: st.title }), el("p", { text: st.text }), st.check ? el("div", { class: "ck", text: "✅ How to tell it worked: " + st.check }) : ""))); }
+      if (r.callPro) out.append(el("div", { class: "box pro" }, el("b", { class: "t", text: "📞 Time for a pro?" }), r.callPro));
+      job.stuck = r;
+      if (r.sourceNote) out.append(el("p", { class: "ainote", text: r.sourceNote }));
+      out.append(footnotes(r.sources));
+    } catch(e){ out.innerHTML = ""; out.append(el("div", { class: "err", text: e.message })); }
+    working(false); go.disabled = false;
+  };
+  wrap.append(el("div", { class: "box info" }, el("b", { class: "t", text: "😕 Still not fixed?" }),
+    el("p", { text: "No problem. Tell the crew what you noticed and they'll suggest what to try next." + (job.tried.size ? " They already know which steps you tried." : "") }),
+    el("div", { class: "field" }, el("label", { for: "stuckIn", text: "What did you notice? (optional)" }), el("span", { class: "ex", text: "Example: it worked for a day, then started again" }), ta),
+    el("div", { class: "row" }, go)), out);
+  if (scroll) scrollToEl(wrap);
+}
+
+/* ---------- ask the crew ---------- */
+function askSection(job){
+  const g = job.guide;
+  const wrap = el("div", { class: "askbar" });
+  const thread = el("div", {});
+  const sel = el("select", { id: "askTo", "aria-label": "Who should answer" });
+  const fillSel = () => {
+    sel.innerHTML = "";
+    sel.append(el("option", { value: "crew", text: "The whole crew" }));
+    const og1 = el("optgroup", { label: "On this job" }); job.advisors.forEach(id => og1.append(el("option", { value: id, text: ADV[id].name })));
+    const og2 = el("optgroup", { label: "Bring in another helper" }); Object.keys(ADV).filter(id => !job.advisors.includes(id)).forEach(id => og2.append(el("option", { value: id, text: ADV[id].name + " (" + ADV[id].role + ")" })));
+    sel.append(og1, og2);
+  };
+  fillSel();
+  const ta = el("textarea", { id: "askIn", maxlength: "600" });
+  const send = el("button", { class: "btn", type: "button" }, "Ask");
+  const paintThread = () => {
+    thread.innerHTML = "";
+    job.thread.forEach(t => {
+      thread.append(el("div", { class: "say me" }, el("span", { class: "av", style: "background:#1f2a44" }, "🙋"), el("div", { class: "bub" }, el("b", { text: "You" + (t.to && t.to !== "crew" ? " → " + ADV[t.to].name : " → The crew") }), t.q)));
+      (t.replies || []).forEach((r, i) => thread.append(el("div", { class: "say" }, avatar(r.id), el("div", { class: "bub" }, el("b", { text: ADV[r.id].name }), r.text,
+        i === t.replies.length - 1 && t.clarify ? el("div", { class: "cq", text: t.clarify }) : ""))));
+      if (t.sources && t.sources.length) thread.append(footnotes(t.sources, "Sources for this answer"));
+    });
+  };
+  const ask = async q => {
+    q = String(q || "").trim(); if (!q) return;
+    const to = sel.value;
+    if (ADV[to] && !job.advisors.includes(to)) { job.advisors.push(to); const old = wrap.closest(".display").querySelector(".crew"); if (old) old.replaceWith(crewBar(job)); fillSel(); sel.value = to; }
+    send.disabled = true; ta.value = "";
+    const pending = el("div", {}); pending.append(loadingEl((ADV[to] ? ADV[to].name : "The crew") + " is looking into it…"));
+    thread.append(el("div", { class: "say me" }, el("span", { class: "av", style: "background:#1f2a44" }, "🙋"), el("div", { class: "bub" }, el("b", { text: "You" }), q)), pending);
+    working(true);
+    try {
+      const summary = [g.quickAnswer, ...g.steps.map((s, i) => (i + 1) + ". " + s.title)].join(" ");
+      const r = await api({ mode: "ask", title: g.title, summary, advisors: job.advisors, to, q, history: job.thread.map(t => ({ q: t.q, who: t.replies && t.replies[0] ? ADV[t.replies[0].id].name : "Crew", a: (t.replies || []).map(x => x.text).join(" ") })) });
+      job.thread.push({ q, to, replies: r.replies, clarify: r.clarify, sources: r.sources });
+    } catch(e){ job.thread.push({ q, to, replies: [{ id: ADV[to] ? to : job.advisors[0], text: e.message }] }); }
+    working(false); send.disabled = false; paintThread();
+  };
+  send.onclick = () => ask(ta.value);
+  wrap.append(el("h3", { text: "❓ Questions for the crew" }), el("p", { class: "ex", text: "Ask the whole crew or one helper. Pick a different helper to bring in a new specialty. Ask as many follow-ups as you like." }));
+  if (g.followups && g.followups.length) wrap.append(el("div", { class: "chips" }, g.followups.map(q => el("button", { class: "chip alt", type: "button", onclick: () => ask(q) }, q))));
+  wrap.append(thread, el("div", { class: "field" },
+    el("label", { for: "askIn", text: "Type your question or answer a helper's question:" }),
+    el("span", { class: "ex", text: "Example: what if the part is stuck or rusted?" }),
+    el("div", { class: "inrow", style: "margin-bottom:8px" }, el("label", { for: "askTo", style: "align-self:center;margin:0;font-weight:800" , text: "Ask:" }), sel), ta,
+    el("div", { class: "row" }, send)));
+  paintThread();
+  return wrap;
+}
+
+/* ---------- gain another perspective ---------- */
+function guideText(job, short){
+  const g = job.guide; const L = [];
+  L.push(g.title.toUpperCase(), "From Fix It. Clean It. Maintain It. on NuSparkLearnWow.com", "");
+  L.push("QUICK ANSWER", g.quickAnswer, "");
+  L.push("Safety: " + (SAFETY[g.safety] || SAFETY.caution)[1].replace(/^\S+\s/, "") + " · Difficulty: " + g.difficulty + (g.time ? " · Time: " + g.time : ""));
+  if (g.safetyNote) L.push(g.safetyNote);
+  if (g.causes.length) { L.push("", "MOST LIKELY CAUSES"); g.causes.forEach(c => L.push("- " + c.cause + (c.sign ? ": " + c.sign : ""))); }
+  if (g.tools.length) L.push("", "TOOLS: " + g.tools.join(", "));
+  if (g.supplies.length) L.push("SUPPLIES: " + g.supplies.join(", "));
+  if (g.before.length) { L.push("", "BEFORE YOU START"); g.before.forEach(x => L.push("- " + x)); }
+  L.push("", "STEP BY STEP"); g.steps.forEach((s, i) => { L.push((i + 1) + ". " + s.title, "   " + s.text); if (s.check) L.push("   How to tell it worked: " + s.check); });
+  if (short) return L.join("\n");
+  if (g.tips.length) { L.push("", "TIPS FROM THE CREW"); g.tips.forEach(t => L.push(ADV[t.id].name + ": " + t.tip)); }
+  if (g.mistakes.length) { L.push("", "COMMON MISTAKES"); g.mistakes.forEach(x => L.push("- " + x)); }
+  if (g.prevent.length) { L.push("", "KEEP IT FROM HAPPENING AGAIN"); g.prevent.forEach(x => L.push("- " + x)); }
+  if (g.callPro) L.push("", "WHEN TO CALL A PRO", g.callPro);
+  (g.deeper || []).forEach(x => L.push("", x.heading.toUpperCase(), x.text));
+  if (job.stuck) { L.push("", "STILL NOT FIXED: NEXT STEPS", job.stuck.message); job.stuck.steps.forEach((s, i) => L.push((i + 1) + ". " + s.title, "   " + s.text)); if (job.stuck.callPro) L.push(job.stuck.callPro); }
+  if (job.thread && job.thread.length) { L.push("", "QUESTIONS FOR THE CREW"); job.thread.forEach(t => { L.push("You: " + t.q); (t.replies || []).forEach(r => L.push(ADV[r.id].name + ": " + r.text)); L.push(""); }); }
+  if (job.blend) { L.push("", "ANOTHER PERSPECTIVE", job.blend.headline, ...job.blend.blend); }
+  if (g.sources.length) { L.push("", "SOURCES"); g.sources.forEach((s, i) => L.push((i + 1) + ". " + s.title + " " + s.url)); }
+  L.push("", "AI can make mistakes, so double-check anything important. " + (g.safetyFooter || ""));
+  return L.join("\n");
+}
+function perspectivePanel(job){
+  const text = "Review, double-check, and add relevant images to this how-to guide. Add anything helpful that's missing, and point out any step that could be done more safely.\n\n" + guideText(job, true);
+  const copyBtn = el("button", { class: "btn green", type: "button" }, "📋 Copy for AI");
+  copyBtn.onclick = async () => { try { await navigator.clipboard.writeText(text); copyBtn.textContent = "Copied!"; } catch(e){ copyBtn.textContent = "Couldn't copy. Try Download instead."; } };
+  const ta = el("textarea", { id: "eyesIn", maxlength: "6000" });
+  const out = el("div", {});
+  const cmp = el("button", { class: "btn", type: "button" }, "Blend Them Together");
+  cmp.onclick = async () => {
+    const other = ta.value.trim(); if (!other) return;
+    cmp.disabled = true; out.innerHTML = ""; out.append(loadingEl("Mr. Paul is blending the two perspectives…")); working(true);
+    try {
+      const c = await api({ mode: "compare", title: job.guide.title, guide: guideText(job, true), other });
+      job.blend = c; out.innerHTML = "";
+      out.append(el("h3", { text: "🤝 The combined view" }), el("p", { class: "lead", text: c.headline }), ...c.blend.map(p => el("p", { text: p })));
+      if (c.added.length) out.append(el("h3", { text: "➕ What the other AI added" }), el("ul", { class: "list" }, c.added.map(x => el("li", { text: x }))));
+      if (c.checked.length) out.append(el("h3", { text: "🔎 Double-checked" }), el("ul", { class: "list" }, c.checked.map(x => el("li", { text: x }))));
+      out.append(footnotes(c.sources));
+    } catch(e){ out.innerHTML = ""; out.append(el("div", { class: "err", text: e.message })); }
+    working(false); cmp.disabled = false;
+  };
+  return el("div", { class: "box info" },
+    el("b", { class: "t", text: "👀 Gain Another Perspective" }),
+    el("p", { text: "See what another AI (like ChatGPT or Gemini) adds, then Mr. Paul blends the best of both into one guide." }),
+    el("p", { class: "ex", text: "Step 1: Tap Copy for AI, then paste it into the other AI." }), copyBtn,
+    el("div", { class: "field" }, el("label", { for: "eyesIn", text: "Step 2: Paste the other AI's answer here:" }), ta),
+    el("div", { class: "row" }, cmp), out);
+}
+function footnotes(sources, label){
+  if (!sources || !sources.length) return el("span", {});
+  return el("div", { class: "fn" }, el("b", { text: label || "Sources the crew checked" }),
+    el("ol", {}, sources.map(s => el("li", {}, el("a", { href: s.url, target: "_blank", rel: "noopener", text: s.title || s.url })))));
+}
+
+/* ---------- maintenance calendar ---------- */
+function calendarView(){
+  return { room: "calendar", render(d){
+    setBar("Maintenance Calendar", "calendar");
+    const view = this;
+    if (view.data) return renderCalendar(d, view.data, view.what);
+    d.append(el("p", { class: "kicker", text: "Room" }), el("h2", { text: "🗓️ Maintenance Calendar" }),
+      el("p", { class: "lead", text: "Most repairs start as skipped upkeep. Pick what you want to keep in shape, and the crew builds a checklist for every month, every season and every year." }));
+    let what = "home";
+    const chips = el("div", { class: "chips" });
+    CAL_PICKS.forEach(([id, lab]) => { const c = el("button", { class: "chip" + (id === what ? " on" : ""), type: "button" }, lab); c.onclick = () => { what = id; chips.querySelectorAll(".chip").forEach(x => x.classList.toggle("on", x === c)); }; chips.append(c); });
+    const ta = el("textarea", { id: "calIn", maxlength: "400" });
+    const go = el("button", { class: "btn", type: "button" }, "Build My Calendar");
+    const out = el("div", {});
+    go.onclick = async () => {
+      go.disabled = true; out.innerHTML = ""; out.append(loadingEl("The crew is building your calendar…", ["Checking the makers' upkeep schedules…", "Sorting tasks by season…", "Adding the every-few-years jobs people forget…", "Almost there…"])); working(true);
+      try {
+        const r = await api({ mode: "calendar", what, details: ta.value.trim() });
+        view.data = r; view.what = what; working(false);
+        d.innerHTML = ""; if (state.stack.length) d.append(navRow()); renderCalendar(d, r, what);
+      } catch(e){ working(false); out.innerHTML = ""; out.append(el("div", { class: "err", text: e.message })); go.disabled = false; }
+    };
+    d.append(el("h3", { text: "What should the calendar cover?" }), chips,
+      el("div", { class: "field" }, el("label", { for: "calIn", text: "Anything that helps? (optional)" }), el("span", { class: "ex", text: "Example: older house, cold winters, gas furnace, well water" }), ta),
+      el("div", { class: "row" }, go), out);
+  }};
+}
+function renderCalendar(d, r, what){
+  d.append(el("p", { class: "kicker", text: "Maintenance Calendar" }), el("h2", { text: r.title }), el("p", { class: "lead", text: r.intro }));
+  const ck = list => el("ul", { class: "check" }, list.map(x => el("li", {}, el("label", {}, el("input", { type: "checkbox" }), el("span", { text: x })))));
+  const sec = (t, list) => { if (list && list.length) d.append(el("h3", { text: t }), ck(list)); };
+  sec("📅 Every month", r.monthly);
+  d.append(el("div", { class: "two" },
+    el("div", {}, r.spring.length ? [el("h3", { text: "🌷 Spring" }), ck(r.spring)] : ""), el("div", {}, r.summer.length ? [el("h3", { text: "☀️ Summer" }), ck(r.summer)] : ""),
+    el("div", {}, r.fall.length ? [el("h3", { text: "🍂 Fall" }), ck(r.fall)] : ""), el("div", {}, r.winter.length ? [el("h3", { text: "❄️ Winter" }), ck(r.winter)] : "")));
+  sec("🗓️ Once a year", r.yearly);
+  sec("⏳ Every few years", r.fewYears);
+  if (r.tips && r.tips.length) { d.append(el("h3", { text: "💬 Tips from the crew" })); r.tips.forEach(t => d.append(el("div", { class: "say" }, avatar(t.id), el("div", { class: "bub" }, el("b", { text: ADV[t.id].name }), t.tip)))); }
+  const txt = () => {
+    const L = [r.title.toUpperCase(), "From Fix It. Clean It. Maintain It. on NuSparkLearnWow.com", "", r.intro];
+    [["EVERY MONTH", r.monthly], ["SPRING", r.spring], ["SUMMER", r.summer], ["FALL", r.fall], ["WINTER", r.winter], ["ONCE A YEAR", r.yearly], ["EVERY FEW YEARS", r.fewYears]].forEach(([h, l]) => { if (l.length) { L.push("", h); l.forEach(x => L.push("[ ] " + x)); } });
+    if (r.sources.length) { L.push("", "SOURCES"); r.sources.forEach((s, i) => L.push((i + 1) + ". " + s.title + " " + s.url)); }
+    return L.join("\n");
+  };
+  d.append(el("div", { class: "row" },
+    el("button", { class: "btn blue", type: "button", onclick: () => window.print() }, "🖨️ Print"),
+    el("button", { class: "btn blue", type: "button", onclick: () => download(slug(r.title) + ".txt", txt()) }, "⬇️ Download"),
+    el("button", { class: "btn ghost", type: "button", onclick: () => show(calendarView()) }, "🗓️ Build Another"),
+    el("button", { class: "btn", type: "button", onclick: newQuestion }, "🆕 New Question")));
+  if (r.sourceNote) d.append(el("p", { class: "ainote", text: r.sourceNote }));
+  d.append(footnotes(r.sources), el("p", { class: "ainote", text: "AI can make mistakes, so double-check anything important and follow your owner's manuals." }));
+}
+
+/* ---------- build the shop ---------- */
+function buildPegboard(){
+  const wrap = $("#pegboard");
+  ROOMS.forEach(r => wrap.append(el("button", { class: "tag", type: "button", "data-id": r.id, "aria-label": "Open the " + r.name + " room", onclick: () => show(roomView(r.id)) },
+    el("span", { class: "ico", text: r.ico }), el("span", { class: "lab", text: r.name }), el("span", { class: "who", text: r.calendar ? "Checklists" : ADV[r.helper].name }))));
+}
+function buildSearch(){
+  const q = $("#mainQ");
+  const go = () => { const v = q.value.trim(); if (v) startJob(v, ""); };
+  $("#mainGo").onclick = go;
+  q.addEventListener("keydown", e => { if (e.key === "Enter") go(); });
+  const pop = $("#popular");
+  pop.append(el("b", { text: "Popular" }));
+  shuffle(ROOMS.filter(r => r.topics).map(r => ({ r, t: shuffle(r.topics)[0] }))).slice(0, 5)
+    .forEach(({ r, t }) => pop.append(el("button", { type: "button", onclick: () => startJob(t, r.id) }, r.ico + " " + t)));
+}
+
+buildBanner();
+buildSearch();
+buildPegboard();
+show(homeView(), false);
+
+/* tell the website page how tall the tool is, so there is no inner scroll bar */
+(function(){
+  if (window.parent === window) return;
+  let last = 0;
+  const send = () => {
+    const h = Math.ceil(document.body.getBoundingClientRect().height) + 20;
+    if (Math.abs(h - last) > 4) { last = h; try { window.parent.postMessage({ lwToolHeight: h }, "*"); } catch(e){} }
+  };
+  if (window.ResizeObserver) new ResizeObserver(send).observe(document.body);
+  window.addEventListener("load", send);
+  setInterval(send, 1500);
+  send();
+})();
+</script>
+</body>
+</html>
