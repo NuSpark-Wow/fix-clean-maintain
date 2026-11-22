@@ -344,8 +344,15 @@ const cleanTips = (a, crew) => (Array.isArray(a) ? a : []).slice(0, 4).map(t => 
 // Diagram safety: keep only the SVG, strip anything active (it is also shown as an <img>, which never runs scripts)
 function cleanSvg(text) {
   let s = String(text || "");
-  const a = s.indexOf("<svg"), z = s.lastIndexOf("</svg>");
-  if (a < 0 || z < a) return "";
+  const a = s.indexOf("<svg");
+  if (a < 0) return "";
+  let z = s.lastIndexOf("</svg>");
+  if (z < a) { // cut off before the end: drop the unfinished last tag and close the drawing
+    const lastClose = s.lastIndexOf(">");
+    if (lastClose <= a) return "";
+    s = s.slice(0, lastClose + 1).replace(/<(g|text|tspan)\b[^>]*>(?![\s\S]*<\/\1>)/gi, "") + "</svg>";
+    z = s.lastIndexOf("</svg>");
+  }
   s = s.slice(a, z + 6)
     .replace(/<script[\s\S]*?<\/script>/gi, "")
     .replace(/<foreignObject[\s\S]*?<\/foreignObject>/gi, "")
@@ -361,6 +368,8 @@ function cleanSvg(text) {
 
 async function anthropic(messages, maxSearches, model, maxTokens) {
   const body = { model: model || MODEL, max_tokens: maxTokens || 9000, system: SYSTEM, messages };
+  // the fast model must have thinking turned off, or it spends its whole budget thinking and returns nothing (the stronger model refuses this setting)
+  if (/haiku/i.test(body.model)) body.thinking = { type: "disabled" };
   if (maxSearches > 0) body.tools = [{ type: "web_search_20250305", name: "web_search", max_uses: maxSearches }];
   const r = await fetch("https://api.anthropic.com/v1/messages", {
     method: "POST",
@@ -446,8 +455,12 @@ module.exports = async (req, res) => {
       return res.status(200).json({ topics: clipList(j.topics, 6, 80) });
     }
     if (mode === "diagram") {
-      const text = textOf(await anthropic([{ role: "user", content: prompt }], 0, DIAGRAM_MODEL, 6000));
-      const svg = cleanSvg(text);
+      let text = textOf(await anthropic([{ role: "user", content: prompt }], 0, DIAGRAM_MODEL, 7000));
+      let svg = cleanSvg(text);
+      if (!svg && DIAGRAM_MODEL !== MODEL) { // backup: the stronger model draws it
+        text = textOf(await anthropic([{ role: "user", content: prompt }], 0, MODEL, 9000));
+        svg = cleanSvg(text);
+      }
       const cap = (text.match(/CAPTION:\s*([^\n<]+)/i) || [])[1] || "";
       if (!svg) return res.status(200).json({ ok: false, message: "The diagram didn't come out right. Tap Try Again." });
       return res.status(200).json({ ok: true, svg, caption: clip(cap, 240) });
