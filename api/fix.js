@@ -26,13 +26,15 @@ const ADVISORS = {
   carla:  "Clean Carla, the cleaning pro: stains, odors, laundry, kitchens, bathrooms, floors, carpets, upholstery, windows, and which cleaners are safe on which surfaces (and which must never be mixed).",
   harry:  "HVAC Harry, the heating and cooling helper: furnaces, air conditioners, heat pumps, thermostats, filters, vents, humidifiers, space heaters.",
   gail:   "Garden Gail, the yard and outdoor helper: lawns, gardens, gutters, decks, patios, fences, sheds, outdoor gear and seasonal yard care.",
-  tina:   "Tailor Tina, the clothes and shoes helper: zippers, buttons, small tears, hems, shrinking, pilling, shoe care, bags and fabric care labels."
+  tina:   "Tailor Tina, the clothes and shoes helper: zippers, buttons, small tears, hems, shrinking, pilling, shoe care, bags and fabric care labels.",
+  supervisor: "The Supervisor, a veteran job-site supervisor with decades across every trade. Calm, direct and reassuring. Catches the mistakes people usually make, shares the shortcuts pros use, and explains why a step matters."
 };
-const ADVISOR_IDS = Object.keys(ADVISORS);
+const ADVISOR_IDS = Object.keys(ADVISORS).filter(id => id !== "supervisor"); // room helpers (The Supervisor oversees every job)
+const INTENTS = { fix: "FIX IT (repair something broken or not working)", clean: "CLEAN IT (clean something or remove a stain, odor or buildup)", maintain: "MAINTAIN IT (keep something in good shape, prevent problems, or learn upkeep)" };
 
 const ROOMS = {
   tech: "Tech & Gadgets", plumbing: "Plumbing", electrical: "Electrical & Lighting", appliances: "Appliances",
-  car: "Car & Bike", house: "Around the House", cleaning: "Cleaning & Stains", hvac: "Heating & Cooling",
+  car: "Car & Bike", house: "Around the House", kitchenbath: "Kitchen & Bath", hvac: "Heating & Cooling",
   yard: "Yard & Outdoor", clothes: "Clothes & Shoes", calendar: "Maintenance Calendar", toolbox: "The Toolbox"
 };
 
@@ -46,7 +48,7 @@ function overLimit(ip, limit) {
   return n > limit;
 }
 
-const SYSTEM = `You are the editor of "Fix It. Clean It. Maintain It.", an interactive how-to tool from NuSparkLearnWow.com (part of the Learn...Wow! series from NuSpark Publishing). It works like a search engine for anything broken, dirty or due for upkeep: computers and software, phones, the home, plumbing, appliances, cars and bikes, heating and cooling, the yard, clothes and shoes. The host is Mr. Paul, a warm, upbeat teacher in a hard hat, and a crew of helpers (advisors) each bring their own specialty.
+const SYSTEM = `You are the editor of "Fix It. Clean It. Maintain It.", an interactive how-to tool from NuSparkLearnWow.com (part of the Learn...Wow! series from NuSpark Publishing). It is a LEARNING tool: people read it to understand how to do a job, often before they start. It works like a search engine for anything broken, dirty or due for upkeep: computers and software, phones, the home, plumbing, appliances, cars and bikes, heating and cooling, the yard, clothes and shoes. The host is Mr. Paul, a warm, upbeat teacher in a hard hat, and a crew of helpers (advisors) each bring their own specialty.
 
 HONESTY RULES:
 1. Use the web_search tool before answering when it is available. Base your steps on what reliable sources say: manufacturer support pages and manuals, government safety agencies (CPSC, EPA, Energy Star, NHTSA, NFPA, OSHA), university extension services, and established home, auto and tech publications. Avoid forums, content farms and social media.
@@ -80,7 +82,7 @@ function jobContext(b) {
   const q = String(b.question || "").slice(0, 500);
   const clar = Array.isArray(b.answers) ? b.answers.slice(0, 4).map(a => `- ${String(a.q || "").slice(0, 160)} -> ${String(a.a || "").slice(0, 200)}`).join("\n") : "";
   const extra = String(b.details || "").slice(0, 600);
-  return `Visitor's job: "${q}"` + (clar ? `\nThey answered these clarifying questions:\n${clar}` : "") + (extra ? `\nMore details from them: "${extra}"` : "") + (ROOMS[b.room] ? `\nRoom they came from: ${ROOMS[b.room]}` : "");
+  return `Visitor's job: "${q}"` + (clar ? `\nThey answered these clarifying questions:\n${clar}` : "") + (extra ? `\nMore details from them: "${extra}"` : "") + (ROOMS[b.room] ? `\nRoom they came from: ${ROOMS[b.room]}` : "") + (INTENTS[b.intent] ? `\nThey want to: ${INTENTS[b.intent]}` : "");
 }
 
 function modePrompt(mode, b) {
@@ -116,7 +118,9 @@ Reply with ONLY this JSON inside <json></json>:
 Crew on this job (write one tip from each, in their own voice and specialty):
 ${crewText(crew.length ? crew : ["hank"])}
 ${style}
-Research the job with web search (several searches: the main fix, the manufacturer's or official guidance, and safety). Then write an interactive guided fix. Order the steps from easiest and most likely to harder and less likely, so the visitor can stop when it is fixed. Each step needs a quick "check" telling them how to tell if that step worked.
+Research the job with web search (several searches: the main fix, the manufacturer's or official guidance, and safety). Then write an interactive guided lesson.
+THE SUPERVISOR watches every job. Add 2-3 notes from him, each attached to a step number (1-based), each one of: "Pro Tip" (what a 30-year pro does that the steps don't say), "Safety Catch" (the mistake or hazard people miss right there), or "The Why" (why that step matters). Make them genuinely useful, not repeats of the step.
+TERMS: list 4-8 part names or terms from the guide a beginner may not know (for example flapper, P-trap, GFCI outlet, lint trap), spelled exactly as they appear in the steps. Order the steps from easiest and most likely to harder and less likely, so the visitor can stop when it is fixed. Each step needs a quick "check" telling them how to tell if that step worked.
 If the job is "pro" or an emergency, follow the safety rules: safe immediate actions only, no repair walkthrough.
 If the job is really a "how do I clean" or "how do I maintain" job, the steps are the cleaning or maintenance steps, and "causes" can list why it gets dirty or wears out.
 Reply with ONLY this JSON inside <json></json>:
@@ -138,6 +142,8 @@ Reply with ONLY this JSON inside <json></json>:
  "prevent": ["3-5 ways to keep it from happening again, or a maintenance schedule"],
  "callPro": "2-3 sentences: when to stop and call a pro, and what kind of pro (by trade, never a company name)",
  "deeper": [{"heading": "short heading", "text": "section text"}],
+ "supervisor": [{"step": 2, "kind": "Pro Tip | Safety Catch | The Why", "text": "2-3 sentences from The Supervisor"}],
+ "terms": [{"term": "a part name or term used in the guide that a beginner may not know (exact wording as it appears in the steps)", "def": "one plain sentence"}],
  "followups": ["4 short follow-up questions a visitor might ask next"],
  "wiki": "the exact English Wikipedia article title that best pictures the main object (e.g. 'Flush toilet', 'Microsoft Outlook', 'Garbage disposal unit')",
  ${sourcesShape}}`;
@@ -169,11 +175,12 @@ then the complete <svg ...>...</svg> code.`;
     const crew = cleanIds(b.advisors).slice(0, 3);
     return `Job: "${String(b.title || "").slice(0, 160)}"
 ${jobContext(b)}
-The visitor already tried these steps and it is STILL not fixed:
+The visitor has learned these steps from the guide:
 ${tried}
+They want to know: what if those steps don't solve it?
 ${b.notes ? `What they noticed: "${String(b.notes).slice(0, 600)}"` : ""}
 Crew: ${crew.join(", ") || "hank"}
-Research with web search for less common causes and next steps. Do not repeat the steps they already tried. If the next steps need a pro, say so honestly.
+Research with web search for less common causes and what to check next. Do not repeat the guide's steps. If the next steps need a pro, say so honestly.
 Reply with ONLY this JSON inside <json></json>:
 {"speaker": "the crew helper id who leads this answer",
  "message": "2-3 encouraging sentences in that helper's voice about what this likely means now",
@@ -192,6 +199,7 @@ ${b.summary ? `Guide summary: ${String(b.summary).slice(0, 1200)}` : ""}
 Crew on this job:
 ${crewText(crew.length ? crew : ["hank"])}
 ${hist ? `Conversation so far:\n${hist}\n` : ""}
+${b.step && b.step.title ? `The question is about step ${parseInt(b.step.n, 10) || ""}: "${String(b.step.title).slice(0, 160)}: ${String(b.step.text || "").slice(0, 700)}"` : ""}
 The visitor asks ${to === "crew" ? "the whole crew" : ADVISORS[to].split(",")[0]}: "${String(b.q || "").slice(0, 600)}"
 ${to === "crew" ? "Have the best-fitting crew helper answer (you may add one short line from a second helper if it truly adds something)." : "Answer in that helper's voice. If the question is outside their specialty, they say so kindly and answer what they safely can."}
 Research with web search if the answer depends on facts, models, settings or safety. Answer in 1-3 short paragraphs. If you truly need one detail to answer correctly (for example the model, the error message, or what they see), answer what you can and put one short clarifying question in "clarify".
@@ -214,11 +222,21 @@ Reply with ONLY this JSON inside <json></json>:
 Helpers you may use for tips (pick 2-3 that fit): ${ADVISOR_IDS.join(", ")}.`;
   }
 
+  if (mode === "glossary") {
+    return `Shop Glossary request: "${String(b.term || "").slice(0, 120)}"
+${ROOMS[b.room] ? `Area: ${ROOMS[b.room]}` : ""}
+Define this home, car, tech or tool term for a beginner. If it is not a term about fixing, cleaning or maintaining things, set ok to false with a kind note in "def". Be accurate; if a term has two common meanings, give the one most people mean around the house and mention the other briefly.
+Reply with ONLY this JSON inside <json></json>:
+{"ok": true, "term": "the term, properly written", "def": "one plain sentence", "more": "2-4 sentences: what it does and why it matters", "where": "where you usually find it, or empty", "related": ["3-5 related terms"]}`;
+  }
+
   if (mode === "more") {
     const ex = (Array.isArray(b.exclude) ? b.exclude : []).slice(0, 60).map(x => String(x).slice(0, 80));
     const room = ROOMS[b.room] || "Around the House";
+    const kind = INTENTS[b.intent] || "a mix of fixing, cleaning and maintaining";
     return `Room: ${room}
-Suggest 6 NEW, specific, common jobs people search for in this room (things that break, get dirty, or need upkeep). Write them the way a person would type them into a search box, 3-9 words. Mix quick fixes with bigger jobs. No brand names except famous software or devices (like Outlook or an iPhone). Do not repeat or closely resemble: ${JSON.stringify(ex)}.
+Type of job: ${kind}
+Suggest 6 NEW, specific, common jobs of that type that people search for in this room. Write them the way a person would type them into a search box, 3-9 words. Mix quick fixes with bigger jobs. No brand names except famous software or devices (like Outlook or an iPhone). Do not repeat or closely resemble: ${JSON.stringify(ex)}.
 Reply with ONLY this JSON inside <json></json>: {"topics": ["...", "...", "...", "...", "...", "..."]}`;
   }
 
@@ -394,7 +412,7 @@ module.exports = async (req, res) => {
   const ip = String(req.headers["x-forwarded-for"] || req.socket?.remoteAddress || "x").split(",")[0].trim();
   const b = req.body || {};
   const mode = String(b.mode || "");
-  if (mode !== "more" && mode !== "triage" && overLimit(ip, DAILY_LIMIT)) {
+  if (mode !== "more" && mode !== "triage" && mode !== "glossary" && overLimit(ip, DAILY_LIMIT)) {
     return res.status(429).json({ error: "limit", message: "You've reached today's limit. Come back tomorrow and the crew will be ready." });
   }
   const prompt = modePrompt(mode, b);
@@ -405,7 +423,7 @@ module.exports = async (req, res) => {
     if (mode === "triage") {
       const j = extractJson(textOf(await anthropic([{ role: "user", content: prompt }], 0, FAST_MODEL, 1500))) || {};
       if (j.onTopic === false) return res.status(200).json({ onTopic: false, message: clip(j.message, 300) || "This tool is for fixing, cleaning and maintaining things. For other questions, try The Answer Man on NuSparkLearnWow.com." });
-      let advisors = cleanIds(j.advisors).slice(0, 2);
+      let advisors = cleanIds(j.advisors).filter(id => id !== "supervisor").slice(0, 2);
       if (!advisors.length) advisors = ["hank"];
       const questions = (Array.isArray(j.questions) ? j.questions : []).slice(0, 2)
         .map(q => ({ q: clip(q && q.q, 160), options: clipList(q && q.options, 5, 60) })).filter(q => q.q);
@@ -414,6 +432,11 @@ module.exports = async (req, res) => {
         advisors, safety: oneOf(j.safety, ["diy", "caution", "pro"], "caution"), emergency: j.emergency === true,
         clarify: j.clarify === true && questions.length > 0 && !(b.answers && b.answers.length), questions
       });
+    }
+    if (mode === "glossary") {
+      const j = extractJson(textOf(await anthropic([{ role: "user", content: prompt }], 0, MODEL, 1200))) || {};
+      if (j.ok === false) return res.status(200).json({ ok: false, def: clip(j.def, 300) || "The Shop Glossary covers home, car, tech and tool terms. Try another word." });
+      return res.status(200).json({ ok: true, term: clip(j.term, 80) || clip(b.term, 80), def: clip(j.def, 400), more: clip(j.more, 900), where: clip(j.where, 300), related: clipList(j.related, 5, 60) });
     }
     if (mode === "more") {
       const j = extractJson(textOf(await anthropic([{ role: "user", content: prompt }], 0, FAST_MODEL, 800))) || {};
@@ -445,6 +468,8 @@ module.exports = async (req, res) => {
         causes: cleanCauses(j.causes, 6), tools: clipList(j.tools, 12, 100), supplies: clipList(j.supplies, 12, 100), before: clipList(j.before, 5, 300),
         steps, tips: cleanTips(j.tips, crew), mistakes: clipList(j.mistakes, 5, 300), prevent: clipList(j.prevent, 6, 300),
         callPro: clip(j.callPro, 600), deeper: (Array.isArray(j.deeper) ? j.deeper : []).slice(0, 3).map(d => ({ heading: clip(d && d.heading, 80), text: clip(d && d.text, 1400) })).filter(d => d.text),
+        supervisor: (Array.isArray(j.supervisor) ? j.supervisor : []).slice(0, 3).map(x => ({ step: Math.max(1, Math.min(steps.length, parseInt(x && x.step, 10) || 1)), kind: oneOf(String(x && x.kind || "").trim(), ["Pro Tip", "Safety Catch", "The Why"], "Pro Tip"), text: clip(x && x.text, 700) })).filter(x => x.text),
+        terms: (Array.isArray(j.terms) ? j.terms : []).slice(0, 8).map(t => ({ term: clip(t && t.term, 60), def: clip(t && t.def, 300) })).filter(t => t.term && t.def),
         followups: clipList(j.followups, 4, 140), wiki: clip(j.wiki, 120), sources, sourceNote: sources.length ? "" : NO_SOURCES, safetyFooter: SAFETY_NOTE
       });
     }
