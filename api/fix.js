@@ -12,6 +12,8 @@
 
 const MODEL = process.env.ANTHROPIC_MODEL || "claude-sonnet-5-5";
 const FAST_MODEL = process.env.FAST_MODEL || "claude-haiku-5-5";
+// Diagrams use the fast model so they draw quickly. To trade speed for detail, set DIAGRAM_MODEL to claude-sonnet-5-5 in Vercel.
+const DIAGRAM_MODEL = process.env.DIAGRAM_MODEL || FAST_MODEL;
 const DAILY_LIMIT = parseInt(process.env.DAILY_LIVE_LIMIT || "40", 10);
 const ALLOWED = (process.env.ALLOWED_ORIGINS || "").split(",").map(s => s.trim()).filter(Boolean);
 
@@ -150,7 +152,7 @@ Reply with ONLY this JSON inside <json></json>:
   }
 
   if (mode === "diagram") {
-    const steps = (Array.isArray(b.steps) ? b.steps : []).slice(0, 14).map((s, i) => `${i + 1}. ${String(s).slice(0, 140)}`).join("\n");
+    const steps = (Array.isArray(b.steps) ? b.steps : []).slice(0, 14).map((s, i) => `${i + 1}. ${String(s).slice(0, 140)}`).join("\n") || `(steps not written yet) The visitor's job: "${String(b.question || b.title || "").slice(0, 300)}"`;
     const focus = b.step ? `Draw the diagram for THIS ONE STEP only: "${String(b.step.title || "").slice(0, 160)}: ${String(b.step.text || "").slice(0, 600)}"` :
       `Draw the main diagram for the whole job. Pick the most useful kind: a labeled cutaway or front view of the object showing the parts named in the steps (for example the inside of a toilet tank, the back of a dryer, a sink trap, a car's battery terminals), OR for software and settings, a simplified mock screen or a flow of the menu path. Number the labels to match the step numbers where it helps.`;
     return `Job: "${String(b.title || "").slice(0, 160)}"
@@ -159,6 +161,7 @@ ${steps}
 ${focus}
 Rules for the drawing:
 - One clean, simple, beginner-friendly SVG diagram, like an illustration in a good how-to book. Flat colors, clear outlines, plenty of white space.
+- Keep it compact so it draws fast: about 40 shapes or fewer, no gradients, no filters, no decorative detail. Short labels only (2-5 words).
 - <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520">. A white background rect first.
 - Only basic SVG shapes, paths, lines, polylines, polygons and text. No images, no scripts, no links, no foreignObject, no external fonts, no CSS animations.
 - Text: font-family="Arial, Helvetica, sans-serif", at least 15px, dark gray #1f2a44. Short labels with thin leader lines pointing to the parts. Keep every label inside the canvas and never let labels overlap.
@@ -443,7 +446,7 @@ module.exports = async (req, res) => {
       return res.status(200).json({ topics: clipList(j.topics, 6, 80) });
     }
     if (mode === "diagram") {
-      const text = textOf(await anthropic([{ role: "user", content: prompt }], 0, MODEL, 12000));
+      const text = textOf(await anthropic([{ role: "user", content: prompt }], 0, DIAGRAM_MODEL, 6000));
       const svg = cleanSvg(text);
       const cap = (text.match(/CAPTION:\s*([^\n<]+)/i) || [])[1] || "";
       if (!svg) return res.status(200).json({ ok: false, message: "The diagram didn't come out right. Tap Try Again." });
