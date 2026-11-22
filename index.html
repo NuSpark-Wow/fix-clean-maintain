@@ -77,7 +77,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Fix It. Clean It. Maintain It. | Learn...Wow! | NuSparkLearnWow</title>
-<meta name="description" content="Step-by-step help for anything that's broken, dirty or due, from Outlook errors to leaky faucets. Guided fixes with expert AI helpers, diagrams and source-checked steps.">
+<meta name="description" content="Step-by-step help for anything that's broken, dirty or due, from frozen laptops to leaky faucets. Guided fixes with expert AI helpers, diagrams and source-checked steps.">
 <meta property="og:title" content="Fix It. Clean It. Maintain It. | Wow...Who Knew?">
 <meta property="og:description" content="Type in what's broken, dirty or due. A crew of AI helpers walks you through the fix, step by step, with diagrams. From NuSparkLearnWow.com.">
 <meta property="og:type" content="website">
@@ -290,13 +290,51 @@ footer p{margin:6px 0}
   body{background:#fff}.bench,.screen{background:none;box-shadow:none;padding:0}.display{padding:0}
   .step{break-inside:avoid}
 }
+
+/* v2 additions */
+.ctrl{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.ctrl button{border:0;background:var(--steel-lt);color:var(--ink);font-weight:800;font-size:14px;padding:7px 14px;border-radius:30px;cursor:pointer}
+.ctrl button.stop{background:#fde3dd;color:#8c2a14}
+body:not(.working) .ctrl button.stop{opacity:.4;pointer-events:none}
+.intent{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0 0}
+.intent b{font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:var(--soft);margin-right:4px}
+.intent button{border:2px solid #d5dbe4;background:#fff;color:var(--ink);font-weight:800;font-size:15px;padding:8px 14px;border-radius:30px;cursor:pointer}
+.intent button.on{border-color:var(--steel);background:var(--steel);color:#fff}
+.exgroups{margin-top:14px;display:grid;gap:8px}
+.exgroups>b{font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:var(--soft)}
+.exrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.exrow .lab{font-weight:900;font-size:14px;min-width:118px}
+.exrow button{border:0;background:var(--steel-lt);color:var(--steel-dk);font-weight:800;font-size:14px;padding:7px 12px;border-radius:30px;cursor:pointer}
+.exrow button:hover{background:var(--steel);color:#fff}
+@media(max-width:520px){.exrow .lab{min-width:100%}}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 4px}
+.tabs button{flex:1 1 140px;border:3px solid #d5dbe4;background:#fff;color:var(--ink);font-family:Oswald,Impact,sans-serif;font-weight:700;font-size:19px;letter-spacing:.4px;text-transform:uppercase;padding:10px 12px;border-radius:14px;cursor:pointer}
+.tabs button.on{border-color:var(--steel);background:var(--steel);color:#fff}
+.glossbtn{display:block;margin:12px auto 0;border:0;background:var(--yellow);color:var(--ink);font-weight:900;font-size:16px;padding:12px 22px;border-radius:30px;cursor:pointer;box-shadow:0 4px 0 var(--yellow-dk)}
+.term{border:0;background:none;padding:0;font:inherit;color:inherit;border-bottom:2px dotted var(--steel);cursor:help}
+.term:hover{color:var(--steel)}
+.tpop{position:absolute;z-index:50;max-width:300px;background:#1f2a44;color:#fff;border-radius:12px;padding:10px 14px;font-size:15px;line-height:1.4;box-shadow:0 10px 24px rgba(0,0,0,.3)}
+.tpop b{color:var(--yellow);display:block;margin-bottom:2px}
+.words{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px;margin:6px 0}
+.word{background:#f6f8fb;border:2px solid #e2e8f0;border-radius:12px;padding:8px 12px;font-size:15px}
+.word b{display:block;color:var(--steel-dk)}
+.supbadge{display:flex;align-items:center;gap:8px;font-weight:800;font-size:13.5px;color:var(--soft)}
+.hand{border:0;background:var(--yellow);color:var(--ink);font-weight:900;font-size:14px;padding:8px 14px;border-radius:30px;cursor:pointer;animation:wave 1.6s ease-in-out infinite;transform-origin:20% 80%}
+.hand.seen{animation:none;background:#fff3d4}
+@keyframes wave{0%,60%,100%{transform:rotate(0)}10%,30%{transform:rotate(-8deg)}20%,40%{transform:rotate(8deg)}}
+.sup{background:#fff8e6;border:2px solid var(--yellow);border-radius:14px;padding:12px 14px;margin:10px 0}
+.sup .kind{display:inline-block;font-size:12px;letter-spacing:1.2px;text-transform:uppercase;font-weight:900;background:var(--yellow);color:var(--ink);border-radius:20px;padding:2px 10px;margin-bottom:6px}
+.qbox{background:#f6f8fb;border:2px solid #e2e8f0;border-radius:14px;padding:10px 12px;margin:10px 0}
+.qbox textarea{width:100%;min-height:70px;font-size:16px;padding:10px 12px;border:2px solid #d5dbe4;border-radius:10px;resize:vertical;font-family:inherit}
+.qbox textarea:focus{outline:none;border-color:var(--steel)}
+.say .bub{min-width:0;word-wrap:break-word}
 </style>
 </head>
 <body>
 
 <header class="top">
   <h1><span class="a">Fix It.</span> <span class="b">Clean It.</span> <span class="c">Maintain It.</span></h1>
-  <p class="tagline">Step-by-step help for anything that's broken, dirty or due, from Outlook errors to leaky faucets. Wow...Who Knew?</p>
+  <p class="tagline">Step-by-step help for anything that's broken, dirty or due, from frozen laptops to leaky faucets. Wow...Who Knew?</p>
 </header>
 
 <div class="banner" id="banner" aria-hidden="true"></div>
@@ -304,15 +342,20 @@ footer p{margin:6px 0}
 <main class="shop">
   <section class="search" aria-label="Search">
     <label for="mainQ">What needs fixing, cleaning or maintaining?</label>
-    <span class="ex">Examples: Outlook says low system resources · toilet keeps running · red wine on the carpet</span>
     <div class="sbar">
       <input type="text" id="mainQ" maxlength="300" autocomplete="off">
       <button class="btn" type="button" id="mainGo">Find the Fix</button>
     </div>
-    <div class="pop" id="popular"></div>
+    <div class="intent" id="intent" role="group" aria-label="I want to (optional)">
+      <b>I want to</b>
+      <button type="button" data-i="fix">🔧 Fix It</button>
+      <button type="button" data-i="clean">🧽 Clean It</button>
+      <button type="button" data-i="maintain">🛡️ Maintain It</button>
+    </div>
+    <div class="exgroups" id="examples"></div>
   </section>
 
-  <p class="howto">Or pick a room off the pegboard. Each one has its own helper.</p>
+  <p class="howto">Or pick a room off the pegboard. Each one has its own helpers.</p>
   <div class="pegboard" id="pegboard"></div>
 
   <div class="bench">
@@ -321,6 +364,7 @@ footer p{margin:6px 0}
       <div class="display" id="display" aria-live="polite"></div>
     </div>
   </div>
+  <button class="glossbtn" type="button" id="glossOpen">📖 The Shop Glossary</button>
 </main>
 
 <!-- Mr. Paul, the workshop host (cartoon drawn in code) -->
@@ -329,7 +373,7 @@ footer p{margin:6px 0}
 <footer>
   <p>Guides are researched live with AI and checked against real sources. AI can still make mistakes, so double-check anything important and follow your owner's manual.</p>
   <p>Safety first: unplug it, switch off the breaker, shut off the water or let it cool before you start. For gas, wiring, structural, roof or other risky work, call a licensed professional. In an emergency, get to safety and call 911.</p>
-  <p>Helper names are friendly characters, not real people. Brand names appear only to describe your own device or product, never as endorsements. Photos from Wikipedia / Wikimedia Commons, credited on each photo.</p>
+  <p>Helper names and The Supervisor are friendly characters, not real people. Brand names appear only to describe your own device or product, never as endorsements. Photos from Wikipedia / Wikimedia Commons, credited on each photo.</p>
   <p>Fix It. Clean It. Maintain It. is part of <a href="https://nusparklearnwow.com" target="_blank" rel="noopener">NuSparkLearnWow.com</a> from NuSpark Publishing.</p>
 </footer>
 
@@ -345,38 +389,87 @@ const ADV = {
   carla:  { name: "Clean Carla",   role: "Cleaning Pro",        ico: "🧽", color: "#1f8fa6" },
   harry:  { name: "HVAC Harry",    role: "Heating & Cooling",   ico: "🌡️", color: "#c2410c" },
   gail:   { name: "Garden Gail",   role: "Yard & Outdoor",      ico: "🌱", color: "#4d7c0f" },
-  tina:   { name: "Tailor Tina",   role: "Clothes & Shoes",     ico: "🧵", color: "#be185d" }
+  tina:   { name: "Tailor Tina",   role: "Clothes & Shoes",     ico: "🧵", color: "#be185d" },
+  supervisor: { name: "The Supervisor", role: "Oversees every job", ico: "📋", color: "#1f2a44" }
 };
+const HELPERS = Object.keys(ADV).filter(id => id !== "supervisor");
+const INTENTS = { fix: { lab: "🔧 Fix It", short: "Fix It" }, clean: { lab: "🧽 Clean It", short: "Clean It" }, maintain: { lab: "🛡️ Maintain It", short: "Maintain It" } };
 
-/* ---------- the rooms ---------- */
+/* ---------- the rooms (each with Fix It / Clean It / Maintain It jobs) ---------- */
 const ROOMS = [
-  { id: "tech", ico: "💻", name: "Tech & Gadgets", helper: "tess", blurb: "Computers, phones, email, Wi-Fi, printers, TVs and smart gadgets.",
-    topics: ["Outlook says low system resources","Wi-Fi keeps dropping","Laptop running slow","Printer says it's offline","Phone storage is full","Computer won't turn on","Laptop overheating","Bluetooth won't connect","Clean a laptop keyboard","Smart TV apps keep freezing","Email stuck in the outbox","Update Windows safely"] },
-  { id: "plumbing", ico: "🚿", name: "Plumbing", helper: "pete", blurb: "Drains, toilets, faucets, pipes, disposals and water heaters.",
-    topics: ["Toilet keeps running","Slow bathroom sink drain","Leaky kitchen faucet","Garbage disposal hums but won't spin","Low water pressure in the shower","Unclog a toilet","Water heater not getting hot","Drip under the kitchen sink","Clean a clogged shower head","Flush a water heater","Toilet rocks on the floor","Keep pipes from freezing"] },
-  { id: "electrical", ico: "🔌", name: "Electrical & Lighting", helper: "sparky", blurb: "Outlets, breakers, bulbs, switches and fixtures, with safety first.",
-    topics: ["Outlet stopped working","Breaker keeps tripping","GFCI outlet won't reset","Light bulbs burn out fast","Flickering lights","Choose the right LED bulb","Ceiling fan wobbles","Extension cord safety","Smoke detector keeps chirping","Doorbell stopped ringing","Change a ceiling light bulb safely","Dimmer switch buzzing"] },
-  { id: "appliances", ico: "🧺", name: "Appliances", helper: "al", blurb: "Washers, dryers, fridges, dishwashers, ovens and small appliances.",
-    topics: ["Dryer takes forever to dry","Washer won't drain","Fridge not cooling","Dishwasher leaves dishes dirty","Ice maker stopped working","Oven not heating evenly","Microwave runs but won't heat","Washing machine smells","Clean the dryer vent","Dishwasher won't drain","Fridge making a loud noise","Descale a coffee maker"] },
-  { id: "car", ico: "🚗", name: "Car & Bike", helper: "mo", blurb: "Warning lights, batteries, tires, wipers, fluids, bikes and mowers.",
-    topics: ["Check engine light came on","Car won't start, just clicks","Tire pressure light is on","Replace wiper blades","Jump-start a car safely","Car battery keeps dying","Squeaky brakes","Check and top off fluids","Foggy headlights","Bike chain keeps falling off","Fix a flat bike tire","Lawn mower won't start"] },
-  { id: "house", ico: "🔨", name: "Around the House", helper: "hank", blurb: "Doors, walls, floors, furniture, paint, caulk and hanging things.",
-    topics: ["Door won't latch","Squeaky door hinge","Patch a hole in drywall","Sticky dresser drawer","Squeaky floorboards","Recaulk a bathtub","Hang a heavy picture","Fix a wobbly table","Touch up paint scuffs","Window won't stay open","Loose cabinet hinge","Remove old wallpaper"] },
-  { id: "cleaning", ico: "🧽", name: "Cleaning & Stains", helper: "carla", blurb: "Stains, odors, kitchens, bathrooms, floors and every surface.",
-    topics: ["Red wine on the carpet","Clean a really dirty oven","Hard water stains on glass","Mold in the shower grout","Smelly garbage disposal","Clean a mattress","Grease stain on a shirt","Clean stainless steel appliances","Pet urine smell in carpet","Clean a microwave fast","Streak-free windows","Clean a washing machine"] },
-  { id: "hvac", ico: "🌡️", name: "Heating & Cooling", helper: "harry", blurb: "Furnaces, air conditioners, heat pumps, thermostats and filters.",
-    topics: ["AC running but not cooling","Furnace won't turn on","Change the furnace filter","Thermostat screen is blank","One room is always cold","AC unit freezing up","Strange smell from the vents","Heat pump blowing cold air","Clean air vents and returns","Humidifier care","Window AC dripping inside","Get the AC ready for summer"] },
-  { id: "yard", ico: "🌳", name: "Yard & Outdoor", helper: "gail", blurb: "Lawns, gutters, decks, fences, patios and outdoor gear.",
-    topics: ["Clean the gutters safely","Brown patches in the lawn","Deck boards turning gray","Fence post is leaning","Pressure wash a patio","Winterize an outdoor faucet","Sharpen garden tools","Weeds between pavers","Gate won't close","Store the grill for winter","Clean patio furniture","Garden hose leaks at the end"] },
-  { id: "clothes", ico: "👕", name: "Clothes & Shoes", helper: "tina", blurb: "Zippers, buttons, tears, shrinking, stains, shoes and care labels.",
-    topics: ["Zipper came off the track","Sew a button back on","Shrunk a wool sweater","Remove pilling from a sweater","Clean white sneakers","Small tear in jeans","Stinky gym clothes","Read laundry care symbols","Waterproof boots","Hem pants without sewing","Unstick a stuck zipper","Deodorant marks on a shirt"] },
-  { id: "toolbox", ico: "🧰", name: "The Toolbox", helper: "hank", blurb: "What each tool is, what it's for, and how to use it safely.",
-    topics: ["Tools every home should have","How to use a stud finder","Types of screwdrivers","How to use a drill safely","Choose the right screw or nail","What a multimeter does","Caulk vs. spackle vs. putty","How to read a tape measure","Socket wrench basics","Choose the right ladder","Types of plungers","Sandpaper grits explained"] },
-  { id: "calendar", ico: "🗓️", name: "Maintenance Calendar", helper: "hank", calendar: true, blurb: "What to check monthly, every season, and every year, so things don't break in the first place." }
+  { id: "tech", ico: "💻", name: "Tech & Gadgets", helpers: { fix: "tess", clean: "tess", maintain: "tess" }, blurb: "Computers, phones, email, Wi-Fi, printers, TVs and smart gadgets.",
+    jobs: {
+      fix: ["Wi-Fi keeps dropping","Laptop running slow","Printer says it's offline","Computer won't turn on","Bluetooth won't connect","Email won't send","Phone storage is full","Laptop overheating","Smart TV apps keep freezing","No sound from computer speakers"],
+      clean: ["Clean a laptop keyboard","Clean a phone screen safely","Clean a TV screen without streaks","Dust out a desktop computer","Clean earbuds and the charging case","Clean a computer mouse","Clean a phone charging port","Disinfect a shared keyboard","Clean a smart speaker","Clean a game controller"],
+      maintain: ["Update Windows safely","Back up photos and files","Keep a laptop battery healthy","Free up storage space","Restart a Wi-Fi router the right way","Clear browser cache and cookies","Keep a phone's software up to date","Organize computer files","Protect devices from power surges","Keep passwords safe"] } },
+  { id: "plumbing", ico: "🚿", name: "Plumbing", helpers: { fix: "pete", clean: "carla", maintain: "pete" }, blurb: "Drains, toilets, faucets, pipes, disposals and water heaters.",
+    jobs: {
+      fix: ["Toilet keeps running","Leaky kitchen faucet","Slow bathroom sink drain","Unclog a toilet","Garbage disposal hums but won't spin","Low water pressure in the shower","Water heater not getting hot","Drip under the kitchen sink","Toilet rocks on the floor","Noisy pipes when water runs"],
+      clean: ["Clean a clogged shower head","Remove hard water from a faucet","Clean a smelly drain","Clean a garbage disposal","Clean a faucet aerator","Remove rust stains in a toilet","Clean inside a toilet tank","Clean a sink overflow hole","Clean a bathtub drain stopper","Clean up under the sink after a leak"],
+      maintain: ["Flush a water heater","Keep pipes from freezing","Check for hidden leaks","Test the main water shutoff valve","Replace a toilet flapper before it fails","Check washing machine hoses","Test the water heater relief valve","Keep drains clear every month","Winterize outdoor plumbing","Check the sump pump"] } },
+  { id: "electrical", ico: "🔌", name: "Electrical & Lighting", helpers: { fix: "sparky", clean: "carla", maintain: "sparky" }, blurb: "Outlets, breakers, bulbs, switches and fixtures, with safety first.",
+    jobs: {
+      fix: ["Outlet stopped working","Breaker keeps tripping","GFCI outlet won't reset","Flickering lights","Light bulbs burn out fast","Ceiling fan wobbles","Doorbell stopped ringing","Dimmer switch buzzing","Light switch feels warm","Smoke detector keeps chirping"],
+      clean: ["Clean a ceiling fan","Clean light fixtures and globes","Clean switch plates and outlet covers","Clean a dusty lamp shade","Clean recessed light trims","Clean a chandelier","Clean a bathroom exhaust fan","Clean outdoor light fixtures","Clean smoke detectors","Clean a range hood light"],
+      maintain: ["Test smoke and CO alarms","Test GFCI outlets","Extension cord safety","Choose the right LED bulb","Label the breaker panel","Set ceiling fan direction by season","Check for warm outlets","Replace smoke alarm batteries","Surge protector care","Childproof outlets"] } },
+  { id: "appliances", ico: "🧺", name: "Appliances", helpers: { fix: "al", clean: "carla", maintain: "al" }, blurb: "Washers, dryers, fridges, dishwashers, ovens and small appliances.",
+    jobs: {
+      fix: ["Dryer takes forever to dry","Washer won't drain","Fridge not cooling","Dishwasher leaves dishes dirty","Ice maker stopped working","Oven not heating evenly","Microwave runs but won't heat","Dishwasher won't drain","Fridge making a loud noise","Washer shakes and walks"],
+      clean: ["Clean a really dirty oven","Clean a washing machine","Clean the dishwasher filter","Clean a microwave fast","Clean the fridge coils","Deep clean the dryer lint trap","Clean stainless steel appliances","Descale a coffee maker","Clean a stovetop","Clean a toaster"],
+      maintain: ["Clean the dryer vent","Change the fridge water filter","Level a washing machine","Check fridge door seals","Keep a dishwasher running well","Run a washer cleaning cycle","Defrost a freezer","Care for a glass cooktop","Replace range hood filters","Keep appliances energy efficient"] } },
+  { id: "car", ico: "🚗", name: "Car & Bike", helpers: { fix: "mo", clean: "mo", maintain: "mo" }, blurb: "Warning lights, batteries, tires, wipers, fluids, bikes and mowers.",
+    jobs: {
+      fix: ["Check engine light came on","Car won't start, just clicks","Tire pressure light is on","Car battery keeps dying","Squeaky brakes","Replace wiper blades","Jump-start a car safely","Foggy headlights","Bike chain keeps falling off","Fix a flat bike tire"],
+      clean: ["Clean a car interior like a pro","Clean car seats","Wash a car without scratches","Clean car windows streak-free","Get odors out of a car","Clean wheels and tires","Clean a car dashboard","Clean a bike chain","Remove tree sap from car paint","Clean foggy headlights"],
+      maintain: ["Check and top off fluids","Check tire pressure and tread","Rotate tires: when and why","Check engine oil","Replace the cabin air filter","Care for a car battery","Get a car ready for winter","Lawn mower tune-up","Bike tune-up basics","Know your car's maintenance schedule"] } },
+  { id: "house", ico: "🔨", name: "Around the House", helpers: { fix: "hank", clean: "carla", maintain: "hank" }, blurb: "Doors, walls, floors, windows, furniture, carpet and paint.",
+    jobs: {
+      fix: ["Door won't latch","Squeaky door hinge","Patch a hole in drywall","Sticky dresser drawer","Squeaky floorboards","Hang a heavy picture","Fix a wobbly table","Window won't stay open","Loose cabinet hinge","Nail pops in drywall"],
+      clean: ["Clean walls without ruining paint","Clean baseboards fast","Clean hardwood floors","Deep clean carpet","Clean window blinds","Clean a mattress","Pet urine smell in carpet","Red wine on the carpet","Clean upholstered furniture","Clean window tracks"],
+      maintain: ["Touch up paint scuffs","Recaulk around windows","Tighten loose door handles","Care for hardwood floors","Check weatherstripping","Keep wood furniture looking new","Seasonal home checklist","Find and seal drafts","Prevent mold in closets","Lubricate sliding doors"] } },
+  { id: "kitchenbath", ico: "🍳", name: "Kitchen & Bath", helpers: { fix: "hank", clean: "carla", maintain: "carla" }, blurb: "Counters, sinks, tile, grout, cabinets, tubs and showers.",
+    jobs: {
+      fix: ["Recaulk a bathtub","Loose towel bar","Cabinet door won't close","Bathroom fan not working","Chipped sink or tub","Grout cracking or falling out","Sticky kitchen drawer slides","Toilet seat keeps loosening","Shower door won't slide","Cracked tile"],
+      clean: ["Mold in the shower grout","Hard water stains on glass","Clean a bathtub","Clean greasy kitchen cabinets","Clean granite countertops","Clean a stainless steel sink","Clean tile floors","Clean a toilet properly","Clean a glass shower door","Clean the range hood"],
+      maintain: ["Seal grout","Seal granite countertops","Keep shower doors spotless","Prevent bathroom mold","Care for a butcher block","Keep a bathroom fan working","Keep drains fresh","Care for cutting boards","Prevent water damage under the sink","Recaulk before it fails"] } },
+  { id: "hvac", ico: "🌡️", name: "Heating & Cooling", helpers: { fix: "harry", clean: "harry", maintain: "harry" }, blurb: "Furnaces, air conditioners, heat pumps, thermostats and filters.",
+    jobs: {
+      fix: ["AC running but not cooling","Furnace won't turn on","Thermostat screen is blank","One room is always cold","AC unit freezing up","Heat pump blowing cold air","Window AC dripping inside","Strange smell from the vents","Furnace turns on and off a lot","Radiator not heating"],
+      clean: ["Clean air vents and returns","Clean an outdoor AC unit","Clean a window AC","Clean a humidifier","Clean a dehumidifier","Clean a space heater","Clean baseboard heaters","Clean a portable fan","Clean ceiling registers","Clean a mini-split filter"],
+      maintain: ["Change the furnace filter","Get the AC ready for summer","Get the furnace ready for winter","Set a thermostat to save energy","Check the condensate drain line","Humidifier care","Keep the outdoor unit clear","When to schedule a tune-up","Bleed radiators","Space heater safety"] } },
+  { id: "yard", ico: "🌳", name: "Yard & Outdoor", helpers: { fix: "gail", clean: "gail", maintain: "gail" }, blurb: "Lawns, gutters, decks, fences, patios and outdoor gear.",
+    jobs: {
+      fix: ["Fence post is leaning","Gate won't close","Garden hose leaks at the end","Brown patches in the lawn","Loose deck boards","Cracked concrete step","Sprinkler head not working","Gutter overflowing","Wobbly mailbox post","Torn window screen"],
+      clean: ["Clean the gutters safely","Pressure wash a patio","Clean a deck","Clean patio furniture","Clean a grill","Clean vinyl siding","Remove moss from pavers","Clean outdoor cushions","Clean a birdbath","Clean garden pots"],
+      maintain: ["Winterize an outdoor faucet","Sharpen garden tools","Store the grill for winter","Seal a deck","Lawn care through the seasons","Keep weeds out of pavers","Winterize a lawn mower","Care for a wood fence","Get garden beds ready for spring","Store a garden hose"] } },
+  { id: "clothes", ico: "👕", name: "Clothes & Shoes", helpers: { fix: "tina", clean: "carla", maintain: "tina" }, blurb: "Zippers, buttons, tears, stains, shoes and care labels.",
+    jobs: {
+      fix: ["Zipper came off the track","Sew a button back on","Shrunk a wool sweater","Small tear in jeans","Unstick a stuck zipper","Hem pants without sewing","Shoe sole coming loose","Stretched-out collar","Snag in a sweater","Broken bag strap"],
+      clean: ["Clean white sneakers","Grease stain on a shirt","Deodorant marks on a shirt","Stinky gym clothes","Remove ink from clothes","Clean a leather jacket","Wash a down coat","Remove sweat stains","Clean a baseball cap","Remove pet hair from clothes"],
+      maintain: ["Read laundry care symbols","Remove pilling from a sweater","Waterproof boots","Store winter clothes","Polish leather shoes","Keep whites white","Make jeans last longer","Care for wool","Hang it or fold it?","Keep shoes from smelling"] } },
+  { id: "toolbox", ico: "🧰", name: "The Toolbox", helpers: { fix: "hank", clean: "hank", maintain: "hank" }, blurb: "What each tool is, how to use it safely, and how to keep it in shape.",
+    jobs: {
+      fix: ["Tools every home should have","How to use a stud finder","Types of screwdrivers","How to use a drill safely","Choose the right screw or nail","What a multimeter does","Caulk vs. spackle vs. putty","How to read a tape measure","Socket wrench basics","Choose the right ladder"],
+      clean: ["Clean rusty tools","Clean paint brushes","Clean a paint roller","Clean a wet/dry vac","Clean power tool vents","Clean drill bits","Clean garden pruners","Clean a putty knife","Clean a caulk gun","Clean dried grout off tools"],
+      maintain: ["Keep tools from rusting","Store power tool batteries","Sharpen a drill bit","Organize a toolbox","Oil hand tools","Care for a ladder","Store paint brushes between coats","Keep a tape measure working","Care for a cordless drill","Store sandpaper"] } },
+  { id: "calendar", ico: "🗓️", name: "Maintenance Calendar", helpers: { fix: "hank", clean: "hank", maintain: "hank" }, calendar: true, blurb: "What to check monthly, every season, and every year, so things don't break in the first place." }
 ];
 const CAL_PICKS = [["home", "🏠 Home"], ["car", "🚗 Car"], ["tech", "💻 Tech"], ["appliances", "🧺 Appliances"], ["yard", "🌳 Yard"], ["all", "📋 Whole Household"]];
+const GLOSS = {
+  tech: ["Router","Modem","Cache","Firmware","Bluetooth pairing","Surge protector","Ethernet cable","Operating system"],
+  plumbing: ["Flapper","Fill valve","P-trap","Shutoff valve","Aerator","Wax ring","Anode rod","Sump pump"],
+  electrical: ["Circuit breaker","GFCI outlet","Circuit","Wattage","Dimmer switch","Junction box","Neutral wire","Lumens"],
+  appliances: ["Lint trap","Condenser coils","Door gasket","Drain pump","Igniter","Water inlet valve","Defrost cycle","Thermal fuse"],
+  car: ["Check engine light","Alternator","Tread depth","Cabin air filter","Brake pads","Coolant","Spark plug","PSI"],
+  house: ["Drywall","Spackle","Wall stud","Weatherstripping","Shim","Floor joist","Hinge pin","Primer"],
+  kitchenbath: ["Grout","Caulk","Grout sealer","Exhaust fan","Backsplash","Drawer slide","Escutcheon","Silicone"],
+  hvac: ["MERV rating","Condensate line","Heat pump","Thermostat","Return vent","Refrigerant","Short cycling","Ductwork"],
+  yard: ["Downspout","Pressure washer PSI","Deck stain","Frost-free spigot","Lawn aeration","Mulch","Pavers","Thatch"],
+  clothes: ["Care label","Pilling","Zipper slider","Pretreating","Felting","Interfacing","Hem","Waterproofing spray"],
+  toolbox: ["Stud finder","Multimeter","Socket wrench","Level","Utility knife","Drill bit","Torque","Caulk gun"]
+};
 const BANNER = ["Toolbox", "Wrench", "Screwdriver", "Plunger", "Laptop", "Paint roller", "Vacuum cleaner", "Tape measure", "Hammer", "Washing machine", "Lawn mower", "Spark plug"];
-const BAR_RIGHT = { home: "Open for Repairs", room: "Pick a Job", clarify: "Quick Question", work: "Crew at Work", guide: "Guided Fix", calendar: "Maintenance Calendar" };
+const BAR_RIGHT = { home: "Open for Repairs", room: "Pick a Job", clarify: "Quick Question", work: "Crew at Work", guide: "Guided Lesson", calendar: "Maintenance Calendar", gloss: "The Shop Glossary" };
 const SAFETY = { diy: ["diy", "✅ DIY Friendly"], caution: ["caution", "⚠️ Doable With Care"], pro: ["pro", "🛑 Call a Pro"] };
 
 /* ---------- helpers ---------- */
@@ -398,13 +491,26 @@ const store = {
 const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const cleanAI = v => typeof v === "string" ? v.replace(/<\/?cite\b[^>]*>/gi, "").replace(/\*\*/g, "").replace(/[ \t]{2,}/g, " ").trim()
   : Array.isArray(v) ? v.map(cleanAI) : (v && typeof v === "object") ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, k === "svg" ? x : cleanAI(x)])) : v;
+
+/* every AI call goes through here, so Stop can cancel them all */
+const inflight = new Set();
+function setWorking(){ document.body.classList.toggle("working", inflight.size > 0); }
 async function api(body){
-  const r = await fetch("/api/fix", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
-  let j = {}; try { j = await r.json(); } catch(e){}
-  if (r.status === 402) throw new Error("Join LearnWow to keep using Fix It. Clean It. Maintain It.");
-  if (!r.ok) throw new Error(j.message || j.error || "Something went wrong. Please try again.");
-  return cleanAI(j);
+  const ctl = new AbortController();
+  inflight.add(ctl); setWorking();
+  try {
+    const r = await fetch("/api/fix", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body), signal: ctl.signal });
+    let j = {}; try { j = await r.json(); } catch(e){}
+    if (r.status === 402) throw new Error("Join LearnWow to keep using Fix It. Clean It. Maintain It.");
+    if (!r.ok) throw new Error(j.message || j.error || "Something went wrong. Please try again.");
+    return cleanAI(j);
+  } catch(e) {
+    if (e && e.name === "AbortError") throw new Error("Stopped. Tap 🔄 Restart to run it again.");
+    throw e;
+  } finally { inflight.delete(ctl); setWorking(); }
 }
+function stopAll(){ [...inflight].forEach(c => c.abort()); }
+
 const roomOf = id => ROOMS.find(r => r.id === id);
 function avatar(id, size){
   const a = ADV[id] || ADV.hank;
@@ -421,7 +527,6 @@ function loadingEl(msg, rotate){
   }
   return box;
 }
-function working(on){ document.body.classList.toggle("working", !!on); }
 function slug(s){ return String(s || "guide").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 60) || "guide"; }
 function download(name, text, type){
   const blob = new Blob([text], { type: type || "text/plain;charset=utf-8" });
@@ -474,70 +579,126 @@ function buildBanner(){
   });
 }
 
-/* ---------- screen + navigation ---------- */
-const state = { view: null, stack: [], seen: {} };
+/* ---------- screen, navigation and the control bar ---------- */
+const state = { view: null, stack: [], seen: {}, intent: "" };
 const display = $("#display");
 function setBar(left, kind){ $("#barLeft").textContent = left || "The Workshop"; $("#barRight").textContent = BAR_RIGHT[kind] || BAR_RIGHT.home; }
-function show(view, push = true){
-  if (push && state.view) state.stack.push(state.view);
-  state.view = view;
+function ctrlBar(){
+  const v = state.view || {};
+  const bar = el("div", { class: "ctrl noprint" });
+  if (state.stack.length) bar.append(el("button", { type: "button", onclick: goBack }, "← Back"));
+  bar.append(el("button", { type: "button", class: "stop", onclick: stopAll, title: "Stop what the crew is working on" }, "⏹ Stop"));
+  if (v.restart) bar.append(el("button", { type: "button", onclick: () => { stopAll(); v.restart(); } }, "🔄 Restart"));
+  bar.append(el("button", { type: "button", onclick: closeView }, "✖ Close"),
+    el("button", { type: "button", onclick: goHome }, "🏠 Back to Start"));
+  return bar;
+}
+function paint(view){
   display.innerHTML = "";
-  if (state.stack.length) display.append(el("div", { class: "navrow" },
-    el("button", { class: "back", type: "button", onclick: goBack }, "← Back"),
-    el("button", { class: "back", type: "button", onclick: goHome }, "🏠 Workshop Home")));
+  if (!view.isHome) display.append(ctrlBar());
   view.render(display);
   syncTags();
+}
+function show(view, push = true){
+  closeTermPop();
+  if (push && state.view) state.stack.push(state.view);
+  state.view = view;
+  paint(view);
   if (push) scrollToEl(display.closest(".screen"));
 }
+function repaint(){ if (state.view) paint(state.view); }
 function scrollToEl(node){
   if (!node) return;
   if (window.parent !== window) {
     try { window.parent.postMessage({ lwToolScrollY: Math.max(0, node.getBoundingClientRect().top + window.scrollY - 10) }, "*"); } catch(e){}
   } else node.scrollIntoView({ behavior: "smooth", block: "start" });
 }
-function goBack(){ const v = state.stack.pop(); if (v) show(v, false); }
-function goHome(){ state.stack = []; show(homeView(), false); }
+function goBack(){ closeTermPop(); const v = state.stack.pop(); if (v) { state.view = v; paint(v); } }
+function goHome(){ stopAll(); closeTermPop(); state.stack = []; state.view = homeView(); paint(state.view); }
+function closeView(){
+  stopAll(); closeTermPop();
+  const room = state.view && state.view.room;
+  if (room && !(state.view && state.view.isRoom)) { state.stack = [homeView()]; state.view = roomView(room); paint(state.view); }
+  else goHome();
+}
 function syncTags(){ const id = state.view && state.view.room; document.querySelectorAll(".tag").forEach(t => t.classList.toggle("on", t.dataset.id === id)); }
+
+/* ---------- glossary terms inside the text (tap a dotted word) ---------- */
+let tpop = null;
+function closeTermPop(){ if (tpop) { tpop.remove(); tpop = null; } }
+document.addEventListener("click", e => { if (tpop && !e.target.closest(".term") && !e.target.closest(".tpop")) closeTermPop(); });
+function openTermPop(btn, t){
+  closeTermPop();
+  tpop = el("div", { class: "tpop", role: "dialog" }, el("b", { text: t.term }), t.def);
+  document.body.append(tpop);
+  const r = btn.getBoundingClientRect();
+  const left = Math.max(8, Math.min(window.scrollX + r.left, window.scrollX + document.documentElement.clientWidth - tpop.offsetWidth - 8));
+  tpop.style.left = left + "px"; tpop.style.top = (window.scrollY + r.bottom + 8) + "px";
+}
+function withTerms(text, terms){
+  const frag = document.createDocumentFragment();
+  const list = (terms || []).filter(t => t.term && t.term.length > 2).sort((a, b) => b.term.length - a.term.length);
+  if (!list.length || !text) { frag.append(text || ""); return frag; }
+  const esc = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const re = new RegExp("\\b(" + list.map(t => esc(t.term)).join("|") + ")(s|es)?\\b", "gi");
+  let last = 0, m, used = new Set();
+  while ((m = re.exec(text))) {
+    const t = list.find(x => x.term.toLowerCase() === m[1].toLowerCase());
+    if (!t || used.has(t.term)) continue; // underline the first mention in each block
+    used.add(t.term);
+    frag.append(text.slice(last, m.index));
+    const b = el("button", { class: "term", type: "button", title: "What's this?" }, m[0]);
+    b.onclick = ev => { ev.stopPropagation(); openTermPop(b, t); };
+    frag.append(b); last = m.index + m[0].length;
+  }
+  frag.append(text.slice(last));
+  return frag;
+}
+const tp = (text, terms, cls) => { const p = el("p", cls ? { class: cls } : {}); p.append(withTerms(text, terms)); return p; };
 
 /* ---------- home ---------- */
 function homeView(){
-  return { room: null, render(d){
+  return { isHome: true, room: null, render(d){
     setBar("The Workshop", "home");
     d.append(el("p", { class: "kicker", text: "Welcome to the workshop" }),
-      el("h2", { text: "Broken, dirty or due? Let's walk through it." }),
-      el("p", { class: "lead", text: "Type what's going on in the search box, or pick a room off the pegboard. The right helpers join the job, ask a quick question if they need to, then walk you through the fix one step at a time, with a diagram, a safety check and real sources." }),
+      el("h2", { text: "Broken, dirty or due? Learn how it's done." }),
+      el("p", { class: "lead", text: "Type what's going on in the search box, or pick a room off the pegboard and choose Fix It, Clean It or Maintain It. The right helpers join the lesson, ask a quick question if they need to, then walk you through it step by step, with diagrams, a safety check and real sources." }),
       el("h3", { text: "How it works" }),
       el("ol", { class: "list" },
-        el("li", { text: "Tell the crew what's wrong, what needs cleaning, or what you want to keep in shape." }),
-        el("li", { text: "The right helper (or two) joins the job. If they need a detail, like a model or an error message, they'll ask." }),
-        el("li", { text: "Work through the steps. Tap Fixed It! when it works, or Not Yet to move to the next step." }),
-        el("li", { text: "Still stuck? The crew suggests what to try next, and tells you honestly when it's time to call a pro." })),
+        el("li", { text: "Tell the crew what's broken, what needs cleaning, or what you want to keep in shape." }),
+        el("li", { text: "The right helper (or two) joins. If they need a detail, like a model or an error message, they'll ask." }),
+        el("li", { text: "Read the steps. Tap 📐 Show Me for a diagram, or ❓ I Have a Question on any step." }),
+        el("li", { text: "Watch for The Supervisor's ✋. He steps in with pro tips, safety catches and the why behind a step." })),
       el("h3", { text: "Meet the crew" }),
       el("div", { class: "crewgrid" }, Object.keys(ADV).map(mate)));
   }};
 }
 
 /* ---------- rooms ---------- */
-function roomView(id){
+function roomView(id, intent){
   const r = roomOf(id);
   if (r.calendar) return calendarView();
-  return { room: id, render(d){
+  const v = { room: id, isRoom: true, tab: intent || state.intent || "fix", render(d){
     setBar(r.name, "room");
-    d.append(el("p", { class: "kicker", text: "Room" }), el("h2", { text: r.ico + " " + r.name }), el("p", { class: "lead", text: r.blurb }),
-      el("div", { class: "crew" }, el("b", { text: "Your helper here" }), mate(r.helper)));
-    const seen = state.seen[id] || (state.seen[id] = new Set());
-    const pool = r.topics.filter(t => !seen.has(t));
-    const pick = shuffle(pool.length >= 6 ? pool : r.topics).slice(0, 6);
+    const helper = r.helpers[v.tab];
+    d.append(el("p", { class: "kicker", text: "Room" }), el("h2", { text: r.ico + " " + r.name }), el("p", { class: "lead", text: r.blurb }));
+    const tabs = el("div", { class: "tabs", role: "tablist" }, Object.keys(INTENTS).map(k => el("button", { type: "button", role: "tab", class: k === v.tab ? "on" : "", "aria-selected": String(k === v.tab), onclick: () => { v.tab = k; repaint(); } }, INTENTS[k].lab)));
+    d.append(tabs, el("div", { class: "crew" }, el("b", { text: "Your helper for " + INTENTS[v.tab].short }), mate(helper), el("span", { class: "supbadge" }, avatar("supervisor", 30), "The Supervisor is watching")));
+    const key = id + "|" + v.tab;
+    const all = r.jobs[v.tab];
+    const seen = state.seen[key] || (state.seen[key] = new Set());
+    const pool = all.filter(t => !seen.has(t));
+    const pick = shuffle(pool.length >= 6 ? pool : all).slice(0, 6);
     pick.forEach(t => seen.add(t));
     const chips = el("div", { class: "chips" });
-    const addChips = list => list.forEach(t => chips.append(el("button", { class: "chip", type: "button", onclick: () => startJob(t, id) }, t)));
+    const addChips = list => list.forEach(t => chips.append(el("button", { class: "chip", type: "button", onclick: () => startJob(t, id, v.tab) }, t)));
     addChips(pick);
     const msg = el("p", { class: "ex" });
     const more = el("button", { class: "btn blue", type: "button" }, "Show Me 6 More");
     more.onclick = async () => {
-      more.disabled = true; msg.textContent = ADV[r.helper].name + " is thinking of more jobs…";
+      more.disabled = true; msg.textContent = ADV[helper].name + " is thinking of more jobs…";
       try {
-        const res = await api({ mode: "more", room: id, exclude: [...seen] });
+        const res = await api({ mode: "more", room: id, intent: v.tab, exclude: [...seen] });
         const fresh = (res.topics || []).filter(t => !seen.has(t));
         fresh.forEach(t => seen.add(t));
         if (fresh.length) { chips.innerHTML = ""; addChips(fresh); msg.textContent = ""; } else msg.textContent = "No new ideas came back. Try again in a moment.";
@@ -545,55 +706,57 @@ function roomView(id){
       more.disabled = false;
     };
     const inp = el("input", { type: "text", id: "own-" + id, maxlength: "300", autocomplete: "off" });
-    const go = () => { const v = inp.value.trim(); if (v) startJob(v, id); };
+    const go = () => { const val = inp.value.trim(); if (val) startJob(val, id, v.tab); };
     inp.addEventListener("keydown", e => { if (e.key === "Enter") go(); });
-    d.append(el("h3", { text: "Popular jobs" }), chips, el("div", { class: "row" }, more), msg,
+    d.append(el("h3", { text: INTENTS[v.tab].lab + " jobs" }), chips, el("div", { class: "row" }, more), msg,
       el("div", { class: "field" }, el("label", { for: "own-" + id, text: "Or describe your own:" }),
-        el("span", { class: "ex", text: "Example: " + r.topics[r.topics.length - 1].toLowerCase() }),
+        el("span", { class: "ex", text: "Example: " + all[all.length - 1].toLowerCase() }),
         el("div", { class: "inrow" }, inp, el("button", { class: "btn", type: "button", onclick: go }, "Find the Fix"))));
   }};
+  return v;
 }
 
 /* ---------- a job: triage -> (clarify) -> guide ---------- */
-function startJob(question, room){
-  const job = { question, room: room || "", answers: [], details: "", advisors: [], style: "full", tried: new Set(), thread: [] };
+function newJob(question, room, intent){ return { question, room: room || "", intent: intent || "", answers: [], details: "", advisors: [], style: "full", thread: [], stepQs: {} }; }
+function startJob(question, room, intent, replace){
+  const job = newJob(question, room, intent);
   $("#mainQ").value = "";
-  show({ room: room || null, render(d){
+  const v = { room: room || null, job, restart: () => startJob(question, room, intent, true), render(d){
+    if (v.done) return v.done(d);
     setBar("Reading the job", "work");
-    const view = this;
-    if (view.done) return view.done(d);
     const box = loadingEl("Mr. Paul is reading the job and calling the right helper…");
     d.append(el("p", { class: "kicker", text: "You asked" }), el("h2", { text: question }), box);
-    working(true);
-    api({ mode: "triage", question, room }).then(t => {
-      working(false);
-      view.done = dd => renderTriage(dd, job, t);
-      if (d.contains(box)) { d.innerHTML = ""; if (state.stack.length) d.append(navRow()); renderTriage(d, job, t); }
-    }).catch(e => { working(false); box.replaceWith(el("div", { class: "err", text: e.message })); });
-  }});
+    if (v.started) return;
+    v.started = true;
+    api({ mode: "triage", question, room, intent }).then(t => {
+      v.done = dd => renderTriage(dd, job, t, v);
+      if (state.view === v) repaint();
+    }).catch(e => { v.started = false; if (d.contains(box)) box.replaceWith(el("div", { class: "err", text: e.message })); });
+  }};
+  if (replace) { state.view = v; paint(v); } else show(v);
 }
-function navRow(){ return el("div", { class: "navrow" }, el("button", { class: "back", type: "button", onclick: goBack }, "← Back"), el("button", { class: "back", type: "button", onclick: goHome }, "🏠 Workshop Home")); }
-function renderTriage(d, job, t){
+function renderTriage(d, job, t, v){
   if (!t.onTopic) {
+    setBar("Not quite our workshop", "clarify");
     d.append(el("p", { class: "kicker", text: "You asked" }), el("h2", { text: job.question }), el("div", { class: "box info" }, t.message),
       el("div", { class: "row" }, el("a", { class: "btn blue", href: "https://nusparklearnwow.com/the-answer-man/", target: "_top", style: "text-decoration:none" }, "Ask The Answer Man")));
     return;
   }
   job.title = t.title; job.room = t.room || job.room; job.advisors = t.advisors; job.safety = t.safety; job.emergency = t.emergency;
-  if (state.view) state.view.room = job.room; syncTags();
-  if (t.clarify) return renderClarify(d, job, t);
-  openGuide(job, false, d);
+  v.room = job.room; syncTags();
+  if (t.clarify) return renderClarify(d, job, t, v);
+  openGuide(job, false);
 }
-function renderClarify(d, job, t){
+function renderClarify(d, job, t, v){
   setBar(job.title, "clarify");
   d.append(el("p", { class: "kicker", text: "Quick question" }), el("h2", { text: job.title }),
     el("div", { class: "crew" }, el("b", { text: "On this job" }), job.advisors.map(mate)),
-    el("p", { class: "lead", text: ADV[job.advisors[0]].name + " needs one detail so the steps fit your situation." }));
+    el("p", { class: "lead", text: ADV[job.advisors[0]].name + " needs one detail so the lesson fits your situation." }));
   const picks = {};
   t.questions.forEach((q, qi) => {
     const chips = el("div", { class: "chips" });
     q.options.forEach(o => {
-      const c = el("button", { class: "chip", type: "button" }, o);
+      const c = el("button", { class: "chip" + (job.answers[qi] && job.answers[qi].a === o ? " on" : ""), type: "button" }, o);
       c.onclick = () => { picks[qi] = o; chips.querySelectorAll(".chip").forEach(x => x.classList.toggle("on", x === c)); };
       chips.append(c);
     });
@@ -602,114 +765,95 @@ function renderClarify(d, job, t){
   const ta = el("textarea", { id: "clarMore", maxlength: "600" });
   d.append(el("div", { class: "field" }, el("label", { for: "clarMore", text: "Anything else the crew should know? (optional)" }),
     el("span", { class: "ex", text: "Example: the exact error message, the model, or what you already tried" }), ta));
-  const go = () => {
-    job.answers = t.questions.map((q, i) => ({ q: q.q, a: picks[i] || "" })).filter(a => a.a);
+  const go = skip => {
+    job.answers = skip ? [] : t.questions.map((q, i) => ({ q: q.q, a: picks[i] || "" })).filter(a => a.a);
     job.details = ta.value.trim();
     openGuide(job, true);
   };
-  d.append(el("div", { class: "row" }, el("button", { class: "btn", type: "button", onclick: go }, "Show Me the Fix"),
-    el("button", { class: "btn ghost", type: "button", onclick: () => { job.answers = []; job.details = ta.value.trim(); openGuide(job, true); } }, "Skip the Questions")));
+  d.append(el("div", { class: "row" }, el("button", { class: "btn", type: "button", onclick: () => go(false) }, "Show Me How"),
+    el("button", { class: "btn ghost", type: "button", onclick: () => go(true) }, "Skip the Questions")));
 }
 
 const WORK_LINES = id => {
   const n = (ADV[id] || ADV.hank).name;
-  return [n + " is checking the maker's support pages…", "The crew is lining up the steps, easiest first…", "Mr. Paul is double-checking the safety notes…", n + " is laying out the tools you'll need…", "Almost there. Big guides take about a minute…"];
+  return [n + " is checking the maker's support pages…", "The crew is lining up the steps…", "The Supervisor is double-checking the safety notes…", n + " is laying out the tools you'll need…", "Almost there. Big guides take about a minute…"];
 };
-function openGuide(job, push, intoEl){
-  const view = { room: job.room, job, render(d){
+function openGuide(job, push){
+  const v = { room: job.room, job, restart: () => { job.guide = null; job.pending = null; job.stepQs = {}; job.diagram = null; job.stepDiagrams = {}; job.stuck = null; job.blend = null; job.thread = []; paint(v); }, render(d){
     setBar(job.title, "work");
     if (job.guide) return renderGuide(d, job);
-    loadGuide(d, job);
+    loadGuide(d, job, v);
   }};
-  if (intoEl) { state.view = view; intoEl.innerHTML = ""; if (state.stack.length) intoEl.append(navRow()); view.render(intoEl); syncTags(); }
-  else show(view, push !== false);
+  if (push) show(v); else { state.view = v; paint(v); }
 }
-function loadGuide(d, job){
+function loadGuide(d, job, v){
   const box = loadingEl("The crew is on the way…", WORK_LINES(job.advisors[0]));
   d.append(el("p", { class: "kicker", text: "Crew at work" }), el("h2", { text: job.title }),
-    el("div", { class: "crew" }, el("b", { text: "On this job" }), job.advisors.map(mate)), box);
-  if (job.emergency) d.append(el("div", { class: "emerg", text: "If you smell gas, see smoke or sparks, or a carbon monoxide alarm is going off: get everyone outside now and call 911 or your utility from outside." }));
-  working(true);
-  if (!job.pending) job.pending = api({ mode: "guide", question: job.question, room: job.room, answers: job.answers, details: job.details, advisors: job.advisors, style: job.style })
-    .then(g => { if (g.ok) { job.guide = g; job.title = g.title || job.title; job.tried = new Set(); job.diagram = null; job.stepDiagrams = {}; } return g; })
+    el("div", { class: "crew" }, el("b", { text: "On this job" }), job.advisors.map(mate), el("span", { class: "supbadge" }, avatar("supervisor", 30), "The Supervisor is watching")), box);
+  if (job.emergency) d.append(emergencyBox());
+  if (!job.pending) job.pending = api({ mode: "guide", question: job.question, room: job.room, intent: job.intent, answers: job.answers, details: job.details, advisors: job.advisors, style: job.style })
+    .then(g => { if (g.ok) { job.guide = g; job.title = g.title || job.title; job.diagram = null; job.stepDiagrams = {}; } return g; })
     .finally(() => { job.pending = null; });
   job.pending.then(g => {
-    working(false);
-    if (!(state.view && state.view.job === job) || !d.contains(box)) return;
-    if (!g.ok) { box.replaceWith(el("div", { class: "err", text: g.message })); return; }
-    d.innerHTML = ""; if (state.stack.length) d.append(navRow()); renderGuide(d, job);
-  }).catch(e => { working(false); if (d.contains(box)) box.replaceWith(el("div", { class: "err", text: e.message })); });
+    if (state.view !== v) return;
+    if (!g.ok) { if (d.contains(box)) box.replaceWith(el("div", { class: "err", text: g.message })); return; }
+    repaint();
+  }).catch(e => { if (d.contains(box)) box.replaceWith(el("div", { class: "err", text: e.message })); });
 }
+function emergencyBox(){ return el("div", { class: "emerg", text: "If you smell gas, see smoke or sparks, or a carbon monoxide alarm is going off: get everyone outside now and call 911 or your utility from outside." }); }
 
-/* ---------- the guide ---------- */
+/* ---------- the guided lesson ---------- */
 function renderGuide(d, job){
-  const g = job.guide;
+  const g = job.guide, T = g.terms || [];
   setBar(g.title, "guide");
   const room = roomOf(job.room);
-  d.append(el("p", { class: "kicker", text: (room ? room.ico + " " + room.name : "Guided Fix") + (job.style === "simple" ? " · Simplified" : job.style === "extended" ? " · Double Length" : "") }), el("h2", { text: g.title }));
+  d.append(el("p", { class: "kicker", text: (room ? room.ico + " " + room.name : "Guided Lesson") + (job.intent ? " · " + INTENTS[job.intent].short : "") + (job.style === "simple" ? " · Simplified" : job.style === "extended" ? " · Double Length" : "") }), el("h2", { text: g.title }));
   d.append(crewBar(job));
-  if (g.emergency || job.emergency) d.append(el("div", { class: "emerg", text: "If you smell gas, see smoke or sparks, or a carbon monoxide alarm is going off: get everyone outside now and call 911 or your utility from outside." }));
+  if (g.emergency || job.emergency) d.append(emergencyBox());
   if (g.wiki) d.append(photoFig(g.wiki));
-  d.append(el("div", { class: "qa" }, el("div", { class: "in" }, el("b", { class: "t", text: "Quick Answer" }), el("p", { text: g.quickAnswer })), el("div", { class: "note", text: "AI can make mistakes, so double-check anything important." })));
+  const qaIn = el("div", { class: "in" }, el("b", { class: "t", text: "Quick Answer" }));
+  qaIn.append(tp(g.quickAnswer, T));
+  d.append(el("div", { class: "qa" }, qaIn, el("div", { class: "note", text: "AI can make mistakes, so double-check anything important." })));
   const s = SAFETY[g.safety] || SAFETY.caution;
   d.append(el("div", { class: "badges" }, el("span", { class: "badge " + s[0], text: s[1] }), el("span", { class: "badge", text: "🔧 " + g.difficulty }), g.time ? el("span", { class: "badge", text: "⏱️ " + g.time }) : ""));
   if (g.safetyNote) d.append(el("div", { class: "box " + (g.safety === "pro" ? "pro" : "warn") }, el("b", { class: "t", text: g.safety === "pro" ? "🛑 Safety: call a pro" : "⚠️ Safety check" }), g.safetyNote));
   d.append(el("div", { class: "clear" }));
 
-  // diagram
-  const dia = el("div", { class: "diagram noprint-if-empty" });
+  const dia = el("div", { class: "diagram" });
   d.append(dia);
   drawDiagram(dia, job, null);
 
-  if (g.causes && g.causes.length) d.append(el("h3", { text: "🔍 Most likely causes" }), el("ul", { class: "list" }, g.causes.map(c => el("li", {}, el("b", { text: c.cause }), c.sign ? ": " + c.sign : ""))));
+  if (T.length) d.append(el("h3", { text: "📖 Words to Know" }), el("p", { class: "ex", text: "Tap any word with a dotted underline to see what it means." }),
+    el("div", { class: "words" }, T.map(t => el("div", { class: "word" }, el("b", { text: t.term }), t.def))));
+  if (g.causes && g.causes.length) d.append(el("h3", { text: job.intent === "clean" ? "🔍 Why it gets dirty" : job.intent === "maintain" ? "🔍 What wears it out" : "🔍 Most likely causes" }),
+    el("ul", { class: "list" }, g.causes.map(c => { const li = el("li", {}, el("b", { text: c.cause })); if (c.sign) { li.append(": "); li.append(withTerms(c.sign, T)); } return li; })));
   if ((g.tools && g.tools.length) || (g.supplies && g.supplies.length)) {
     const ck = list => el("ul", { class: "check" }, list.map(x => el("li", {}, el("label", {}, el("input", { type: "checkbox" }), el("span", { text: x })))));
     d.append(el("h3", { text: "🧰 What you'll need" }), el("div", { class: "two" },
       el("div", {}, el("b", { text: "Tools" }), g.tools.length ? ck(g.tools) : el("p", { class: "ex", text: "No special tools." })),
       el("div", {}, el("b", { text: "Supplies & parts" }), g.supplies.length ? ck(g.supplies) : el("p", { class: "ex", text: "No supplies needed." }))));
   }
-  if (g.before && g.before.length) d.append(el("div", { class: "box warn" }, el("b", { class: "t", text: "✋ Before you start" }), el("ul", { class: "list" }, g.before.map(x => el("li", { text: x })))));
+  if (g.before && g.before.length) d.append(el("div", { class: "box warn" }, el("b", { class: "t", text: "✋ Before you start" }), el("ul", { class: "list" }, g.before.map(x => el("li", {}, withTerms(x, T))))));
 
-  // steps
   d.append(el("h3", { text: g.safety === "pro" ? "🧯 What to do right now" : "🪜 Step by step" }),
-    el("p", { class: "ex", text: g.safety === "pro" ? "These are the safe steps only. The repair itself is a job for a licensed pro." : "Start at step 1. Tap Fixed It! when it works, or Not Yet to move on. Tap Show Me for a diagram of that step." }));
-  const stepsWrap = el("div", {});
-  d.append(stepsWrap);
-  const cards = g.steps.map((st, i) => stepCard(st, i, job, cards => cards));
-  cards.forEach(c => stepsWrap.append(c));
-  const fixedBox = el("div", {});
-  const stuckWrap = el("div", {});
-  d.append(fixedBox, stuckWrap);
-  const setNow = i => cards.forEach((c, k) => c.classList.toggle("now", k === i && !c.classList.contains("fixed")));
-  setNow(0);
-  cards.forEach((c, i) => {
-    c.querySelector(".yes").onclick = () => {
-      cards.forEach(x => x.classList.remove("now")); c.classList.add("fixed");
-      fixedBox.innerHTML = "";
-      fixedBox.append(el("div", { class: "box good" }, el("b", { class: "t", text: "🎉 Nice work!" }), "You fixed it at step " + (i + 1) + ". Check the tips below to keep it from happening again."));
-      scrollToEl(fixedBox);
-    };
-    c.querySelector(".no").onclick = () => {
-      job.tried.add((i + 1) + ". " + g.steps[i].title); c.classList.add("tried");
-      if (i + 1 < cards.length) { setNow(i + 1); scrollToEl(cards[i + 1]); }
-      else { setNow(-1); openStuck(stuckWrap, job, true); }
-    };
-  });
-  if (g.safety !== "pro") d.append(el("div", { class: "row" }, el("button", { class: "btn ghost", type: "button", onclick: () => openStuck(stuckWrap, job, true) }, "😕 Still Not Fixed?")));
+    el("p", { class: "ex", text: g.safety === "pro" ? "These are the safe steps only. The repair itself is a job for a licensed pro." : "Tap 📐 Show Me for a diagram of any step, or ❓ I Have a Question to ask about it. Watch for The Supervisor's ✋." }));
+  g.steps.forEach((st, i) => d.append(stepCard(st, i, job)));
 
-  // crew tips
+  const stuckWrap = el("div", {});
+  if (g.safety !== "pro") d.append(el("div", { class: "row" }, el("button", { class: "btn ghost", type: "button", onclick: () => openStuck(stuckWrap, job) }, "🤔 What If That Doesn't Work?")), stuckWrap);
+  if (job.stuck) openStuck(stuckWrap, job);
+
   if (g.tips && g.tips.length) {
     d.append(el("h3", { text: "💬 Tips from the crew" }));
-    g.tips.forEach(t => d.append(el("div", { class: "say" }, avatar(t.id), el("div", { class: "bub" }, el("b", { text: ADV[t.id].name }), t.tip))));
+    g.tips.forEach(t => d.append(el("div", { class: "say" }, avatar(t.id), el("div", { class: "bub" }, el("b", { text: ADV[t.id].name }), withTerms(t.tip, T)))));
   }
   if (g.mistakes && g.mistakes.length) d.append(el("h3", { text: "🚫 Common mistakes" }), el("ul", { class: "list" }, g.mistakes.map(x => el("li", { text: x }))));
   if (g.prevent && g.prevent.length) d.append(el("h3", { text: "🛡️ Keep it from happening again" }), el("ul", { class: "list" }, g.prevent.map(x => el("li", { text: x }))));
   if (g.callPro) d.append(el("div", { class: "box pro" }, el("b", { class: "t", text: "📞 When to call a pro" }), g.callPro));
-  if (g.deeper && g.deeper.length) { d.append(el("h3", { text: "📚 Go deeper" })); g.deeper.forEach(x => d.append(el("h4", { text: x.heading, style: "margin:12px 0 4px;font-size:17px" }), el("p", { text: x.text }))); }
+  if (g.deeper && g.deeper.length) { d.append(el("h3", { text: "📚 Go deeper" })); g.deeper.forEach(x => d.append(el("h4", { text: x.heading, style: "margin:12px 0 4px;font-size:17px" }), tp(x.text, T))); }
 
-  // actions
   const eyes = el("div", {});
-  d.append(el("div", { class: "row" },
+  d.append(el("div", { class: "row noprint" },
     job.style !== "simple" ? el("button", { class: "btn yellow", type: "button", onclick: () => restyle(job, "simple") }, "🪄 Simplify") : el("button", { class: "btn yellow", type: "button", onclick: () => restyle(job, "full") }, "📄 Full Guide"),
     job.style !== "extended" ? el("button", { class: "btn yellow", type: "button", onclick: () => restyle(job, "extended") }, "📏 Double Length") : "",
     el("button", { class: "btn blue", type: "button", onclick: () => window.print() }, "🖨️ Print"),
@@ -717,54 +861,125 @@ function renderGuide(d, job){
     el("button", { class: "btn ghost", type: "button", onclick: () => { eyes.innerHTML = ""; eyes.append(perspectivePanel(job)); } }, "👀 Gain Another Perspective"),
     el("button", { class: "btn", type: "button", onclick: newQuestion }, "🆕 New Question")), eyes);
 
-  // follow-ups + thread
   d.append(askSection(job));
   if (g.sourceNote) d.append(el("p", { class: "ainote", text: g.sourceNote }));
   d.append(footnotes(g.sources), el("p", { class: "ainote", text: g.safetyFooter || "" }));
 }
-function crewBar(job){
-  const bar = el("div", { class: "crew" }, el("b", { text: "On this job" }), job.advisors.map(mate));
-  return bar;
-}
+function crewBar(job){ return el("div", { class: "crew" }, el("b", { text: "On this job" }), job.advisors.map(mate), el("span", { class: "supbadge" }, avatar("supervisor", 30), "The Supervisor is watching")); }
+
 function stepCard(st, i, job){
-  const show = el("button", { class: "btn ghost small", type: "button" }, "📐 Show Me");
-  const holder = el("div", {});
-  const card = el("div", { class: "step" }, el("span", { class: "num", text: String(i + 1) }), el("h4", { text: st.title || ("Step " + (i + 1)) }), el("p", { text: st.text }),
-    st.check ? el("div", { class: "ck", text: "✅ How to tell it worked: " + st.check }) : "",
-    el("div", { class: "sb" }, el("button", { class: "btn green small yes", type: "button" }, "🎉 Fixed It!"), el("button", { class: "btn ghost small no", type: "button" }, "➡️ Not Yet"), show), holder);
-  show.onclick = () => {
-    if (holder.childNodes.length) { holder.innerHTML = ""; show.textContent = "📐 Show Me"; return; }
-    const dia = el("div", { class: "diagram" }); holder.append(dia); show.textContent = "📐 Hide Diagram";
+  const g = job.guide, T = g.terms || [];
+  const holder = el("div", {}), qHolder = el("div", {}), supHolder = el("div", {});
+  const showBtn = el("button", { class: "btn ghost small", type: "button" }, "📐 Show Me");
+  const qBtn = el("button", { class: "btn ghost small", type: "button" }, "❓ I Have a Question");
+  const sup = (g.supervisor || []).find(x => x.step === i + 1);
+  const buttons = el("div", { class: "sb noprint" }, showBtn, qBtn);
+  if (sup) {
+    const hand = el("button", { class: "hand" + (job.supSeen && job.supSeen[i] ? " seen" : ""), type: "button", title: "The Supervisor has something to add" }, "✋ The Supervisor");
+    hand.onclick = () => {
+      job.supSeen = job.supSeen || {}; job.supSeen[i] = true; hand.classList.add("seen");
+      if (supHolder.childNodes.length) { supHolder.innerHTML = ""; return; }
+      supHolder.append(supervisorBox(sup, i, job));
+    };
+    buttons.prepend(hand);
+    if (job.supSeen && job.supSeen[i]) supHolder.append(supervisorBox(sup, i, job));
+  }
+  const card = el("div", { class: "step" }, el("span", { class: "num", text: String(i + 1) }), el("h4", { text: st.title || ("Step " + (i + 1)) }), tp(st.text, T),
+    st.check ? el("div", { class: "ck", text: "✅ How to tell it worked: " + st.check }) : "", buttons, supHolder, holder, qHolder);
+  showBtn.onclick = () => {
+    if (holder.childNodes.length) { holder.innerHTML = ""; showBtn.textContent = "📐 Show Me"; return; }
+    const dia = el("div", { class: "diagram" }); holder.append(dia); showBtn.textContent = "📐 Hide Diagram";
     drawDiagram(dia, job, { title: st.title, text: st.text, i });
   };
+  qBtn.onclick = () => {
+    if (qHolder.childNodes.length) { qHolder.innerHTML = ""; return; }
+    qHolder.append(stepQuestionBox(st, i, job));
+  };
+  if (job.stepQs[i] && job.stepQs[i].length) qHolder.append(stepQuestionBox(st, i, job));
   return card;
 }
+function supervisorBox(sup, i, job){
+  const box = el("div", { class: "sup" }, el("div", { class: "say", style: "margin:0" }, avatar("supervisor"),
+    el("div", { class: "bub", style: "background:#fff" }, el("span", { class: "kind", text: sup.kind }), el("b", { text: "The Supervisor" }), withTerms(sup.text, job.guide.terms))));
+  const thread = el("div", {});
+  const key = "sup" + i;
+  const ta = el("textarea", { maxlength: "500", "aria-label": "Ask The Supervisor" });
+  const send = el("button", { class: "btn small blue", type: "button" }, "Ask The Supervisor");
+  const paintT = () => { thread.innerHTML = ""; (job.stepQs[key] || []).forEach(t => thread.append(qa(t))); };
+  send.onclick = async () => {
+    const q = ta.value.trim(); if (!q) return;
+    ta.value = ""; send.disabled = true;
+    const pend = loadingEl("The Supervisor is answering…"); thread.append(el("div", { class: "say me" }, youAv(), el("div", { class: "bub" }, el("b", { text: "You" }), q)), pend);
+    try {
+      const st = job.guide.steps[i];
+      const r = await api({ mode: "ask", title: job.guide.title, summary: job.guide.quickAnswer + " The Supervisor said: " + sup.text, advisors: job.advisors.concat("supervisor"), to: "supervisor", q, step: { n: i + 1, title: st.title, text: st.text }, history: (job.stepQs[key] || []).map(histOf) });
+      (job.stepQs[key] = job.stepQs[key] || []).push({ q, to: "supervisor", replies: r.replies, clarify: r.clarify, sources: r.sources });
+    } catch(e){ (job.stepQs[key] = job.stepQs[key] || []).push({ q, to: "supervisor", replies: [{ id: "supervisor", text: e.message }] }); }
+    send.disabled = false; paintT();
+  };
+  box.append(thread, el("div", { class: "qbox noprint" }, el("span", { class: "ex", text: "Ask The Supervisor about this:" }), ta, el("div", { class: "row", style: "margin-top:8px" }, send)));
+  paintT();
+  return box;
+}
+function youAv(){ return el("span", { class: "av", style: "background:#5d6677" }, "🙋"); }
+function histOf(t){ return { q: t.q, who: t.replies && t.replies[0] ? ADV[t.replies[0].id].name : "Crew", a: (t.replies || []).map(x => x.text).join(" ") }; }
+function qa(t){
+  const wrap = el("div", {});
+  wrap.append(el("div", { class: "say me" }, youAv(), el("div", { class: "bub" }, el("b", { text: "You" + (t.to && ADV[t.to] ? " → " + ADV[t.to].name : " → The crew") }), t.q)));
+  (t.replies || []).forEach((r, i) => wrap.append(el("div", { class: "say" }, avatar(r.id), el("div", { class: "bub" }, el("b", { text: ADV[r.id].name }), r.text,
+    i === t.replies.length - 1 && t.clarify ? el("div", { class: "cq", text: t.clarify }) : ""))));
+  if (t.sources && t.sources.length) wrap.append(footnotes(t.sources, "Sources for this answer"));
+  return wrap;
+}
+function stepQuestionBox(st, i, job){
+  const box = el("div", { class: "qbox" });
+  const thread = el("div", {});
+  const ta = el("textarea", { maxlength: "500", "aria-label": "Your question about step " + (i + 1) });
+  const send = el("button", { class: "btn small", type: "button" }, "Ask");
+  const paintT = () => { thread.innerHTML = ""; (job.stepQs[i] || []).forEach(t => thread.append(qa(t))); };
+  send.onclick = async () => {
+    const q = ta.value.trim(); if (!q) return;
+    ta.value = ""; send.disabled = true;
+    const pend = loadingEl("The crew is looking into it…"); thread.append(el("div", { class: "say me" }, youAv(), el("div", { class: "bub" }, el("b", { text: "You" }), q)), pend);
+    try {
+      const r = await api({ mode: "ask", title: job.guide.title, summary: job.guide.quickAnswer, advisors: job.advisors, to: "crew", q, step: { n: i + 1, title: st.title, text: st.text }, history: (job.stepQs[i] || []).map(histOf) });
+      (job.stepQs[i] = job.stepQs[i] || []).push({ q, to: "crew", replies: r.replies, clarify: r.clarify, sources: r.sources });
+    } catch(e){ (job.stepQs[i] = job.stepQs[i] || []).push({ q, to: "crew", replies: [{ id: job.advisors[0], text: e.message }] }); }
+    send.disabled = false; paintT();
+  };
+  box.append(el("b", { text: "❓ Your question about step " + (i + 1) }), thread, el("span", { class: "ex", style: "margin-top:6px", text: "Example: what if this part is stuck or rusted?" }), ta, el("div", { class: "row", style: "margin-top:8px" }, send));
+  paintT();
+  return box;
+}
+
 function svgImg(svg){ return el("img", { src: "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg), alt: "Diagram" }); }
-function drawDiagram(box, job, step){
-  const g = job.guide;
+function drawDiagram(box, job, step, titleOverride){
+  const g = job ? job.guide : null;
   const cacheKey = step ? "s" + step.i : "main";
-  job.stepDiagrams = job.stepDiagrams || {};
-  const cached = step ? job.stepDiagrams[cacheKey] : job.diagram;
+  const cache = job ? (job.stepDiagrams = job.stepDiagrams || {}) : (box._cache = box._cache || {});
+  const cached = step ? cache[cacheKey] : (job ? job.diagram : cache.main);
+  const store1 = r => { if (step) cache[cacheKey] = r; else if (job) job.diagram = r; else cache.main = r; };
+  const clear1 = () => { if (step) delete cache[cacheKey]; else if (job) job.diagram = null; else delete cache.main; };
+  const title = titleOverride || (g && g.title) || "";
   box.innerHTML = "";
-  box.append(el("b", { class: "t", text: step ? "📐 Step " + (step.i + 1) + " diagram" : "📐 The diagram" }));
-  const paint = r => {
-    box.querySelector(".loading") && box.querySelector(".loading").remove();
+  box.append(el("b", { class: "t", text: step && step.i != null ? "📐 Step " + (step.i + 1) + " diagram" : "📐 The diagram" }));
+  const draw = r => {
+    const ld = box.querySelector(".loading"); if (ld) ld.remove();
     if (!r || !r.ok) {
-      box.append(el("p", { class: "ex", text: (r && r.message) || "The diagram didn't load." }), el("button", { class: "btn ghost small", type: "button", onclick: () => { if (step) delete job.stepDiagrams[cacheKey]; else job.diagram = null; drawDiagram(box, job, step); } }, "Try Again"));
+      box.append(el("p", { class: "ex", text: (r && r.message) || "The diagram didn't load." }), el("button", { class: "btn ghost small", type: "button", onclick: () => { clear1(); drawDiagram(box, job, step, titleOverride); } }, "Try Again"));
       return;
     }
-    const img = svgImg(r.svg);
-    box.append(img);
+    box.append(svgImg(r.svg));
     if (r.caption) box.append(el("p", { class: "cap", text: r.caption }));
     box.append(el("div", { class: "row noprint" },
-      el("button", { class: "btn ghost small", type: "button", onclick: () => svgToPng(r.svg, slug(g.title) + (step ? "-step-" + (step.i + 1) : "") + "-diagram.png") }, "⬇️ Download Diagram"),
-      el("button", { class: "btn ghost small", type: "button", onclick: () => { if (step) delete job.stepDiagrams[cacheKey]; else job.diagram = null; drawDiagram(box, job, step); } }, "🔄 Redraw")));
+      el("button", { class: "btn ghost small", type: "button", onclick: () => svgToPng(r.svg, slug(title) + (step && step.i != null ? "-step-" + (step.i + 1) : "") + "-diagram.png") }, "⬇️ Download Diagram"),
+      el("button", { class: "btn ghost small", type: "button", onclick: () => { clear1(); drawDiagram(box, job, step, titleOverride); } }, "🔄 Redraw")));
   };
-  if (cached) return paint(cached);
-  box.append(loadingEl(step ? "Drawing this step…" : "Mr. Paul is drawing your diagram…"));
-  api({ mode: "diagram", title: g.title, steps: g.steps.map(s => s.title), step: step ? { title: step.title, text: step.text } : null })
-    .then(r => { if (r.ok) { if (step) job.stepDiagrams[cacheKey] = r; else job.diagram = r; } paint(r); })
-    .catch(e => paint({ ok: false, message: e.message }));
+  if (cached) return draw(cached);
+  box.append(loadingEl(step ? "Drawing this…" : "Mr. Paul is drawing your diagram…"));
+  api({ mode: "diagram", title, steps: g ? g.steps.map(s => s.title) : [], step: step ? { title: step.title, text: step.text } : null })
+    .then(r => { if (r.ok) store1(r); draw(r); })
+    .catch(e => draw({ ok: false, message: e.message }));
 }
 function svgToPng(svg, name){
   const img = new Image();
@@ -776,45 +991,41 @@ function svgToPng(svg, name){
   img.onerror = () => download(name.replace(/png$/, "svg"), svg, "image/svg+xml");
   img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
 }
-function restyle(job, style){
-  job.style = style; job.guide = null; job.thread = job.thread || [];
-  openGuide(job, true);
-}
-function newQuestion(){
-  goHome();
-  const q = $("#mainQ"); scrollToEl($(".search")); setTimeout(() => q.focus(), 300);
-}
+function restyle(job, style){ job.style = style; job.guide = null; job.pending = null; job.stepQs = {}; job.stuck = null; openGuide(job, true); }
+function newQuestion(){ goHome(); const q = $("#mainQ"); scrollToEl($(".search")); setTimeout(() => q.focus(), 300); }
 
-/* ---------- still not fixed ---------- */
-function openStuck(wrap, job, scroll){
-  if (wrap.dataset.open === "1") { if (scroll) scrollToEl(wrap); return; }
+/* ---------- what if that doesn't work? ---------- */
+function openStuck(wrap, job){
+  if (wrap.dataset.open === "1") { scrollToEl(wrap); return; }
   wrap.dataset.open = "1"; wrap.innerHTML = "";
   const ta = el("textarea", { id: "stuckIn", maxlength: "600" });
   const out = el("div", {});
-  const go = el("button", { class: "btn", type: "button" }, "Ask the Crew for Next Steps");
-  go.onclick = async () => {
-    go.disabled = true; out.innerHTML = ""; out.append(loadingEl("The crew is digging into less common causes…")); working(true);
-    try {
-      const r = await api({ mode: "stuck", title: job.title, question: job.question, answers: job.answers, details: job.details, advisors: job.advisors, tried: [...job.tried], notes: ta.value.trim() });
-      out.innerHTML = "";
-      out.append(el("div", { class: "say" }, avatar(r.speaker), el("div", { class: "bub" }, el("b", { text: ADV[r.speaker].name }), r.message)));
-      if (r.causes.length) out.append(el("h3", { text: "🔍 What else it could be" }), el("ul", { class: "list" }, r.causes.map(c => el("li", {}, el("b", { text: c.cause }), c.sign ? ": " + c.sign : ""))));
-      if (r.steps.length) { out.append(el("h3", { text: "🪜 Try these next" })); r.steps.forEach((st, i) => out.append(el("div", { class: "step" }, el("span", { class: "num", text: String(i + 1) }), el("h4", { text: st.title }), el("p", { text: st.text }), st.check ? el("div", { class: "ck", text: "✅ How to tell it worked: " + st.check }) : ""))); }
-      if (r.callPro) out.append(el("div", { class: "box pro" }, el("b", { class: "t", text: "📞 Time for a pro?" }), r.callPro));
-      job.stuck = r;
-      if (r.sourceNote) out.append(el("p", { class: "ainote", text: r.sourceNote }));
-      out.append(footnotes(r.sources));
-    } catch(e){ out.innerHTML = ""; out.append(el("div", { class: "err", text: e.message })); }
-    working(false); go.disabled = false;
+  const paintR = r => {
+    out.innerHTML = "";
+    out.append(el("div", { class: "say" }, avatar(r.speaker), el("div", { class: "bub" }, el("b", { text: ADV[r.speaker].name }), r.message)));
+    if (r.causes.length) out.append(el("h3", { text: "🔍 What else it could be" }), el("ul", { class: "list" }, r.causes.map(c => el("li", {}, el("b", { text: c.cause }), c.sign ? ": " + c.sign : ""))));
+    if (r.steps.length) { out.append(el("h3", { text: "🪜 What to check next" })); r.steps.forEach((st, i) => out.append(el("div", { class: "step" }, el("span", { class: "num", text: String(i + 1) }), el("h4", { text: st.title }), el("p", { text: st.text }), st.check ? el("div", { class: "ck", text: "✅ How to tell it worked: " + st.check }) : ""))); }
+    if (r.callPro) out.append(el("div", { class: "box pro" }, el("b", { class: "t", text: "📞 Time for a pro?" }), r.callPro));
+    if (r.sourceNote) out.append(el("p", { class: "ainote", text: r.sourceNote }));
+    out.append(footnotes(r.sources));
   };
-  wrap.append(el("div", { class: "box info" }, el("b", { class: "t", text: "😕 Still not fixed?" }),
-    el("p", { text: "No problem. Tell the crew what you noticed and they'll suggest what to try next." + (job.tried.size ? " They already know which steps you tried." : "") }),
-    el("div", { class: "field" }, el("label", { for: "stuckIn", text: "What did you notice? (optional)" }), el("span", { class: "ex", text: "Example: it worked for a day, then started again" }), ta),
+  const go = el("button", { class: "btn", type: "button" }, "Show Me What's Next");
+  go.onclick = async () => {
+    go.disabled = true; out.innerHTML = ""; out.append(loadingEl("The crew is digging into the less common causes…"));
+    try {
+      const r = await api({ mode: "stuck", title: job.title, question: job.question, intent: job.intent, answers: job.answers, details: job.details, advisors: job.advisors, tried: job.guide.steps.map((s, i) => (i + 1) + ". " + s.title), notes: ta.value.trim() });
+      job.stuck = r; paintR(r);
+    } catch(e){ out.innerHTML = ""; out.append(el("div", { class: "err", text: e.message })); }
+    go.disabled = false;
+  };
+  wrap.append(el("div", { class: "box info" }, el("b", { class: "t", text: "🤔 What if that doesn't work?" }),
+    el("p", { text: "Learn what else could be going on and what a pro would check next." }),
+    el("div", { class: "field" }, el("label", { for: "stuckIn", text: "Anything specific you're wondering about? (optional)" }), el("span", { class: "ex", text: "Example: what if it starts again a week later?" }), ta),
     el("div", { class: "row" }, go)), out);
-  if (scroll) scrollToEl(wrap);
+  if (job.stuck) paintR(job.stuck); else scrollToEl(wrap);
 }
 
-/* ---------- ask the crew ---------- */
+/* ---------- ask the crew (whole job) ---------- */
 function askSection(job){
   const g = job.guide;
   const wrap = el("div", { class: "askbar" });
@@ -822,70 +1033,68 @@ function askSection(job){
   const sel = el("select", { id: "askTo", "aria-label": "Who should answer" });
   const fillSel = () => {
     sel.innerHTML = "";
-    sel.append(el("option", { value: "crew", text: "The whole crew" }));
+    sel.append(el("option", { value: "crew", text: "The whole crew" }), el("option", { value: "supervisor", text: "The Supervisor" }));
     const og1 = el("optgroup", { label: "On this job" }); job.advisors.forEach(id => og1.append(el("option", { value: id, text: ADV[id].name })));
-    const og2 = el("optgroup", { label: "Bring in another helper" }); Object.keys(ADV).filter(id => !job.advisors.includes(id)).forEach(id => og2.append(el("option", { value: id, text: ADV[id].name + " (" + ADV[id].role + ")" })));
+    const og2 = el("optgroup", { label: "Bring in another helper" }); HELPERS.filter(id => !job.advisors.includes(id)).forEach(id => og2.append(el("option", { value: id, text: ADV[id].name + " (" + ADV[id].role + ")" })));
     sel.append(og1, og2);
   };
   fillSel();
   const ta = el("textarea", { id: "askIn", maxlength: "600" });
   const send = el("button", { class: "btn", type: "button" }, "Ask");
-  const paintThread = () => {
-    thread.innerHTML = "";
-    job.thread.forEach(t => {
-      thread.append(el("div", { class: "say me" }, el("span", { class: "av", style: "background:#1f2a44" }, "🙋"), el("div", { class: "bub" }, el("b", { text: "You" + (t.to && t.to !== "crew" ? " → " + ADV[t.to].name : " → The crew") }), t.q)));
-      (t.replies || []).forEach((r, i) => thread.append(el("div", { class: "say" }, avatar(r.id), el("div", { class: "bub" }, el("b", { text: ADV[r.id].name }), r.text,
-        i === t.replies.length - 1 && t.clarify ? el("div", { class: "cq", text: t.clarify }) : ""))));
-      if (t.sources && t.sources.length) thread.append(footnotes(t.sources, "Sources for this answer"));
-    });
-  };
+  const paintThread = () => { thread.innerHTML = ""; job.thread.forEach(t => thread.append(qa(t))); };
   const ask = async q => {
     q = String(q || "").trim(); if (!q) return;
     const to = sel.value;
-    if (ADV[to] && !job.advisors.includes(to)) { job.advisors.push(to); const old = wrap.closest(".display").querySelector(".crew"); if (old) old.replaceWith(crewBar(job)); fillSel(); sel.value = to; }
+    if (HELPERS.includes(to) && !job.advisors.includes(to)) { job.advisors.push(to); const old = wrap.closest(".display").querySelector(".crew"); if (old) old.replaceWith(crewBar(job)); fillSel(); sel.value = to; }
     send.disabled = true; ta.value = "";
-    const pending = el("div", {}); pending.append(loadingEl((ADV[to] ? ADV[to].name : "The crew") + " is looking into it…"));
-    thread.append(el("div", { class: "say me" }, el("span", { class: "av", style: "background:#1f2a44" }, "🙋"), el("div", { class: "bub" }, el("b", { text: "You" }), q)), pending);
-    working(true);
+    thread.append(el("div", { class: "say me" }, youAv(), el("div", { class: "bub" }, el("b", { text: "You" }), q)), loadingEl((ADV[to] ? ADV[to].name : "The crew") + " is looking into it…"));
     try {
       const summary = [g.quickAnswer, ...g.steps.map((s, i) => (i + 1) + ". " + s.title)].join(" ");
-      const r = await api({ mode: "ask", title: g.title, summary, advisors: job.advisors, to, q, history: job.thread.map(t => ({ q: t.q, who: t.replies && t.replies[0] ? ADV[t.replies[0].id].name : "Crew", a: (t.replies || []).map(x => x.text).join(" ") })) });
+      const r = await api({ mode: "ask", title: g.title, summary, advisors: to === "supervisor" ? job.advisors.concat("supervisor") : job.advisors, to, q, history: job.thread.map(histOf) });
       job.thread.push({ q, to, replies: r.replies, clarify: r.clarify, sources: r.sources });
     } catch(e){ job.thread.push({ q, to, replies: [{ id: ADV[to] ? to : job.advisors[0], text: e.message }] }); }
-    working(false); send.disabled = false; paintThread();
+    send.disabled = false; paintThread();
   };
   send.onclick = () => ask(ta.value);
-  wrap.append(el("h3", { text: "❓ Questions for the crew" }), el("p", { class: "ex", text: "Ask the whole crew or one helper. Pick a different helper to bring in a new specialty. Ask as many follow-ups as you like." }));
+  wrap.append(el("h3", { text: "❓ Questions for the crew" }), el("p", { class: "ex", text: "Ask the whole crew, one helper, or The Supervisor. Pick a different helper to bring in a new specialty. Ask as many follow-ups as you like." }));
   if (g.followups && g.followups.length) wrap.append(el("div", { class: "chips" }, g.followups.map(q => el("button", { class: "chip alt", type: "button", onclick: () => ask(q) }, q))));
   wrap.append(thread, el("div", { class: "field" },
     el("label", { for: "askIn", text: "Type your question or answer a helper's question:" }),
-    el("span", { class: "ex", text: "Example: what if the part is stuck or rusted?" }),
-    el("div", { class: "inrow", style: "margin-bottom:8px" }, el("label", { for: "askTo", style: "align-self:center;margin:0;font-weight:800" , text: "Ask:" }), sel), ta,
+    el("span", { class: "ex", text: "Example: how often should I do this?" }),
+    el("div", { class: "inrow", style: "margin-bottom:8px" }, el("label", { for: "askTo", style: "align-self:center;margin:0;font-weight:800", text: "Ask:" }), sel), ta,
     el("div", { class: "row" }, send)));
   paintThread();
   return wrap;
 }
 
-/* ---------- gain another perspective ---------- */
+/* ---------- download text + gain another perspective ---------- */
+function threadText(L, list){ (list || []).forEach(t => { L.push("   You: " + t.q); (t.replies || []).forEach(r => L.push("   " + ADV[r.id].name + ": " + r.text)); }); }
 function guideText(job, short){
   const g = job.guide; const L = [];
   L.push(g.title.toUpperCase(), "From Fix It. Clean It. Maintain It. on NuSparkLearnWow.com", "");
   L.push("QUICK ANSWER", g.quickAnswer, "");
   L.push("Safety: " + (SAFETY[g.safety] || SAFETY.caution)[1].replace(/^\S+\s/, "") + " · Difficulty: " + g.difficulty + (g.time ? " · Time: " + g.time : ""));
   if (g.safetyNote) L.push(g.safetyNote);
-  if (g.causes.length) { L.push("", "MOST LIKELY CAUSES"); g.causes.forEach(c => L.push("- " + c.cause + (c.sign ? ": " + c.sign : ""))); }
+  if (g.causes.length) { L.push("", "CAUSES"); g.causes.forEach(c => L.push("- " + c.cause + (c.sign ? ": " + c.sign : ""))); }
   if (g.tools.length) L.push("", "TOOLS: " + g.tools.join(", "));
   if (g.supplies.length) L.push("SUPPLIES: " + g.supplies.join(", "));
   if (g.before.length) { L.push("", "BEFORE YOU START"); g.before.forEach(x => L.push("- " + x)); }
-  L.push("", "STEP BY STEP"); g.steps.forEach((s, i) => { L.push((i + 1) + ". " + s.title, "   " + s.text); if (s.check) L.push("   How to tell it worked: " + s.check); });
+  L.push("", "STEP BY STEP");
+  g.steps.forEach((s, i) => {
+    L.push((i + 1) + ". " + s.title, "   " + s.text); if (s.check) L.push("   How to tell it worked: " + s.check);
+    if (short) return;
+    (g.supervisor || []).filter(x => x.step === i + 1).forEach(x => { L.push("   THE SUPERVISOR (" + x.kind + "): " + x.text); threadText(L, job.stepQs["sup" + i]); });
+    threadText(L, job.stepQs[i]);
+  });
   if (short) return L.join("\n");
+  if ((g.terms || []).length) { L.push("", "WORDS TO KNOW"); g.terms.forEach(t => L.push("- " + t.term + ": " + t.def)); }
   if (g.tips.length) { L.push("", "TIPS FROM THE CREW"); g.tips.forEach(t => L.push(ADV[t.id].name + ": " + t.tip)); }
   if (g.mistakes.length) { L.push("", "COMMON MISTAKES"); g.mistakes.forEach(x => L.push("- " + x)); }
   if (g.prevent.length) { L.push("", "KEEP IT FROM HAPPENING AGAIN"); g.prevent.forEach(x => L.push("- " + x)); }
   if (g.callPro) L.push("", "WHEN TO CALL A PRO", g.callPro);
   (g.deeper || []).forEach(x => L.push("", x.heading.toUpperCase(), x.text));
-  if (job.stuck) { L.push("", "STILL NOT FIXED: NEXT STEPS", job.stuck.message); job.stuck.steps.forEach((s, i) => L.push((i + 1) + ". " + s.title, "   " + s.text)); if (job.stuck.callPro) L.push(job.stuck.callPro); }
-  if (job.thread && job.thread.length) { L.push("", "QUESTIONS FOR THE CREW"); job.thread.forEach(t => { L.push("You: " + t.q); (t.replies || []).forEach(r => L.push(ADV[r.id].name + ": " + r.text)); L.push(""); }); }
+  if (job.stuck) { L.push("", "WHAT IF THAT DOESN'T WORK?", job.stuck.message); job.stuck.steps.forEach((s, i) => L.push((i + 1) + ". " + s.title, "   " + s.text)); if (job.stuck.callPro) L.push(job.stuck.callPro); }
+  if (job.thread && job.thread.length) { L.push("", "QUESTIONS FOR THE CREW"); threadText(L, job.thread); }
   if (job.blend) { L.push("", "ANOTHER PERSPECTIVE", job.blend.headline, ...job.blend.blend); }
   if (g.sources.length) { L.push("", "SOURCES"); g.sources.forEach((s, i) => L.push((i + 1) + ". " + s.title + " " + s.url)); }
   L.push("", "AI can make mistakes, so double-check anything important. " + (g.safetyFooter || ""));
@@ -900,7 +1109,7 @@ function perspectivePanel(job){
   const cmp = el("button", { class: "btn", type: "button" }, "Blend Them Together");
   cmp.onclick = async () => {
     const other = ta.value.trim(); if (!other) return;
-    cmp.disabled = true; out.innerHTML = ""; out.append(loadingEl("Mr. Paul is blending the two perspectives…")); working(true);
+    cmp.disabled = true; out.innerHTML = ""; out.append(loadingEl("Mr. Paul is blending the two perspectives…"));
     try {
       const c = await api({ mode: "compare", title: job.guide.title, guide: guideText(job, true), other });
       job.blend = c; out.innerHTML = "";
@@ -909,7 +1118,7 @@ function perspectivePanel(job){
       if (c.checked.length) out.append(el("h3", { text: "🔎 Double-checked" }), el("ul", { class: "list" }, c.checked.map(x => el("li", { text: x }))));
       out.append(footnotes(c.sources));
     } catch(e){ out.innerHTML = ""; out.append(el("div", { class: "err", text: e.message })); }
-    working(false); cmp.disabled = false;
+    cmp.disabled = false;
   };
   return el("div", { class: "box info" },
     el("b", { class: "t", text: "👀 Gain Another Perspective" }),
@@ -924,34 +1133,77 @@ function footnotes(sources, label){
     el("ol", {}, sources.map(s => el("li", {}, el("a", { href: s.url, target: "_blank", rel: "noopener", text: s.title || s.url })))));
 }
 
+/* ---------- the shop glossary ---------- */
+const glossCache = {};
+function glossaryView(roomId){
+  const v = { room: null, gRoom: roomId || "plumbing", render(d){
+    setBar("The Shop Glossary", "gloss");
+    d.append(el("p", { class: "kicker", text: "Look it up" }), el("h2", { text: "📖 The Shop Glossary" }),
+      el("p", { class: "lead", text: "Parts, tools and terms explained in plain words. Pick a room to browse, or type any word you've run into." }));
+    const inp = el("input", { type: "text", id: "glossIn", maxlength: "120", autocomplete: "off" });
+    const go = () => { const val = inp.value.trim(); if (val) show(termView(val, v.gRoom)); };
+    inp.addEventListener("keydown", e => { if (e.key === "Enter") go(); });
+    d.append(el("div", { class: "field" }, el("label", { for: "glossIn", text: "Look up any word:" }), el("span", { class: "ex", text: "Example: shutoff valve" }),
+      el("div", { class: "inrow" }, inp, el("button", { class: "btn", type: "button", onclick: go }, "Look It Up"))));
+    d.append(el("h3", { text: "Browse by room" }), el("div", { class: "chips" }, ROOMS.filter(r => GLOSS[r.id]).map(r => el("button", { class: "chip" + (r.id === v.gRoom ? " on" : ""), type: "button", onclick: () => { v.gRoom = r.id; repaint(); } }, r.ico + " " + r.name))));
+    d.append(el("h3", { text: roomOf(v.gRoom).name + " terms" }), el("div", { class: "chips" }, GLOSS[v.gRoom].map(t => el("button", { class: "chip alt", type: "button", onclick: () => show(termView(t, v.gRoom)) }, t))));
+  }};
+  return v;
+}
+function termView(term, roomId){
+  const v = { room: null, restart: () => { delete glossCache[term.toLowerCase()]; paint(v); }, render(d){
+    setBar("The Shop Glossary", "gloss");
+    d.append(el("p", { class: "kicker", text: "The Shop Glossary" }), el("h2", { text: term }));
+    const key = term.toLowerCase();
+    const box = loadingEl("Looking it up…");
+    d.append(box);
+    (glossCache[key] ? Promise.resolve(glossCache[key]) : api({ mode: "glossary", term, room: roomId })).then(r => {
+      if (state.view !== v) return;
+      box.remove();
+      if (!r.ok) { d.append(el("div", { class: "err", text: r.def })); return; }
+      glossCache[key] = r;
+      d.querySelector("h2").textContent = r.term;
+      d.append(el("p", { class: "lead", text: r.def }));
+      if (r.more) d.append(el("p", { text: r.more }));
+      if (r.where) d.append(el("div", { class: "box info" }, el("b", { class: "t", text: "📍 Where you'll find it" }), r.where));
+      const dia = el("div", { class: "diagram" });
+      d.append(el("div", { class: "row" }, el("button", { class: "btn ghost", type: "button", onclick: e => { e.target.remove(); drawDiagram(dia, null, { title: r.term, text: r.def + " " + (r.where || "") }, r.term); } }, "📐 Show Me a Diagram")), dia);
+      if (r.related && r.related.length) d.append(el("h3", { text: "Related terms" }), el("div", { class: "chips" }, r.related.map(t => el("button", { class: "chip alt", type: "button", onclick: () => show(termView(t, roomId)) }, t))));
+      d.append(el("div", { class: "row" }, el("button", { class: "btn blue", type: "button", onclick: () => show(glossaryView(roomId)) }, "📖 Back to the Glossary"),
+        el("button", { class: "btn", type: "button", onclick: () => startJob("How to fix, clean or maintain: " + r.term, roomId, "") }, "🔧 Learn How to Work On It")));
+      d.append(el("p", { class: "ainote", text: "AI can make mistakes, so double-check anything important." }));
+    }).catch(e => { if (d.contains(box)) box.replaceWith(el("div", { class: "err", text: e.message })); });
+  }};
+  return v;
+}
+
 /* ---------- maintenance calendar ---------- */
 function calendarView(){
-  return { room: "calendar", render(d){
+  const v = { room: "calendar", isRoom: true, restart: () => { v.data = null; v.started = false; paint(v); }, render(d){
     setBar("Maintenance Calendar", "calendar");
-    const view = this;
-    if (view.data) return renderCalendar(d, view.data, view.what);
+    if (v.data) return renderCalendar(d, v.data);
     d.append(el("p", { class: "kicker", text: "Room" }), el("h2", { text: "🗓️ Maintenance Calendar" }),
       el("p", { class: "lead", text: "Most repairs start as skipped upkeep. Pick what you want to keep in shape, and the crew builds a checklist for every month, every season and every year." }));
-    let what = "home";
+    v.what = v.what || "home";
     const chips = el("div", { class: "chips" });
-    CAL_PICKS.forEach(([id, lab]) => { const c = el("button", { class: "chip" + (id === what ? " on" : ""), type: "button" }, lab); c.onclick = () => { what = id; chips.querySelectorAll(".chip").forEach(x => x.classList.toggle("on", x === c)); }; chips.append(c); });
+    CAL_PICKS.forEach(([id, lab]) => { const c = el("button", { class: "chip" + (id === v.what ? " on" : ""), type: "button" }, lab); c.onclick = () => { v.what = id; chips.querySelectorAll(".chip").forEach(x => x.classList.toggle("on", x === c)); }; chips.append(c); });
     const ta = el("textarea", { id: "calIn", maxlength: "400" });
     const go = el("button", { class: "btn", type: "button" }, "Build My Calendar");
     const out = el("div", {});
     go.onclick = async () => {
-      go.disabled = true; out.innerHTML = ""; out.append(loadingEl("The crew is building your calendar…", ["Checking the makers' upkeep schedules…", "Sorting tasks by season…", "Adding the every-few-years jobs people forget…", "Almost there…"])); working(true);
+      go.disabled = true; out.innerHTML = ""; out.append(loadingEl("The crew is building your calendar…", ["Checking the makers' upkeep schedules…", "Sorting tasks by season…", "Adding the every-few-years jobs people forget…", "Almost there…"]));
       try {
-        const r = await api({ mode: "calendar", what, details: ta.value.trim() });
-        view.data = r; view.what = what; working(false);
-        d.innerHTML = ""; if (state.stack.length) d.append(navRow()); renderCalendar(d, r, what);
-      } catch(e){ working(false); out.innerHTML = ""; out.append(el("div", { class: "err", text: e.message })); go.disabled = false; }
+        const r = await api({ mode: "calendar", what: v.what, details: ta.value.trim() });
+        v.data = r; if (state.view === v) repaint();
+      } catch(e){ out.innerHTML = ""; out.append(el("div", { class: "err", text: e.message })); go.disabled = false; }
     };
     d.append(el("h3", { text: "What should the calendar cover?" }), chips,
       el("div", { class: "field" }, el("label", { for: "calIn", text: "Anything that helps? (optional)" }), el("span", { class: "ex", text: "Example: older house, cold winters, gas furnace, well water" }), ta),
       el("div", { class: "row" }, go), out);
   }};
+  return v;
 }
-function renderCalendar(d, r, what){
+function renderCalendar(d, r){
   d.append(el("p", { class: "kicker", text: "Maintenance Calendar" }), el("h2", { text: r.title }), el("p", { class: "lead", text: r.intro }));
   const ck = list => el("ul", { class: "check" }, list.map(x => el("li", {}, el("label", {}, el("input", { type: "checkbox" }), el("span", { text: x })))));
   const sec = (t, list) => { if (list && list.length) d.append(el("h3", { text: t }), ck(list)); };
@@ -968,7 +1220,7 @@ function renderCalendar(d, r, what){
     if (r.sources.length) { L.push("", "SOURCES"); r.sources.forEach((s, i) => L.push((i + 1) + ". " + s.title + " " + s.url)); }
     return L.join("\n");
   };
-  d.append(el("div", { class: "row" },
+  d.append(el("div", { class: "row noprint" },
     el("button", { class: "btn blue", type: "button", onclick: () => window.print() }, "🖨️ Print"),
     el("button", { class: "btn blue", type: "button", onclick: () => download(slug(r.title) + ".txt", txt()) }, "⬇️ Download"),
     el("button", { class: "btn ghost", type: "button", onclick: () => show(calendarView()) }, "🗓️ Build Another"),
@@ -981,23 +1233,32 @@ function renderCalendar(d, r, what){
 function buildPegboard(){
   const wrap = $("#pegboard");
   ROOMS.forEach(r => wrap.append(el("button", { class: "tag", type: "button", "data-id": r.id, "aria-label": "Open the " + r.name + " room", onclick: () => show(roomView(r.id)) },
-    el("span", { class: "ico", text: r.ico }), el("span", { class: "lab", text: r.name }), el("span", { class: "who", text: r.calendar ? "Checklists" : ADV[r.helper].name }))));
+    el("span", { class: "ico", text: r.ico }), el("span", { class: "lab", text: r.name }), el("span", { class: "who", text: r.calendar ? "Checklists" : ADV[r.helpers.fix].name }))));
 }
 function buildSearch(){
   const q = $("#mainQ");
-  const go = () => { const v = q.value.trim(); if (v) startJob(v, ""); };
+  const go = () => { const val = q.value.trim(); if (val) startJob(val, "", state.intent); };
   $("#mainGo").onclick = go;
   q.addEventListener("keydown", e => { if (e.key === "Enter") go(); });
-  const pop = $("#popular");
-  pop.append(el("b", { text: "Popular" }));
-  shuffle(ROOMS.filter(r => r.topics).map(r => ({ r, t: shuffle(r.topics)[0] }))).slice(0, 5)
-    .forEach(({ r, t }) => pop.append(el("button", { type: "button", onclick: () => startJob(t, r.id) }, r.ico + " " + t)));
+  document.querySelectorAll("#intent button").forEach(b => b.onclick = () => {
+    state.intent = state.intent === b.dataset.i ? "" : b.dataset.i;
+    document.querySelectorAll("#intent button").forEach(x => x.classList.toggle("on", x.dataset.i === state.intent));
+  });
+  const ex = $("#examples");
+  ex.append(el("b", { text: "Examples" }));
+  const rooms = ROOMS.filter(r => r.jobs);
+  Object.keys(INTENTS).forEach(k => {
+    const picks = shuffle(rooms).slice(0, 3).map(r => ({ r, t: shuffle(r.jobs[k])[0] }));
+    ex.append(el("div", { class: "exrow" }, el("span", { class: "lab", text: INTENTS[k].lab }),
+      picks.map(({ r, t }) => el("button", { type: "button", onclick: () => startJob(t, r.id, k) }, r.ico + " " + t))));
+  });
+  $("#glossOpen").onclick = () => show(glossaryView());
 }
 
 buildBanner();
 buildSearch();
 buildPegboard();
-show(homeView(), false);
+state.view = homeView(); paint(state.view);
 
 /* tell the website page how tall the tool is, so there is no inner scroll bar */
 (function(){
